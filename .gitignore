@@ -1,0 +1,7 @@
+*.log
+.vs/
+obj/
+Logs/
+Temp/
+Library/
+Assets/Undead Survivor/

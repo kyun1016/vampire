@@ -1,0 +1,275 @@
+{
+  "ko": 
+  {
+    "english": "Korean",
+    "native": "한국어",
+    "api": "koreana",
+    "translations": {
+      "ANTONIO": {
+        "description": "10개 레벨마다 피해량이 10% 증가합니다(최대 +50%).",
+        "charName": "안토니오",
+        "surname": "벨파에제"
+      },
+      "IMELDA": {
+        "description": "5개 레벨마다 10%의 경험치를 추가 획득합니다(최대 +30%).",
+        "charName": "이멜다",
+        "surname": "벨파에제"
+      },
+      "CIRO": {
+        "charName": "아르카",
+        "description": "10개 레벨마다 쿨타임이 5% 감소합니다(최대 -15%).",
+        "surname": "라돈나"
+      },
+      "DOMMARIO": {
+        "charName": "돔마리오",
+        "description": "지속시간 및 투사체 속도가 40% 증가하지만 이동 속도가 40% 감소합니다."
+      },
+      "EXDASH": {
+        "description": "어쨌든 운이 좋군요."
+      },
+      "GENNARO": {
+        "charName": "젠나로",
+        "description": "투사체 1개가 영구 추가됩니다(모든 무기에 적용).",
+        "surname": "벨파에제"
+      },
+      "GERMANA": {
+        "charName": "클레리씨",
+        "description": "초당 체력 회복량 0.5 추가 및 최대 체력 +50. 일시적인 공격 범위 보너스를 받고 시작합니다.",
+        "prefix": "시스터"
+      },
+      "MORTACCIO": {
+        "charName": "모르타치오",
+        "description": "20개 레벨마다 투사체가 추가됩니다(최대 +3)."
+      },
+      "CAMILLO": {
+        "charName": "포",
+        "description": "아이템 획득 범위가 25% 증가하지만 체력이 30 감소합니다.",
+        "surname": "랏초"
+      },
+      "PASQUALINA": {
+        "charName": "파스콸리나",
+        "description": "5개 레벨마다 투사체의 속도가 10%증가합니다(최대 +30%).",
+        "surname": "벨파에제"
+      },
+      "PORTA": {
+        "charName": "포르타",
+        "description": "공격 범위가 30% 증가합니다. 일시적인 쿨타임 감소 보너스를 받고 시작합니다.",
+        "surname": "라돈나"
+      },
+      "CROCI": {
+        "charName": "크로치",
+        "surname": "프리토",
+        "description": "추가 부활을 가지고 시작합니다. 레벨 33에 부활을 하나 더 획득합니다."
+      },
+      "LAMA": {
+        "charName": "라마",
+        "surname": "라돈나",
+        "description": "10개 레벨마다 피해량, 이동 속도와 저주가 +5% 증가합니다(최대 +20%)."
+      },
+      "CAVALLO": {
+        "prefix": "야타",
+        "charName": "카발로",
+        "description": "20개 레벨마다 투사체가 추가됩니다(최대 +3)."
+      },
+      "POPPEA": {
+        "charName": "포페아",
+        "surname": "페코리나",
+        "description": "레벨마다 무기의 지속시간이 1%씩 증가합니다."
+      },
+      "CRISTINA": {
+        "description": "1개의 추가 레벨로 시작합니다.",
+        "surname": "다베인",
+        "charName": "크리스틴"
+      },
+      "PUGNALA": {
+        "description": "레벨마다 피해량이 1%씩 증가합니다.",
+        "surname": "프로볼라",
+        "charName": "푸냘라"
+      },
+      "MARIA": {
+        "description": "20개 레벨마다 투사체가 추가됩니다(최대 +3).",
+        "prefix": "비앙카",
+        "charName": "람바"
+      },
+      "GIOVANNA": {
+        "charName": "지오반나",
+        "surname": "그라나",
+        "description": "레벨마다 1%씩 투사체 속도가 증가합니다."
+      },
+      "TATANKA": {
+        "charName": "오'솔레",
+        "surname": "미오",
+        "description": "20개 레벨마다 투사체가 추가됩니다(최대 +3)."
+      },
+      "CONCETTA": {
+        "charName": "콘체타",
+        "surname": "카치오타",
+        "description": "레벨마다 공격 범위가 1%씩 증가합니다."
+      },
+      "FEBBRA": {
+        "charName": "디바노",
+        "surname": "델마",
+        "description": "1개의 추가 레벨로 시작합니다. 5개 레벨마다 +1 방어력을 얻습니다(최대 +5)."
+      },
+      "PINO": {
+        "charName": "갈로",
+        "prefix": "이구아나",
+        "surname": "발레토",
+        "description": "1개의 추가 레벨로 시작합니다. 5개 레벨마다 +10%의 성장 보너스를 획득합니다(최대 +50%)."
+      },
+      "ASSUNTA": {
+        "charName": "지아순타",
+        "surname": "벨파에제",
+        "description": "레벨마다 피해량, 투사체 속도, 지속시간 및 공격 범위가 0.5% 증가합니다."
+      },
+      "GRAZIELLA": {
+        "charName": "민나",
+        "surname": "만나라",
+        "description": "매분 힘, 발사체 속도, 지속시간, 공격 범위 및 쿨타임이 변경됩니다."
+      },
+      "NEO": {
+        "charName": "마라비오",
+        "prefix": "분"
+      },
+      "PEPPINO": {
+        "charName": "페피노",
+        "description": "일시적인 공격 범위 감소를 가지고 시작합니다."
+      },
+      "AMBROGIO": {
+        "prefix": "경",
+        "charName": "암브로조",
+        "description": "20개 레벨 마다 투사체가 추가됩니다(최대 +3). 일시적인 투사체 수 증가 보너스로 시작합니다."
+      },
+      "BOROS": {
+        "charName": "가인스",
+        "surname": "보로스",
+        "description": "레벨마다 성장을 +2% 획득합니다."
+      },
+      "DRAGOGION": {
+        "charName": "교룬톤",
+        "description": "레벨마다 저주를 +1% 획득합니다. 모든 보물상자에서 진화를 찾을 수 있습니다."
+      },
+      "PAVONE": {
+        "charName": "코스모",
+        "surname": "파보네",
+        "description": "레벨마다 회복을 +1, 행운을 +1% 획득합니다. 100레벨마다 부활을 +1 획득합니다. 숨겨진 무기가 있습니다."
+      },
+      "PANTALONE": {
+        "prefix": "빅",
+        "charName": "트라우저",
+        "description": "레벨마다 탐욕을 +1% 획득합니다. 황금의 피버타임이 더 오래 지속됩니다."
+      },
+      "SIGMA": {
+        "prefix": "여왕",
+        "charName": "시그마",
+        "description": "그녀는 모든 것을 소유합니다."
+      },
+      "ARENGIJUS": {
+        "charName": "무작위",
+        "description": "무작위로 선택합니다."
+      },
+      "NOSTRO": {
+        "prefix": "붉은 죽음의",
+        "charName": "가면",
+        "description": "신성 모독적인 조롱."
+      },
+      "VERANDA": {
+        "charName": "레다"
+      },
+      "AVATAR": {
+        "surname": "인페르나스",
+        "charName": "아바타",
+        "description": "추가 아르카나인 XIX - 불의 심장으로 시작합니다. 레벨마다 점점 강해지지만 제어력을 잃습니다."
+      },
+      "PANINI": {
+        "description": "너무나 큰 잠재력을 품고 있습니다.",
+        "charName": "토스티"
+      },
+      "SMITH": {
+        "description": "별난 흰 곰입니다.",
+        "charName": "스미스 4세"
+      },
+      "SCOREJ": {
+        "charName": "스코레지 오니",
+        "description": "8레벨마다 숨겨진 번개 반지를 획득합니다(최대 6개). 체력을 잃을 때도 발사됩니다."
+      },
+      "MIANG": {
+        "charName": "미앙",
+        "surname": "문스펠",
+        "description": "회복 시 모든 치유의 근원을 배가합니다. 초과 치유 시 최대 체력이 약간 증가합니다."
+      },
+      "MENYA": {
+        "charName": "멘야",
+        "surname": "문스펠",
+        "description": "다수의 적을 처치하면 일정 시간 더 강해지고 무적 상태가 됩니다."
+      },
+      "SYUUTO": {
+        "charName": "슈토",
+        "surname": "문스펠",
+        "description": "숨겨진 밤의 검으로 시작합니다. 기본 무기가 진화하면 더 강한 버전으로 변합니다."
+      },
+      "ONNA": {
+        "charName": "바비 온나",
+        "description": "무기 쿨타임을 무시합니다. 이동 시 무기가 일정한 간격으로 발사됩니다."
+      },
+      "MCCOY": {
+        "charName": "맥코이 오니",
+        "description": "일정한 간격으로 공격 범위가 일시적으로 증가합니다."
+      },
+      "MEGAMENYA": {
+        "prefix": "강력한",
+        "charName": "멘야",
+        "surname": "문스펠",
+        "description": "피해를 가할 수는 없지만 현재 제한 시간에 도달한 후 사라집니다. 숨겨진 108 보체와 함께 시작합니다."
+      },
+      "MEGASYUUTO": {
+        "prefix": "강력한",
+        "charName": "슈토",
+        "surname": "문스펠",
+        "description": "레벨마다 피해량이 1%씩 증가합니다."
+      },
+      "TONY": {
+        "charName": "가베트오니",
+        "description": "20개 레벨마다 투사체가 추가됩니다(최대 +4)."
+      },
+      "ELEANOR": {
+        "charName": "엘리노어",
+        "surname": "유지론",
+        "description": "레벨 10에서는 마법주문 유창본을 받고 레벨 20에서는 마법주문 전능본을 받습니다. 레벨 30에서는 아카데미 배지를 받습니다."
+      },
+      "VICTORprefix": {},
+      "VICTOR": {
+        "charName": "마루토",
+        "surname": "컷츠",
+        "description": "데미지를 받고 나면 일시적인 방어력 보너스를 획득합니다. 레벨 30에서는 아카데미 배지를 받습니다."
+      },
+      "KEIRA": {
+        "charName": "케이타",
+        "surname": "무오르트",
+        "description": "각 레벨에서 +1%의 행운을 획득합니다. 레벨 30에서는 아카데미 배지를 받습니다."
+      },
+      "LUMINAIRE": {
+        "charName": "루미네어",
+        "surname": "포스카리",
+        "description": "레벨업할 때 묵주를 발동합니다. 부활 후 피해량, 쿨타임, 이동속도를 일시적 보너스로 얻습니다."
+      },
+      "GENEVIEVE": {
+        "charName": "쥬느비에브",
+        "surname": "그루예르",
+        "description": "레벨업할 때 흡입기를 발동합니다. 치명적인 데미지를 받으면 수명당 한 번씩 세계를 먹어치우는 자를 발동합니다."
+      },
+      "MEGAGENEVIEVE": {
+        "charName": "제네비",
+        "description": "말 그대로 세계를 먹어치울 거예요."
+      },
+      "CTRPCAKE": {
+        "charName": "새미",
+        "description": "금화와 금화 주머니를 주우면 XP를 획득합니다. 일시적으로 줄어든 피해량에서 시작합니다."
+      },
+      "GHOUL": {
+        "charName": "썩어가는 구울",
+        "description": "20레벨마다 발사체를 더 많이 얻습니다.(최대+4)"
+      }
+    }
+  }
+}
