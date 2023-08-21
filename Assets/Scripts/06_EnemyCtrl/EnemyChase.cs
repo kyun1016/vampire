@@ -7,7 +7,7 @@ public class EnemyChase : MonoBehaviour
     public float mSpeed;
     public Rigidbody2D mTarget;
 
-    bool mIsLive;
+    bool mIsLive = true;
 
     Rigidbody2D mRigid;
     SpriteRenderer mSpriter;
@@ -35,5 +35,10 @@ public class EnemyChase : MonoBehaviour
             return;
 
         mSpriter.flipX = mTarget.position.x < mRigid.position.x;
+    }
+
+    private void OnEnable()
+    {
+        mTarget = GameManager.mInstance.mPlayer.GetComponent<Rigidbody2D>();
     }
 }
