@@ -5,7 +5,10 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public Transform[] mSpawnPoint;
+    public DataSpawn[] mDataSpawn;
 
+
+    int mLevel;
     float mTimer;
     private void Awake()
     {
@@ -14,8 +17,9 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         mTimer += Time.deltaTime;
+        mLevel = Mathf.FloorToInt(GameManager.instance.mGameTime / 10f);
 
-        if(mTimer > 0.2f)
+        if(mTimer > mDataSpawn[mLevel].spawnTime)
         {
             mTimer = 0;
             Spawn();
@@ -24,7 +28,9 @@ public class EnemySpawner : MonoBehaviour
 
     void Spawn()
     {
-        GameObject enemy = GameManager.mInstance.mPoolManager.Get(Random.Range(0,2));
+        GameObject enemy = GameManager.instance.mPoolManager.Get(0);
         enemy.transform.position = mSpawnPoint[Random.Range(1, mSpawnPoint.Length)].position;
+        enemy.GetComponent<Enemy>().Init(mDataSpawn[mLevel]);
     }
 }
+

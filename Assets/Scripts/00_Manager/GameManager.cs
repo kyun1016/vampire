@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public PlayerCtrl mPlayer;
+    public static GameManager instance;
+
+    public float mGameTime;
+    public float mMaxGameTime = 5 * 10f;
+
+    public Player mPlayer;
     public PoolManager mPoolManager;
-
-    public static GameManager mInstance;
-
+    
     void Awake()
     {
-        mInstance = this;
+        instance = this;
+    }
+
+    void Update()
+    {
+        mGameTime += Time.deltaTime;
+
+        if (mGameTime > mMaxGameTime)
+        {
+            mGameTime = mMaxGameTime;
+        }
     }
 }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerCtrl : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public Vector2 mInputVec;
     public float mSpeed;
+    public EnemyScanner mScanner;
+
 
     Animator mAnim;
     SpriteRenderer mSpriter;
@@ -18,7 +20,7 @@ public class PlayerCtrl : MonoBehaviour
         mAnim = GetComponent<Animator>();
         mSpriter = GetComponent<SpriteRenderer>();
         mRigid = GetComponent<Rigidbody2D>();
-        
+        mScanner = GetComponent<EnemyScanner>();
     }
 
     void OnMove(InputValue value)
