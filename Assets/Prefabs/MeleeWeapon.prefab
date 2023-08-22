@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 754299372983725187}
   - component: {fileID: 7236329569421746971}
   - component: {fileID: 7147330518690515308}
-  - component: {fileID: 1363570286798399374}
+  - component: {fileID: -436222676308609336}
   m_Layer: 0
   m_Name: MeleeWeapon
-  m_TagString: Bullet
+  m_TagString: Melee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3888889, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1363570286798399374
+--- !u!114 &-436222676308609336
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,8 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2152621316174555715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4236ff811de6b6a438ea922d4f5a6400, type: 3}
+  m_Script: {fileID: 11500000, guid: df3bef575899f984ca27420995bff915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mDamege: 0
-  mPer: 0

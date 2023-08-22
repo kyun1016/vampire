@@ -59,9 +59,12 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Bullet"))
+        if (!collision.CompareTag("Bullet") || !collision.CompareTag("Melee"))
             return;
-        mHealth -= collision.GetComponent<Bullet>().mDamege;
+        if (collision.CompareTag("Bullet"))
+            mHealth -= collision.GetComponent<Bullet>().mDamege;
+        else
+            mHealth -= collision.GetComponent<Melee>().mDamege;
         if (mHealth > 0)
         {
 

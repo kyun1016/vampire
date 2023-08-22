@@ -6,33 +6,41 @@ public class Bullet : MonoBehaviour
 {
     public float mDamege;
     public int mPer;
+    Vector3 mDir;
+    public float mSpeed;
+    bool mIsLive;
 
-    Rigidbody2D mRigid;
-
-    private void Awake()
+    private void FixedUpdate()
     {
-        mRigid = GetComponent<Rigidbody2D>();
+        if (!mIsLive)
+            return;
+
+        transform.position += mDir * mSpeed * Time.deltaTime;
+        
+        if (Vector3.Distance(transform.position, transform.parent.transform.position) > 20)
+        {
+            mIsLive = false;
+            gameObject.SetActive(false);
+        }
     }
-    public void Init(float damage, int per, Vector3 dir)
+    public void Init(float damage, int per, Vector3 dir, float speed)
     {
+        mIsLive = true;
         mDamege = damage;
         mPer = per;
-
-        if(per > -1)
-        {
-            mRigid.velocity = dir;
-        }
+        mDir = dir;
+        mSpeed = speed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Enemy") | mPer == -1)
+        if (!collision.CompareTag("Enemy"))
             return;
 
         mPer--;
         if(mPer == -1)
         {
-            mRigid.velocity = Vector2.zero;
+            mIsLive = false;
             gameObject.SetActive(false);
         }
     }

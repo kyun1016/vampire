@@ -103,8 +103,10 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\03_JsonCtrl\DataSpawn.cs" />
     <Compile Include="Assets\Scripts\07_Attack\Bullet.cs" />
-    <Compile Include="Assets\Scripts\07_Attack\Weapon.cs" />
+    <Compile Include="Assets\Scripts\07_Attack\RangeWeapon.cs" />
     <Compile Include="Assets\Scripts\06_EnemyCtrl\EnemyScanner.cs" />
+    <Compile Include="Assets\Scripts\07_Attack\Melee.cs" />
+    <Compile Include="Assets\Scripts\07_Attack\MeleeWeapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
