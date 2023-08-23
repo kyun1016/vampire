@@ -99,7 +99,7 @@ Animator:
   m_GameObject: {fileID: 4955412108151490179}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: f0feaeadf3990404f86ae82f49af5e8b, type: 2}
+  m_Controller: {fileID: 22100000, guid: 6c32cca4f4a4b2445947bc38aa7c594e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -161,6 +161,7 @@ MonoBehaviour:
   mSpeed: 0
   mHealth: 0
   mMaxHealth: 0
+  mKnockBackForce: 0
   mAnimCtrl:
   - {fileID: 22100000, guid: f0feaeadf3990404f86ae82f49af5e8b, type: 2}
   - {fileID: 22100000, guid: 46f3a3c88125ca5438f58daeaab2736c, type: 2}

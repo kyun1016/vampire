@@ -1498,7 +1498,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mGameTime: 0
-  mMaxGameTime: 20
+  mMaxGameTime: 50
+  mLevel: 0
+  mKill: 0
+  mExp: 0
+  mNextExp: 0a0000001e0000003c0000006400000096000000d20000001801000068010000c201000058020000
   mPlayer: {fileID: 1931207843}
   mPoolManager: {fileID: 746595200}
 --- !u!4 &734466990
@@ -18920,28 +18924,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0115e3f06c8c4bc498bb4fb066f7295b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mSpawnPoint: []
-  mDataSpawn:
+  mSpawnPoint:
+  - {fileID: 1579190151}
+  - {fileID: 1599968872}
+  - {fileID: 1479456177}
+  - {fileID: 1741390311}
+  - {fileID: 1498093309}
+  - {fileID: 580168719}
+  - {fileID: 2072545870}
+  - {fileID: 1810545282}
+  - {fileID: 1366641211}
+  - {fileID: 1705483359}
+  - {fileID: 1569304431}
+  - {fileID: 1180667723}
+  - {fileID: 1040276717}
+  - {fileID: 44516928}
+  - {fileID: 316749195}
+  mDataEnemy:
   - spriteType: 0
     spawnTime: 1
-    health: 10
-    speed: 1.5
-  - spriteType: 1
-    spawnTime: 0.8
     health: 20
-    speed: 2.5
-  - spriteType: 2
-    spawnTime: 0.6
+    speed: 5
+    knockBackForce: 8
+    dropExp: 2
+  - spriteType: 1
+    spawnTime: 0.7
     health: 30
-    speed: 3.5
-  - spriteType: 3
+    speed: 8
+    knockBackForce: 7
+    dropExp: 4
+  - spriteType: 2
     spawnTime: 0.4
     health: 40
-    speed: 4.5
+    speed: 10
+    knockBackForce: 6
+    dropExp: 6
+  - spriteType: 3
+    spawnTime: 0.3
+    health: 50
+    speed: 15
+    knockBackForce: 5
+    dropExp: 8
   - spriteType: 4
     spawnTime: 0.2
-    health: 50
-    speed: 5.5
+    health: 60
+    speed: 20
+    knockBackForce: 4
+    dropExp: 10
 --- !u!1 &1366456657
 GameObject:
   m_ObjectHideFlags: 0
