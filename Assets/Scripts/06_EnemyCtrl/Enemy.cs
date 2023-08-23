@@ -59,11 +59,11 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Bullet") || !collision.CompareTag("Melee"))
+        if (!(collision.CompareTag("Bullet") || collision.CompareTag("Melee")))
             return;
         if (collision.CompareTag("Bullet"))
             mHealth -= collision.GetComponent<Bullet>().mDamege;
-        else
+        else if (collision.CompareTag("Melee"))
             mHealth -= collision.GetComponent<Melee>().mDamege;
         if (mHealth > 0)
         {
