@@ -110,6 +110,7 @@
     <Compile Include="Assets\Scripts\08_HUD\HUD.cs" />
     <Compile Include="Assets\Scripts\08_HUD\FollowCamera.cs" />
     <Compile Include="Assets\Scripts\03_JsonCtrl\ItemData.cs" />
+    <Compile Include="Assets\Scripts\09_Item\Item.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
