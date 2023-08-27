@@ -107,6 +107,9 @@
     <Compile Include="Assets\Scripts\04_PlayerCtrl\Player.cs" />
     <Compile Include="Assets\Scripts\07_Attack\Bullet.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUD.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\FollowCamera.cs" />
+    <Compile Include="Assets\Scripts\03_JsonCtrl\ItemData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

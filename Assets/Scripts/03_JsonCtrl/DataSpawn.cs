@@ -1,6 +1,6 @@
 
 [System.Serializable]
-public class DataEnemy
+public class EnemyData
 {
     public int spriteType;
     public float spawnTime;

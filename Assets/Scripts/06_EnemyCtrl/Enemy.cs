@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
         mSpriter = GetComponent<SpriteRenderer>();
         mWaitFixedFrame = new WaitForFixedUpdate(); 
     }
-    public void Init(DataEnemy data)
+    public void Init(EnemyData data)
     {
         mAnim.runtimeAnimatorController = mAnimCtrl[data.spriteType];
         mSpeed = data.speed;
