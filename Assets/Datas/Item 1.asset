@@ -16,7 +16,7 @@ MonoBehaviour:
   itemId: 1
   itemName: "\uC5FD\uCD1D"
   itemDescription: 
-  itemIcon: {fileID: -181907988, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  itemIcon: {fileID: -205726582, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
   baseDamage: 4.5
   baseCount: 3
   damages:
@@ -29,4 +29,4 @@ MonoBehaviour:
   - 2.2
   - 2.4
   counts: 030000000400000005000000060000000700000008000000090000000a000000
-  projectile: {fileID: 2152621316174555715, guid: a539acb16f3022746b36babf4e3b1851, type: 3}
+  projectile: {fileID: 9022744534048549305, guid: 86e8839497398234f9ae769abf3bd9d4, type: 3}

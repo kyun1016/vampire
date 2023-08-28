@@ -8,8 +8,8 @@ public class Item : MonoBehaviour
 {
     public ItemData mData;
     public int mLevel;
-    public MeleeWeapon mMeleeWeapon;
-    public RangeWeapon mRangeWeapon;
+    public Weapon mWeapon;
+    public Gear mGear;
 
     Image mIcon;
     TMP_Text mTextLevel;
@@ -34,18 +34,44 @@ public class Item : MonoBehaviour
         switch (mData.itemType)
         {
             case ItemData.ItemType.Melee:
-                break;
             case ItemData.ItemType.Range:
+                if (mLevel == 0)
+                {
+                    GameObject newWeapon = new GameObject();
+                    mWeapon = newWeapon.AddComponent<Weapon>();
+                    mWeapon.Init(mData);
+                }
+                else
+                {
+                    float nextDamage = mData.baseDamage;
+                    int nextCount = 0;
+
+                    nextDamage += mData.baseDamage * mData.damages[mLevel];
+                    nextCount += mData.counts[mLevel];
+
+                    mWeapon.LevelUp(nextDamage, nextCount);
+                }
+                mLevel++;
                 break;
             case ItemData.ItemType.Glove:
-                break;
             case ItemData.ItemType.Shoe:
+                if (mLevel == 0)
+                {
+                    GameObject newGear = new GameObject();
+                    mGear = newGear.AddComponent<Gear>();
+                    mGear.Init(mData);
+                }
+                else
+                {
+                    float nextRate = mData.damages[mLevel];
+                    mGear.LevelUp(nextRate);
+                }
+                mLevel++;
                 break;
             case ItemData.ItemType.Heal:
+                GameManager.instance.mHealth = GameManager.instance.mMaxHealth;
                 break;
         }
-
-        mLevel++;
 
         if(mLevel == mData.damages.Length)
         {
