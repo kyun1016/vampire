@@ -60,6 +60,24 @@ public class Item : MonoBehaviour
         switch (mData.itemType)
         {
             case ItemData.ItemType.Melee:
+                if (mLevel == 0)
+                {
+                    GameObject newWeapon = new GameObject();
+                    mWeapon = newWeapon.AddComponent<Weapon>();
+                    mWeapon.Init(mData);
+                }
+                else
+                {
+                    float nextDamage = mData.baseDamage;
+                    int nextCount = 0;
+
+                    nextDamage += mData.baseDamage * mData.damages[mLevel];
+                    nextCount += mData.counts[mLevel];
+
+                    mWeapon.LevelUp(nextDamage, nextCount, true);
+                }
+                mLevel++;
+                break;
             case ItemData.ItemType.Range:
                 if (mLevel == 0)
                 {

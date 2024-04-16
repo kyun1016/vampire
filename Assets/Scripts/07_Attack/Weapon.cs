@@ -81,14 +81,15 @@ public class Weapon : MonoBehaviour
             LevelUp(mDamage + 10, mCount + 1);
         }
     }
-    public void LevelUp(float damage, int count)
+    public void LevelUp(float damage, int count, bool isMelee = false)
     {
         mDamage = damage;
         mCount = count;
 
         mPlayer.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
 
-        Placement();
+        if(isMelee)
+            Placement();
     }
     void Placement()
     {
