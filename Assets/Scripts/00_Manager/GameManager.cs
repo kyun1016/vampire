@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
         if (mExp >= mNextExp[Mathf.Min(mLevel, mNextExp.Length - 1)])
         {
-            mExp -= mNextExp[mLevel];
+            mExp -= mNextExp[Mathf.Min(mLevel, mNextExp.Length - 1)];
             mLevel++;
             mHealth = mMaxHealth;
             mUILevelUp.Show();
