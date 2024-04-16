@@ -13,6 +13,8 @@ public class Item : MonoBehaviour
 
     Image mIcon;
     TMP_Text mTextLevel;
+    TMP_Text mTextName;
+    TMP_Text mTextDesc;
 
     private void Awake()
     {
@@ -20,8 +22,32 @@ public class Item : MonoBehaviour
         mIcon.sprite = mData.itemIcon;
 
         TMP_Text[] texts = GetComponentsInChildren<TMP_Text>();
-
         mTextLevel = texts[0];
+        mTextName = texts[1];
+        mTextDesc = texts[2];
+
+        mTextName.text = mData.itemName;
+    }
+
+    private void OnEnable()
+    {
+        mTextLevel.text = "Lv." + (mLevel + 1);
+        switch (mData.itemType)
+        {
+            case ItemData.ItemType.Melee:
+            case ItemData.ItemType.Range:
+                mTextDesc.text = string.Format(mData.itemDesc, mData.damages[mLevel] * 100, mData.counts[mLevel]);
+                break;
+            case ItemData.ItemType.Glove:
+            case ItemData.ItemType.Shoe:
+                mTextDesc.text = string.Format(mData.itemDesc, mData.damages[mLevel] * 100);
+                break;
+            default:
+                mTextDesc.text = string.Format(mData.itemDesc);
+                break;
+
+        }
+        
     }
 
     private void LateUpdate()

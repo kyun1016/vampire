@@ -16,6 +16,9 @@ public class EnemySpawner : MonoBehaviour
     }
     void Update()
     {
+        if (!GameManager.instance.mIsLive)
+            return;
+
         mTimer += Time.deltaTime;
         mLevel = Mathf.FloorToInt(GameManager.instance.mGameTime / 10f);
         mLevel = mLevel > mEnemyData.Length ? mEnemyData.Length : mLevel;
