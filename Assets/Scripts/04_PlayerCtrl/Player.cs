@@ -9,12 +9,10 @@ public class Player : MonoBehaviour
     public float mSpeed;
     public EnemyScanner mScanner;
 
-
     Animator mAnim;
     SpriteRenderer mSpriter;
     Rigidbody2D mRigid;
-    
-    
+
     void Start()
     {
         mAnim = GetComponent<Animator>();
@@ -22,14 +20,12 @@ public class Player : MonoBehaviour
         mRigid = GetComponent<Rigidbody2D>();
         mScanner = GetComponent<EnemyScanner>();
     }
-
     void OnMove(InputValue value)
     {
         if (!GameManager.instance.mIsLive)
             return;
         mInputVec = value.Get<Vector2>();
     }
-
     void FixedUpdate()
     {
         if (!GameManager.instance.mIsLive)
@@ -47,17 +43,4 @@ public class Player : MonoBehaviour
             mSpriter.flipX = mInputVec.x < 0;
         }
     }
-
-    
 }
-
-
-// 공부
-//// 1. 힘을 주는 것
-//mRigid.AddForce(mInputVec);
-
-//// 2. 속도 제어
-//mRigid.velocity = mInputVec;
-
-// 3. 위치 이동
-// Vector2 nextVec = mInputVec * mSpeed * Time.fixedDeltaTime;

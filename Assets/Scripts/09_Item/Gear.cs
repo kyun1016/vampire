@@ -4,37 +4,34 @@ using UnityEngine;
 
 public class Gear : MonoBehaviour
 {
-    public ItemData.ItemType mType;
-    public float mRate;
+    public int mId;
 
-    public void Init(ItemData data)
+    public void Init(int id)
     {
+        mId = id;
         // Basic Set
-        name = "Gear " + data.itemId;
+        name = "Gear " + id;
         transform.parent = GameManager.instance.mPlayer.transform;
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
 
         // Property Set
-        mType = data.itemType;
-        mRate = data.damages[0];
         ApplyGear();
     }
 
-    public void LevelUp(float rate)
+    public void LevelUp()
     {
-        mRate = rate;
         ApplyGear();
     }
 
     void ApplyGear()
     {
-        switch(mType)
+        switch(GameManager.instance.mItemData[mId].ItemType)
         {
-            case ItemData.ItemType.Glove:
+            case eItemType.Glove:
                 RateUp();
                 break;
-            case ItemData.ItemType.Shoe:
+            case eItemType.Shoe:
                 SpeedUp();
                 break;
         }
@@ -47,13 +44,16 @@ public class Gear : MonoBehaviour
 
         foreach(Weapon weapon in weapons)
         {
-            switch (weapon.mId)
+            switch (GameManager.instance.mItemData[mId].ItemType)
             {
-                case 0:
-                    weapon.mSpeed = 150 + (150 * mRate);
+                case eItemType.Melee:
+                    weapon.mSpeed = 150 + (150 * GameManager.instance.mItemData[mId].Damages[GameManager.instance.mItemLevel[mId]]);
                     break;
-                case 1:
-                    weapon.mSpeed = 10 + (10 * mRate);
+                case eItemType.Range:
+                    weapon.mSpeed = 10 + (10 * GameManager.instance.mItemData[mId].Damages[GameManager.instance.mItemLevel[mId]]);
+                    break;
+                default:
+                    Debug.Assert(false, "Error");
                     break;
             }
         }
@@ -62,6 +62,6 @@ public class Gear : MonoBehaviour
     void SpeedUp()
     {
         float speed = 3;
-        GameManager.instance.mPlayer.mSpeed = speed + speed * mRate;
+        GameManager.instance.mPlayer.mSpeed = speed + speed * GameManager.instance.mItemData[mId].Damages[GameManager.instance.mItemLevel[mId]];
     }
 }

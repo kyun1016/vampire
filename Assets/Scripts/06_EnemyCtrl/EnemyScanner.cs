@@ -6,19 +6,20 @@ public class EnemyScanner : MonoBehaviour
 {
     public float mScanRange;
     public LayerMask mTargetLayer;
-    public RaycastHit2D[] mTargets;
+    RaycastHit2D[] mTargets;
     public Transform mNearestTarget;
 
     private void FixedUpdate()
     {
+        // GameManager.instance.mPoolManager.mPools[1];
         mTargets = Physics2D.CircleCastAll(transform.position, mScanRange, Vector2.zero, 0, mTargetLayer);
         mNearestTarget = GetNearest();
     }
 
-    Transform GetNearest()
+    public Transform GetNearest()
     {
         Transform result = null;
-        float diff = 100;
+        float diff = mScanRange;
 
         foreach (RaycastHit2D target in mTargets)
         {

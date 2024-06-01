@@ -5,11 +5,11 @@ using UnityEngine;
 public class LevelUp : MonoBehaviour
 {
     RectTransform mRect;
-    Item[] mItems;
+    HUDItem[] mItems;
     void Awake()
     {
         mRect = GetComponent<RectTransform>();
-        mItems = GetComponentsInChildren<Item>(true);
+        mItems = GetComponentsInChildren<HUDItem>(true);
     }
 
     public void Show()
@@ -33,7 +33,7 @@ public class LevelUp : MonoBehaviour
     void Next()
     {
         // 1. 모든 아이템 비활성화
-        foreach(Item item in mItems)
+        foreach(HUDItem item in mItems)
         {
             item.gameObject.SetActive(false);
         }
@@ -51,10 +51,10 @@ public class LevelUp : MonoBehaviour
 
         for (int index = 0; index < ran.Length; ++index) 
         {
-            Item ranItem = mItems[ran[index]];
+            HUDItem ranItem = mItems[ran[index]];
 
             // 3. 만렙 아이템의 경우는 소비아이템으로 대체
-            if(ranItem.mLevel == ranItem.mData.damages.Length)
+            if(GameManager.instance.mItemLevel[ranItem.mId] == GameManager.instance.mItemData[ranItem.mId].Damages.Length)
             {
                 mItems[4].gameObject.SetActive(true);
             }

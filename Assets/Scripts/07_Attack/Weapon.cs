@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public eWeaponType mType;
     public int mId;
     public int mPrefabId;
     public float mDamage;
@@ -20,36 +21,46 @@ public class Weapon : MonoBehaviour
         mPlayer = GameManager.instance.mPlayer;
     }
 
-    public void Init(ItemData data)
+    public void Init(int id)
     {
+        mId = id;
+        ItemData data = GameManager.instance.mItemData[mId];
         // Basic Set
-        name = "Weapon " + data.itemId;
-        transform.parent = mPlayer.transform;
+        name = "Weapon " + data.Id;
+        transform.parent = GameManager.instance.mPlayer.transform;
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
 
-        mId = data.itemId;
-        mDamage = data.baseDamage;
-        mCount = data.baseCount;
+        if (data.ItemType == eItemType.Melee)
+            mType = eWeaponType.Melee;
+        else if (data.ItemType == eItemType.Range)
+            mType = eWeaponType.Range;
+        else
+            Debug.Assert(false, "Error");
+        mDamage = data.Damages[0];
+        mCount = data.Counts[0];
 
         for(int i=0;i< GameManager.instance.mPoolManager.mPrefabs.Length; ++i)
         {
-            if(data.projectile == GameManager.instance.mPoolManager.mPrefabs[i])
+            if(data.Projectile == GameManager.instance.mPoolManager.mPrefabs[i])
             {
                 mPrefabId = i;
                 break;
             }
         }
-        switch (mId)
+        switch (mType)
         {
-            case 0:
+            case eWeaponType.Melee:
                 mSpeed = 150;
                 mRange = 1.5f;
                 Placement();
                 break;
-            case 1:
+            case eWeaponType.Range:
                 mSpeed = 10;
                 mMaxTimer = 0.4f;
+                break;
+            default:
+                Debug.Assert(false, "Error");
                 break;
         }
 
@@ -61,12 +72,12 @@ public class Weapon : MonoBehaviour
         if (!GameManager.instance.mIsLive)
             return;
 
-        switch (mId)
+        switch (mType)
         {
-            case 0:
+            case eWeaponType.Melee:
                 transform.Rotate(Vector3.back * mSpeed * Time.deltaTime);
                 break;
-            default:
+            case eWeaponType.Range:
                 mTimer += Time.deltaTime;
                 if (mTimer > mMaxTimer)
                 {
@@ -74,46 +85,44 @@ public class Weapon : MonoBehaviour
                     Fire();
                 }
                 break;
-        }
-        
-        if (Input.GetButtonDown("Jump"))
-        {
-            LevelUp(mDamage + 10, mCount + 1);
+            default:
+                Debug.Assert(false, "Error");
+                break;
         }
     }
-    public void LevelUp(float damage, int count, bool isMelee = false)
+    public void LevelUp()
     {
-        mDamage = damage;
-        mCount = count;
+        mDamage = GameManager.instance.mItemData[mId].Damages[GameManager.instance.mItemLevel[mId]];
+        mCount = GameManager.instance.mItemData[mId].Counts[GameManager.instance.mItemLevel[mId]];
 
         mPlayer.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
 
-        if(isMelee)
+        if(mType == eWeaponType.Melee)
             Placement();
     }
     void Placement()
     {
         for (int i = 0; i < mCount; ++i)
         {
-            Transform bullet;
+            Transform melee;
 
             if (i < transform.childCount)
             {
-                bullet = transform.GetChild(i);
+                melee = transform.GetChild(i);
             }
             else
             {
-                bullet = GameManager.instance.mPoolManager.Get(mPrefabId).transform; // 부족한 것을 오브젝트 풀로 추가
-                bullet.parent = transform;
+                melee = GameManager.instance.mPoolManager.Get(mPrefabId).transform; // 부족한 것을 오브젝트 풀로 추가
+                melee.parent = transform;
             }
 
-            bullet.localPosition = Vector3.zero;
-            bullet.localRotation = Quaternion.identity;
+            melee.localPosition = Vector3.zero;
+            melee.localRotation = Quaternion.identity;
 
             Vector3 rotVec = Vector3.forward * 360 * i / mCount;
-            bullet.Rotate(rotVec);
-            bullet.Translate(bullet.up * mRange, Space.World);
-            bullet.GetComponent<Melee>().Init(mDamage);
+            melee.Rotate(rotVec);
+            melee.Translate(melee.up * mRange, Space.World);
+            melee.GetComponent<Melee>().Init(mDamage);
         }
     }
 
@@ -129,7 +138,7 @@ public class Weapon : MonoBehaviour
         Transform bullet = GameManager.instance.mPoolManager.Get(mPrefabId).transform; // 부족한 것을 오브젝트 풀로 추가
         bullet.position = transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
-        bullet.GetComponent<Bullet>().Init(mDamage, mCount, dir, mSpeed); // -1 is Infinity Per
+        bullet.GetComponent<Range>().Init(mDamage, mCount, dir, mSpeed); // -1 is Infinity Per
         bullet.parent = transform;
     }
 }

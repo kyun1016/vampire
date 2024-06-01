@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUD : MonoBehaviour
+public class HUDDefault : MonoBehaviour
 {
     public enum InfoType { Exp, Level, Kill, Time, Health}
     public InfoType mType;

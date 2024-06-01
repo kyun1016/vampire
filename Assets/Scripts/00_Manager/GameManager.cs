@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +18,16 @@ public class GameManager : MonoBehaviour
     public int mKill;
     public int mExp;
     public int[] mNextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
+    public int[] mWeaponId = { 0, 0, 0, 0, 0, 0, 0, 0 };
+    public int[] mWeaponLevel = { 0, 0, 0, 0, 0, 0, 0, 0 };
+    public int[] mGearId = { 0, 0, 0, 0, 0, 0, 0, 0 };
+    public int[] mGearLevel = { 0, 0, 0, 0, 0, 0, 0, 0 };
+    [Header(" Item Info")]
+    public Sprite[] mItemSprite;
+    public ItemData[] mItemData;
+    public int[] mItemLevel;
+    [Header(" Enemy Info")]
+    public EnemyData[] mEnemyData;
     [Header("# Game Object")]
     public Player mPlayer;
     public PoolManager mPoolManager;
@@ -26,8 +38,22 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
+    public void SaveToJson()
+    {
+        string json = JsonConvert.SerializeObject(mEnemyData);
+
+        File.WriteAllText(Application.dataPath + "/Datas/EnemyData.json", json);
+    }
+    private void LoadFromJson()
+    {
+        string json = File.ReadAllText(Application.dataPath + "/Datas/EnemyData.json");
+        mEnemyData = JsonConvert.DeserializeObject<EnemyData[]>(json);
+    }
+
     private void Start()
     {
+        LoadFromJson();
+        
         mHealth = mMaxHealth;
 
         mUILevelUp.Select(0);

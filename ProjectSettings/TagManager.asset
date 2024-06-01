@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Bullet
   - Melee
+  - AreaCollider
   layers:
   - Default
   - TransparentFX

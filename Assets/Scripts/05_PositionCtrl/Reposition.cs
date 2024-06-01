@@ -13,7 +13,7 @@ public class Reposition : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Area"))
+        if (!collision.CompareTag("AreaCollider"))
             return;
 
         Vector3 playerPos = GameManager.instance.mPlayer.transform.position;

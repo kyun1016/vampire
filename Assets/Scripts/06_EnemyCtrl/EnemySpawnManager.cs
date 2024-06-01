@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawnManager : MonoBehaviour
 {
     public Transform[] mSpawnPoint;
-    public EnemyData[] mEnemyData;
-
 
     int mLevel;
     float mTimer;
@@ -21,8 +19,8 @@ public class EnemySpawner : MonoBehaviour
 
         mTimer += Time.deltaTime;
         mLevel = Mathf.FloorToInt(GameManager.instance.mGameTime / 10f);
-        mLevel = mLevel > mEnemyData.Length ? mEnemyData.Length : mLevel;
-        if (mTimer > mEnemyData[mLevel].spawnTime)
+        mLevel = mLevel > GameManager.instance.mEnemyData.Length ? GameManager.instance.mEnemyData.Length - 1 : mLevel;
+        if (mTimer > GameManager.instance.mEnemyData[mLevel].SpawnTime)
         {
             mTimer = 0;
             Spawn();
@@ -33,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
     {
         GameObject enemy = GameManager.instance.mPoolManager.Get(0);
         enemy.transform.position = mSpawnPoint[Random.Range(1, mSpawnPoint.Length)].position;
-        enemy.GetComponent<Enemy>().Init(mEnemyData[mLevel]);
+        enemy.GetComponent<Enemy>().Init(mLevel);
     }
 }
 

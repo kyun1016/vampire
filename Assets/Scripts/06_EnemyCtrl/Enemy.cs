@@ -30,14 +30,15 @@ public class Enemy : MonoBehaviour
         mSpriter = GetComponent<SpriteRenderer>();
         mWaitFixedFrame = new WaitForFixedUpdate(); 
     }
-    public void Init(EnemyData data)
+    public void Init(int id)
     {
-        mAnim.runtimeAnimatorController = mAnimCtrl[data.spriteType];
-        mSpeed = data.speed;
-        mMaxHealth = data.health;
-        mHealth = data.health;
-        mKnockBackForce = data.knockBackForce;
-        mDropExp = data.dropExp;
+        EnemyData data = GameManager.instance.mEnemyData[id];
+        mAnim.runtimeAnimatorController = mAnimCtrl[data.SpriteId];
+        mSpeed = data.Speed;
+        mMaxHealth = data.MaxHealth;
+        mHealth = data.MaxHealth;
+        mKnockBackForce = data.KnockBackForce;
+        mDropExp = data.DropExp;
     }
     private void OnEnable()
     {
@@ -77,7 +78,7 @@ public class Enemy : MonoBehaviour
         if (!(collision.CompareTag("Bullet") || collision.CompareTag("Melee")) || !mIsLive)
             return;
         if (collision.CompareTag("Bullet"))
-            mHealth -= collision.GetComponent<Bullet>().mDamege;
+            mHealth -= collision.GetComponent<Range>().mDamege;
         else if (collision.CompareTag("Melee"))
             mHealth -= collision.GetComponent<Melee>().mDamege;
 
