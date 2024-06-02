@@ -54,7 +54,7 @@ public class LevelUp : MonoBehaviour
             HUDItem ranItem = mItems[ran[index]];
 
             // 3. 만렙 아이템의 경우는 소비아이템으로 대체
-            if(GameManager.instance.mItemLevel[ranItem.mId] == GameManager.instance.mItemData[ranItem.mId].Damages.Length)
+            if(GameManager.instance.mItemLevel[ranItem.mId] == GameManager.instance.mItemData[ranItem.mId].Damage.Length)
             {
                 mItems[4].gameObject.SetActive(true);
             }

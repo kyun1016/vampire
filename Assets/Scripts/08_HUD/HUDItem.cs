@@ -13,9 +13,6 @@ public class HUDItem : MonoBehaviour
     TMP_Text mTextName;
     TMP_Text mTextDesc;
 
-    Weapon mWeapon;
-    Gear mGear;
-
     private void Awake()
     {
         mIcon = GetComponentsInChildren<Image>()[1];
@@ -25,7 +22,6 @@ public class HUDItem : MonoBehaviour
         mTextName = texts[1];
         mTextDesc = texts[2];
 
-        Debug.Log(GameManager.instance.mItemData[mId].Id);
         mIcon.sprite = GameManager.instance.mItemSprite[GameManager.instance.mItemData[mId].Id];
         mTextName.text = GameManager.instance.mItemData[mId].Name;
     }
@@ -35,15 +31,17 @@ public class HUDItem : MonoBehaviour
         mTextLevel.text = "Lv." + (GameManager.instance.mItemLevel[mId] + 1);
         switch (GameManager.instance.mItemData[mId].ItemType)
         {
-            case eItemType.Melee:
-            case eItemType.Range:
-                mTextDesc.text = string.Format(GameManager.instance.mItemData[mId].Desc, GameManager.instance.mItemData[mId].Damages[GameManager.instance.mItemLevel[mId]] * 100, GameManager.instance.mItemData[mId].Counts[GameManager.instance.mItemLevel[mId]]);
+            case Enum.ItemType.Melee:
+                mTextDesc.text = string.Format(GameManager.instance.mItemData[mId].Desc, GameManager.instance.mItemData[mId].Damage[GameManager.instance.mItemLevel[mId]] * 100, GameManager.instance.mItemData[mId].Projectile[GameManager.instance.mItemLevel[mId]], GameManager.instance.mItemData[mId].Info1[GameManager.instance.mItemLevel[mId]]);
                 break;
-            case eItemType.Glove:
-            case eItemType.Shoe:
-                mTextDesc.text = string.Format(GameManager.instance.mItemData[mId].Desc, GameManager.instance.mItemData[mId].Damages[GameManager.instance.mItemLevel[mId]] * 100);
+            case Enum.ItemType.Range:
+                mTextDesc.text = string.Format(GameManager.instance.mItemData[mId].Desc, GameManager.instance.mItemData[mId].Damage[GameManager.instance.mItemLevel[mId]] * 100, GameManager.instance.mItemData[mId].Projectile[GameManager.instance.mItemLevel[mId]], GameManager.instance.mItemData[mId].Info1[GameManager.instance.mItemLevel[mId]], GameManager.instance.mItemData[mId].Pierce[GameManager.instance.mItemLevel[mId]]);
                 break;
-            case eItemType.Heal:
+            case Enum.ItemType.Glove:
+            case Enum.ItemType.Shoe:
+                mTextDesc.text = string.Format(GameManager.instance.mItemData[mId].Desc, GameManager.instance.mItemData[mId].Damage[GameManager.instance.mItemLevel[mId]] * 100);
+                break;
+            case Enum.ItemType.Heal:
                 mTextDesc.text = string.Format(GameManager.instance.mItemData[mId].Desc);
                 break;
             default:
@@ -61,35 +59,37 @@ public class HUDItem : MonoBehaviour
     {
         switch (GameManager.instance.mItemData[mId].ItemType)
         {
-            case eItemType.Melee:
-            case eItemType.Range:
+            case Enum.ItemType.Melee:
+            case Enum.ItemType.Range:
                 if (GameManager.instance.mItemLevel[mId] == 0)
                 {
                     GameObject newWeapon = new GameObject();
-                    mWeapon = newWeapon.AddComponent<Weapon>();
-                    mWeapon.Init(mId);
+                    GameManager.instance.mPlayer.mWeapons[mId] = newWeapon.AddComponent<Weapon>();
+
+                    GameManager.instance.mPlayer.mWeapons[mId].Init(mId);
                 }
                 else
                 {
-                    mWeapon.LevelUp();
+                    GameManager.instance.mPlayer.mWeapons[mId].LevelUp();
                 }
                 ++GameManager.instance.mItemLevel[mId];
                 break;
-            case eItemType.Glove:
-            case eItemType.Shoe:
-                if (GameManager.instance.mItemLevel[mId] == 0)
+            case Enum.ItemType.Glove:
+            case Enum.ItemType.Shoe:
+                ++GameManager.instance.mItemLevel[mId];
+                if (GameManager.instance.mItemLevel[mId] == 1)
                 {
                     GameObject newGear = new GameObject();
-                    mGear = newGear.AddComponent<Gear>();
-                    mGear.Init(mId);
+                    GameManager.instance.mPlayer.mGears[mId] = newGear.AddComponent<Gear>();
+
+                    GameManager.instance.mPlayer.mGears[mId].Init(mId);
                 }
                 else
                 {
-                    mGear.LevelUp();
+                    GameManager.instance.mPlayer.mGears[mId].LevelUp();
                 }
-                ++GameManager.instance.mItemLevel[mId];
                 break;
-            case eItemType.Heal:
+            case Enum.ItemType.Heal:
                 GameManager.instance.mHealth = GameManager.instance.mMaxHealth;
                 break;
             default:
@@ -97,7 +97,7 @@ public class HUDItem : MonoBehaviour
                 break;
         }
 
-        if(GameManager.instance.mItemLevel[mId] == GameManager.instance.mItemData[mId].Damages.Length)
+        if(GameManager.instance.mItemLevel[mId] == GameManager.instance.mItemData[mId].Damage.Length)
         {
             GetComponent<Button>().interactable = false;
         }

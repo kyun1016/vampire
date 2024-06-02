@@ -13,6 +13,16 @@ public class Player : MonoBehaviour
     SpriteRenderer mSpriter;
     Rigidbody2D mRigid;
 
+    public int mWeaponCount = 0;
+    public int mGearCount = 0;
+    public Weapon[] mWeapons;
+    public Gear[] mGears;
+
+    private void Awake()
+    {
+        mWeapons = new Weapon[8];
+        mGears = new Gear[8];
+    }
     void Start()
     {
         mAnim = GetComponent<Animator>();

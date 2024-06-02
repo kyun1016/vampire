@@ -6,14 +6,13 @@ using UnityEngine;
 public struct ItemData
 {
     public int Id;
-    public eItemType ItemType;
+    public Enum.ItemType ItemType;
     public string Name;
     [TextArea]
     public string Desc;
-    public int[] Counts;
-    public float[] Damages;
-    public float[] Speeds;
-    public float[] CoolTimes;   // Range Weapon
-
-    public GameObject Projectile;
+    public int[] Projectile;
+    public int[] Pierce;   // Range Weapon Only
+    public float[] Damage;
+    public float[] Speed;
+    public float[] Info1;   // Range Weapon: CoolTime / Melee Weapon: Range
 }

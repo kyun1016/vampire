@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
-    // 1. 프리펩들을 보관할 변수
-    public GameObject[] mPrefabs;
-
     // 2. 풀 담당을 하는 리스트들
     List<GameObject>[] mPools;
 
     private void Awake()
     {
-        mPools = new List<GameObject>[mPrefabs.Length];
+        mPools = new List<GameObject>[GameManager.instance.mPrefabs.Length];
 
         for(int i=0; i < mPools.Length; ++i)
         {
@@ -37,7 +34,7 @@ public class PoolManager : MonoBehaviour
         }
 
         // ... 못찾은 경우, 풀 등록
-        select = Instantiate(mPrefabs[index], transform);
+        select = Instantiate(GameManager.instance.mPrefabs[index], transform);
         mPools[index].Add(select);
 
         return select;

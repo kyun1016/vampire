@@ -13,7 +13,6 @@ public class Enemy : MonoBehaviour
     public int mDropExp;
     
     [Header("# Game Object")]
-    public RuntimeAnimatorController[] mAnimCtrl;
     public Rigidbody2D mTarget;
 
     Rigidbody2D mRigid;
@@ -33,7 +32,7 @@ public class Enemy : MonoBehaviour
     public void Init(int id)
     {
         EnemyData data = GameManager.instance.mEnemyData[id];
-        mAnim.runtimeAnimatorController = mAnimCtrl[data.SpriteId];
+        mAnim.runtimeAnimatorController = GameManager.instance.mEnemyAnimCtrl[data.SpriteId];
         mSpeed = data.Speed;
         mMaxHealth = data.MaxHealth;
         mHealth = data.MaxHealth;
