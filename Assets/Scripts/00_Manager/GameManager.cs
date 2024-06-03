@@ -9,67 +9,67 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [Header("# Game Control")]
     public bool mIsLive = true;
-    public float mGameTime;
-    public float mMaxGameTime;
     [Header("# Player Info")]
-    public int mHealth;
-    public int mMaxHealth = 100;
-    public int mLevel;
-    public int mKill;
-    public int mExp;
     public int[] mNextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
-    public int[] mWeaponId = { 0, 0, 0, 0, 0, 0, 0, 0 };
-    public int[] mWeaponLevel = { 0, 0, 0, 0, 0, 0, 0, 0 };
-    public int[] mGearId = { 0, 0, 0, 0, 0, 0, 0, 0 };
-    public int[] mGearLevel = { 0, 0, 0, 0, 0, 0, 0, 0 };
     [Header("# Item Info")]
     public Sprite[] mItemSprite;
-    public GameObject[] mItemProjectile;
-    public int[] mItemLevel;
     [Header("# Json Info")]
-    public ItemData[] mItemData;
-    public EnemyData[] mEnemyData;
+    public WeaponJsonData[] mWeaponJsonData;
+    public PerkJsonData[] mPerkJsonData;
+    public EnemyJsonData[] mEnemyJsonData;
+    [Header("# Level & Item Info")]
+    public PlayerData mPlayerData;
+    public int mWeaponSize;
+    public int mPerkSize;
+    public ItemCtrlData[] mWeaponCtrlData;
+    public ItemCtrlData[] mPerkCtrlData;
+    public PerkData mPerkData;
+    public WeaponData[] mWeaponData;
+    public WeaponData[] mWeaponLastData;
     [Header("# Game Object")]
     public GameObject[] mPrefabs;               // 프리펩들을 보관할 변수
     public RuntimeAnimatorController[] mPlayerAnimCtrl;
     public RuntimeAnimatorController[] mEnemyAnimCtrl;
-
     public Player mPlayer;
-    public PoolManager mPoolManager;
+    public PoolManager mEnemyPool;
     public LevelUp mUILevelUp;
 
     void Awake()
     {
         instance = this;
-        GameObject newPoolManager = new GameObject();
-        mPoolManager = newPoolManager.AddComponent<PoolManager>();
-        mPoolManager.transform.name = "EnemyPool";
-        mPoolManager.transform.parent = GameManager.instance.transform;
 
-        GameObject newPlayer = new GameObject();
-        // mPlayer = newPlayer.AddComponent<Player>();
+        mEnemyPool = new GameObject().AddComponent<PoolManager>();
+        mEnemyPool.transform.name = "EnemyPool";
+        mEnemyPool.transform.parent = GameManager.instance.transform;
+        mEnemyPool.Init(mEnemyJsonData[0].PrefabId);
     }
 
     public void SaveToJson()
     {
-        string json = JsonConvert.SerializeObject(mItemData);
-
-        File.WriteAllText(Application.dataPath + "/Datas/ItemData.json", json);
+        string json = JsonConvert.SerializeObject(mEnemyJsonData);
+        File.WriteAllText(Application.dataPath + "/Datas/EnemyJsonData.json", json);
+        json = JsonConvert.SerializeObject(mWeaponJsonData);
+        File.WriteAllText(Application.dataPath + "/Datas/WeaponJsonData.json", json);
+        json = JsonConvert.SerializeObject(mPerkJsonData);
+        File.WriteAllText(Application.dataPath + "/Datas/PerkJsonData.json", json);
     }
     private void LoadFromJson()
     {
         string json = File.ReadAllText(Application.dataPath + "/Datas/EnemyData.json");
-        mEnemyData = JsonConvert.DeserializeObject<EnemyData[]>(json);
+        mEnemyJsonData = JsonConvert.DeserializeObject<EnemyJsonData[]>(json);
 
-        json = File.ReadAllText(Application.dataPath + "/Datas/ItemData.json");
-        mItemData = JsonConvert.DeserializeObject<ItemData[]>(json);
+        json = File.ReadAllText(Application.dataPath + "/Datas/WeaponData.json");
+        mWeaponJsonData = JsonConvert.DeserializeObject<WeaponJsonData[]>(json);
+
+        json = File.ReadAllText(Application.dataPath + "/Datas/PerkData.json");
+        mPerkJsonData = JsonConvert.DeserializeObject<PerkJsonData[]>(json);
     }
 
     private void Start()
     {
         LoadFromJson();
         
-        mHealth = mMaxHealth;
+        mPlayerData.Health = mPlayerData.MaxHealth;
 
         mUILevelUp.Select(0);
     }
@@ -79,23 +79,23 @@ public class GameManager : MonoBehaviour
         if (!mIsLive)
             return;
 
-        mGameTime += Time.deltaTime;
+        mPlayerData.GameTime += Time.deltaTime;
 
-        if (mGameTime > mMaxGameTime)
+        if (mPlayerData.GameTime > mPlayerData.MaxGameTime)
         {
-            mGameTime = mMaxGameTime;
+            mPlayerData.GameTime = mPlayerData.MaxGameTime;
         }
     }
 
     public void GetExp(int exp)
     {
-        mExp += exp;
+        mPlayerData.Exp += exp;
 
-        if (mExp >= mNextExp[Mathf.Min(mLevel, mNextExp.Length - 1)])
+        if (mPlayerData.Exp >= mNextExp[Mathf.Min(mPlayerData.Level, mNextExp.Length - 1)])
         {
-            mExp -= mNextExp[Mathf.Min(mLevel, mNextExp.Length - 1)];
-            mLevel++;
-            mHealth = mMaxHealth;
+            mPlayerData.Exp -= mNextExp[Mathf.Min(mPlayerData.Level, mNextExp.Length - 1)];
+            mPlayerData.Level++;
+            mPlayerData.Health = mPlayerData.MaxHealth;
             mUILevelUp.Show();
         }
     }

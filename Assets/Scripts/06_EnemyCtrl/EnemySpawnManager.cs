@@ -18,9 +18,9 @@ public class EnemySpawnManager : MonoBehaviour
             return;
 
         mTimer += Time.deltaTime;
-        mLevel = Mathf.FloorToInt(GameManager.instance.mGameTime / 10f);
-        mLevel = mLevel > GameManager.instance.mEnemyData.Length ? GameManager.instance.mEnemyData.Length - 1 : mLevel;
-        if (mTimer > GameManager.instance.mEnemyData[mLevel].SpawnTime)
+        mLevel = Mathf.FloorToInt(GameManager.instance.mPlayerData.GameTime / 10f);
+        mLevel = mLevel > GameManager.instance.mEnemyJsonData.Length ? GameManager.instance.mEnemyJsonData.Length - 1 : mLevel;
+        if (mTimer > GameManager.instance.mEnemyJsonData[mLevel].SpawnTime)
         {
             mTimer = 0;
             Spawn();
@@ -29,7 +29,7 @@ public class EnemySpawnManager : MonoBehaviour
 
     void Spawn()
     {
-        GameObject enemy = GameManager.instance.mPoolManager.Get(0);
+        GameObject enemy = GameManager.instance.mEnemyPool.Get();
         enemy.transform.position = mSpawnPoint[Random.Range(1, mSpawnPoint.Length)].position;
         enemy.GetComponent<Enemy>().Init(mLevel);
     }

@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
     }
     public void Init(int id)
     {
-        EnemyData data = GameManager.instance.mEnemyData[id];
+        EnemyJsonData data = GameManager.instance.mEnemyJsonData[id];
         mAnim.runtimeAnimatorController = GameManager.instance.mEnemyAnimCtrl[data.SpriteId];
         mSpeed = data.Speed;
         mMaxHealth = data.MaxHealth;
@@ -77,9 +77,9 @@ public class Enemy : MonoBehaviour
         if (!(collision.CompareTag("Bullet") || collision.CompareTag("Melee")) || !mIsLive)
             return;
         if (collision.CompareTag("Bullet"))
-            mHealth -= collision.GetComponent<Range>().mDamege;
+            mHealth -= collision.GetComponent<Range>().mDamage;
         else if (collision.CompareTag("Melee"))
-            mHealth -= collision.GetComponent<Melee>().mDamege;
+            mHealth -= collision.GetComponent<Melee>().mDamage;
 
         if (mHealth > 0)
         {
@@ -93,7 +93,7 @@ public class Enemy : MonoBehaviour
             mRigid.simulated = false;
             mSpriter.sortingOrder = 1;
             mAnim.SetBool("Dead", true);
-            GameManager.instance.mKill++;
+            GameManager.instance.mPlayerData.Kill++;
             GameManager.instance.GetExp(mDropExp);
         }
     }

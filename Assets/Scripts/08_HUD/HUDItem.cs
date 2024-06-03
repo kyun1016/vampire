@@ -22,84 +22,141 @@ public class HUDItem : MonoBehaviour
         mTextName = texts[1];
         mTextDesc = texts[2];
 
-        mIcon.sprite = GameManager.instance.mItemSprite[GameManager.instance.mItemData[mId].Id];
-        mTextName.text = GameManager.instance.mItemData[mId].Name;
+        mIcon.sprite = GameManager.instance.mItemSprite[GameManager.instance.mWeaponJsonData[mId].SpriteId];
+        mTextName.text = GameManager.instance.mWeaponJsonData[mId].Name;
     }
 
     private void OnEnable()
     {
-        mTextLevel.text = "Lv." + (GameManager.instance.mItemLevel[mId] + 1);
-        switch (GameManager.instance.mItemData[mId].ItemType)
+        int idx = mId;
+        int level = 0;
+        if (mId < GameManager.instance.mWeaponJsonData.Length)
         {
-            case Enum.ItemType.Melee:
-                mTextDesc.text = string.Format(GameManager.instance.mItemData[mId].Desc, GameManager.instance.mItemData[mId].Damage[GameManager.instance.mItemLevel[mId]] * 100, GameManager.instance.mItemData[mId].Projectile[GameManager.instance.mItemLevel[mId]], GameManager.instance.mItemData[mId].Info1[GameManager.instance.mItemLevel[mId]]);
-                break;
-            case Enum.ItemType.Range:
-                mTextDesc.text = string.Format(GameManager.instance.mItemData[mId].Desc, GameManager.instance.mItemData[mId].Damage[GameManager.instance.mItemLevel[mId]] * 100, GameManager.instance.mItemData[mId].Projectile[GameManager.instance.mItemLevel[mId]], GameManager.instance.mItemData[mId].Info1[GameManager.instance.mItemLevel[mId]], GameManager.instance.mItemData[mId].Pierce[GameManager.instance.mItemLevel[mId]]);
-                break;
-            case Enum.ItemType.Glove:
-            case Enum.ItemType.Shoe:
-                mTextDesc.text = string.Format(GameManager.instance.mItemData[mId].Desc, GameManager.instance.mItemData[mId].Damage[GameManager.instance.mItemLevel[mId]] * 100);
-                break;
-            case Enum.ItemType.Heal:
-                mTextDesc.text = string.Format(GameManager.instance.mItemData[mId].Desc);
-                break;
-            default:
-                Debug.Assert(false, "Error");
-                break;
+            for (int i = 0; i < GameManager.instance.mWeaponSize; ++i)
+            {
+                if (idx == GameManager.instance.mWeaponCtrlData[i].Id)
+                    level = GameManager.instance.mWeaponCtrlData[i].Level;
+            }
+            switch (GameManager.instance.mWeaponJsonData[mId].WeaponType)
+            {
+                case Enum.WeaponType.Melee:
+                    mTextDesc.text = string.Format(GameManager.instance.mWeaponJsonData[idx].Desc, GameManager.instance.mWeaponJsonData[idx].Damage[level] * 100, GameManager.instance.mWeaponJsonData[idx].Projectile[level], GameManager.instance.mWeaponJsonData[idx].Speed[level]);
+                    break;
+                case Enum.WeaponType.Range:
+                    mTextDesc.text = string.Format(GameManager.instance.mWeaponJsonData[idx].Desc, GameManager.instance.mWeaponJsonData[idx].Damage[level] * 100, GameManager.instance.mWeaponJsonData[idx].Projectile[level], GameManager.instance.mWeaponJsonData[idx].CoolTime[level], GameManager.instance.mWeaponJsonData[idx].Pierce[level]);
+                    break;
+                default:
+                    Debug.Assert(false, "Error");
+                    break;
+            }
         }
+        else
+        {
+            idx -= GameManager.instance.mWeaponJsonData.Length;
+            for (int i = 0; i < GameManager.instance.mPerkSize; ++i)
+            {
+                if (idx == GameManager.instance.mPerkCtrlData[i].Id)
+                    level = GameManager.instance.mPerkCtrlData[i].Level;
+            }
+
+            switch (GameManager.instance.mPerkJsonData[mId].DescType)
+            {
+                case Enum.DescType.Perk:
+                    mTextDesc.text = string.Format(GameManager.instance.mPerkJsonData[idx].Desc, GameManager.instance.mPerkJsonData[idx].Damage[level] * 100);
+                    break;
+                case Enum.DescType.Heal:
+                    mTextDesc.text = string.Format(GameManager.instance.mPerkJsonData[mId].Desc);
+                    break;
+                default:
+                    Debug.Assert(false, "Error");
+                    break;
+            }
+        }
+        mTextLevel.text = "Lv." + (level + 1);
     }
 
     private void LateUpdate()
     {
-        mTextLevel.text = "Lv." + (GameManager.instance.mItemLevel[mId] + 1);
+        // mTextLevel.text = "Lv." + (GameManager.instance.mItemLevel[mId] + 1);
     }
 
     public void OnClick()
     {
-        switch (GameManager.instance.mItemData[mId].ItemType)
+        int idx = mId;
+        int idxCtrl = -1;
+        int level = 0;
+        if (mId < GameManager.instance.mWeaponJsonData.Length)
         {
-            case Enum.ItemType.Melee:
-            case Enum.ItemType.Range:
-                if (GameManager.instance.mItemLevel[mId] == 0)
+            for (int i = 0; i < GameManager.instance.mWeaponSize; ++i)
+            {
+                if (idx == GameManager.instance.mWeaponCtrlData[i].Id)
                 {
-                    GameObject newWeapon = new GameObject();
-                    GameManager.instance.mPlayer.mWeapons[mId] = newWeapon.AddComponent<Weapon>();
+                    idxCtrl = i;
+                    level = GameManager.instance.mWeaponCtrlData[i].Level;
+                }
+            }
+            switch (GameManager.instance.mWeaponJsonData[mId].WeaponType)
+            {
+                case Enum.WeaponType.Melee:
+                case Enum.WeaponType.Range:
+                    if (level == 0)
+                    {
+                        idxCtrl = GameManager.instance.mWeaponSize++;
+                        GameManager.instance.mWeaponCtrlData[idxCtrl].Id = idx;
+                        GameManager.instance.mWeaponCtrlData[idxCtrl].Level = 0;
+                    }
 
-                    GameManager.instance.mPlayer.mWeapons[mId].Init(mId);
-                }
-                else
+                    FuncWeapon.UpdateWeaponLastIdx(idxCtrl);
+                    ++GameManager.instance.mWeaponCtrlData[idxCtrl].Level;
+                    break;
+                default:
+                    Debug.Assert(false, "Error");
+                    break;
+            }
+            if (GameManager.instance.mWeaponCtrlData[idxCtrl].Level == GameManager.instance.mWeaponJsonData[idx].Damage.Length)
+            {
+                GetComponent<Button>().interactable = false;
+            }
+        }
+        else
+        {
+            idx -= GameManager.instance.mWeaponJsonData.Length;
+            for (int i = 0; i < GameManager.instance.mPerkSize; ++i)
+            {
+                if (idx == GameManager.instance.mPerkCtrlData[i].Id)
                 {
-                    GameManager.instance.mPlayer.mWeapons[mId].LevelUp();
+                    idxCtrl = i;
+                    level = GameManager.instance.mPerkCtrlData[i].Level;
                 }
-                ++GameManager.instance.mItemLevel[mId];
-                break;
-            case Enum.ItemType.Glove:
-            case Enum.ItemType.Shoe:
-                ++GameManager.instance.mItemLevel[mId];
-                if (GameManager.instance.mItemLevel[mId] == 1)
-                {
-                    GameObject newGear = new GameObject();
-                    GameManager.instance.mPlayer.mGears[mId] = newGear.AddComponent<Gear>();
 
-                    GameManager.instance.mPlayer.mGears[mId].Init(mId);
-                }
-                else
-                {
-                    GameManager.instance.mPlayer.mGears[mId].LevelUp();
-                }
-                break;
-            case Enum.ItemType.Heal:
-                GameManager.instance.mHealth = GameManager.instance.mMaxHealth;
-                break;
-            default:
-                Debug.Assert(false, "Error");
-                break;
+            }
+            switch (GameManager.instance.mPerkJsonData[mId].DescType)
+            {
+                case Enum.DescType.Perk:
+                    if (level == 0)
+                    {
+                        idxCtrl = GameManager.instance.mPerkSize++;
+                        GameManager.instance.mPerkCtrlData[idxCtrl].Id = idx;
+                        GameManager.instance.mPerkCtrlData[idxCtrl].Level = 0;
+                    }
+                    FuncWeapon.UpdatePerkIdx(idx);
+                    FuncWeapon.ReloadWeaponLast();
+                    ++GameManager.instance.mPerkCtrlData[idxCtrl].Level;
+                    break;
+                case Enum.DescType.Heal:
+                    GameManager.instance.mPlayerData.Health = GameManager.instance.mPlayerData.MaxHealth;
+                    break;
+                default:
+                    Debug.Assert(false, "Error");
+                    break;
+
+            }
+            if (GameManager.instance.mPerkCtrlData[idxCtrl].Level == GameManager.instance.mPerkJsonData[idx].Damage.Length)
+            {
+                GetComponent<Button>().interactable = false;
+            }
         }
 
-        if(GameManager.instance.mItemLevel[mId] == GameManager.instance.mItemData[mId].Damage.Length)
-        {
-            GetComponent<Button>().interactable = false;
-        }
+
     }
 }

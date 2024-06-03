@@ -5,24 +5,21 @@ using UnityEngine;
 public class PoolManager : MonoBehaviour
 {
     // 2. 풀 담당을 하는 리스트들
-    List<GameObject>[] mPools;
+    public List<GameObject> mPool;
+    int mSpriteId;
 
-    private void Awake()
+    public void Init(int id)
     {
-        mPools = new List<GameObject>[GameManager.instance.mPrefabs.Length];
-
-        for(int i=0; i < mPools.Length; ++i)
-        {
-            mPools[i] = new List<GameObject>();
-        }
+        mSpriteId = id;
+        mPool = new List<GameObject>();
     }
 
-    public GameObject Get(int index)
+    public GameObject Get()
     {
         GameObject select = null;
 
         // ... 선택한 풀의 놀고 (비활성화 된) 있는 게임 오브젝트 접근
-        foreach (GameObject item in mPools[index])
+        foreach (GameObject item in mPool)
         {
             // ... 발견하면 select 변수에 할당
             if (!item.activeSelf)
@@ -34,8 +31,8 @@ public class PoolManager : MonoBehaviour
         }
 
         // ... 못찾은 경우, 풀 등록
-        select = Instantiate(GameManager.instance.mPrefabs[index], transform);
-        mPools[index].Add(select);
+        select = Instantiate(GameManager.instance.mPrefabs[mSpriteId], transform);
+        mPool.Add(select);
 
         return select;
     }

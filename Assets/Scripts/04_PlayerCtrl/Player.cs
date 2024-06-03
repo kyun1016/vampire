@@ -9,19 +9,21 @@ public class Player : MonoBehaviour
     public float mSpeed;
     public EnemyScanner mScanner;
 
+    public WeaponCtrl[] mWeaponCtrl;
+
     Animator mAnim;
     SpriteRenderer mSpriter;
     Rigidbody2D mRigid;
-
-    public int mWeaponCount = 0;
-    public int mGearCount = 0;
-    public Weapon[] mWeapons;
-    public Gear[] mGears;
-
-    private void Awake()
+    void Awake()
     {
-        mWeapons = new Weapon[8];
-        mGears = new Gear[8];
+        mWeaponCtrl = new WeaponCtrl[8];
+
+        for (int i = 0; i < mWeaponCtrl.Length; ++i)
+        {
+            mWeaponCtrl[i] = new GameObject().AddComponent<WeaponCtrl>();
+            mWeaponCtrl[i].transform.name = "WeaponCtrl" + i;
+            mWeaponCtrl[i].transform.parent = GameManager.instance.mPlayer.transform;
+        }
     }
     void Start()
     {

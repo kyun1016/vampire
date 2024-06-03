@@ -51,19 +51,40 @@ public class LevelUp : MonoBehaviour
 
         for (int index = 0; index < ran.Length; ++index) 
         {
-            HUDItem ranItem = mItems[ran[index]];
-
             // 3. 만렙 아이템의 경우는 소비아이템으로 대체
-            if(GameManager.instance.mItemLevel[ranItem.mId] == GameManager.instance.mItemData[ranItem.mId].Damage.Length)
+            HUDItem ranItem = mItems[ran[index]];
+            int level = 0;
+            int idx = ran[index];
+            if (ran[index] < GameManager.instance.mWeaponJsonData.Length)
             {
-                mItems[4].gameObject.SetActive(true);
+                for (int i = 0; i < GameManager.instance.mWeaponSize; ++i)
+                {
+                    if (ran[index] == GameManager.instance.mWeaponCtrlData[i].Id)
+                        level = GameManager.instance.mWeaponCtrlData[i].Level;
+                }
+
+                if (level == GameManager.instance.mWeaponJsonData[ranItem.mId].Damage.Length)
+                {
+                    mItems[4].gameObject.SetActive(true);
+                    return;
+                }
             }
             else
             {
-                ranItem.gameObject.SetActive(true);
+                idx -= GameManager.instance.mWeaponJsonData.Length;
+                for (int i = 0; i < GameManager.instance.mPerkSize; ++i)
+                {
+                    if (idx == GameManager.instance.mPerkCtrlData[i].Id)
+                        level = GameManager.instance.mWeaponCtrlData[i].Level;
+                }
+
+                if (level == GameManager.instance.mPerkJsonData[idx].Damage.Length)
+                {
+                    mItems[4].gameObject.SetActive(true);
+                    return;
+                }
             }
+            ranItem.gameObject.SetActive(true);
         }
-
-
     }
 }

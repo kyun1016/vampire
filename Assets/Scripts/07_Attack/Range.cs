@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Range : MonoBehaviour
 {
-    public float mDamege;
-    public int mPer;
-    Vector3 mDir;
-    public float mSpeed;
     bool mIsLive;
+    public float mDamage;
+    int mPer;
+    Vector3 mDir;
+    float mSpeed;
 
     private void FixedUpdate()
     {
@@ -17,7 +17,7 @@ public class Range : MonoBehaviour
 
         transform.position += mDir * mSpeed * Time.deltaTime;
         
-        if (Vector3.Distance(transform.position, transform.parent.transform.position) > 20)
+        if (Vector3.Distance(transform.position, GameManager.instance.mPlayer.transform.position) > 20)
         {
             mIsLive = false;
             gameObject.SetActive(false);
@@ -26,7 +26,7 @@ public class Range : MonoBehaviour
     public void Init(float damage, int per, Vector3 dir, float speed)
     {
         mIsLive = true;
-        mDamege = damage;
+        mDamage = damage;
         mPer = per;
         mDir = dir;
         mSpeed = speed;

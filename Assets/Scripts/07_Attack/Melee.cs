@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Melee : MonoBehaviour
 {
-    public float mDamege;
-    
+    public float mDamage;
+
     public void Init(float damage)
     {
-        mDamege = damage;
+        mDamage = damage;
     }
 }

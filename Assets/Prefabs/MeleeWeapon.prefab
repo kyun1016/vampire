@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 754299372983725187}
   - component: {fileID: 7236329569421746971}
   - component: {fileID: 7147330518690515308}
-  - component: {fileID: -436222676308609336}
+  - component: {fileID: -5972792379920461001}
   m_Layer: 0
   m_Name: MeleeWeapon
   m_TagString: Melee
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3888889, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-436222676308609336
+--- !u!114 &-5972792379920461001
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

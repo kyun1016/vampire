@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class Enum
 {
-    public enum ItemType
+    public enum WeaponType
+    {
+        Melee,
+        Range
+    }
+    public enum DescType
     {
         Melee,
         Range,
-        Glove,
-        Shoe,
+        Perk,
         Heal
     }
 }

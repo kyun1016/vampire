@@ -1,8 +1,9 @@
 
 [System.Serializable]
-public struct EnemyData
+public struct EnemyJsonData
 {
     public int SpriteId;
+    public int PrefabId;
     public float SpawnTime;
     public int MaxHealth;
     public float Speed;
