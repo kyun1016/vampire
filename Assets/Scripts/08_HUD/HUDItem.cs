@@ -169,8 +169,11 @@ public class HUDItem : MonoBehaviour
         }
         for (int i = 0; i < GameManager.instance.mWeaponSize; ++i)
         {
-            if (GameManager.instance.mWeaponData[GameManager.instance.mWeaponCtrlData[i].Id].WeaponType == Enum.WeaponType.Melee)
-                GameManager.instance.mPlayer.mWeaponCtrl[GameManager.instance.mWeaponCtrlData[i].Id].Placement();
+            if (GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[i].Id].WeaponType == Enum.WeaponType.Melee)
+            {
+                GameManager.instance.mPlayer.mWeaponCtrl[i].Placement();
+            }
+                
         }
     }
 }

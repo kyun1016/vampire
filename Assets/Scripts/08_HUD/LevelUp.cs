@@ -48,14 +48,12 @@ public class LevelUp : MonoBehaviour
             if (ran[0] != ran[1] && ran[0] != ran[2] && ran[1] != ran[2])
                 break;
         }
-        Debug.Log("Length:" + ran.Length);
         for (int index = 0; index < ran.Length; ++index) 
         {
             // 3. 만렙 아이템의 경우는 소비아이템으로 대체
             HUDItem ranItem = mItems[ran[index]];
             int level = -1;
             int idx = ran[index];
-            Debug.Log(idx);
             if (idx < GameManager.instance.mWeaponJsonData.Length)
             {
                 for (int i = 0; i < GameManager.instance.mWeaponSize; ++i)

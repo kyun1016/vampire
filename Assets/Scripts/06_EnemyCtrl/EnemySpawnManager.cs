@@ -19,7 +19,7 @@ public class EnemySpawnManager : MonoBehaviour
 
         mTimer += Time.deltaTime;
         mLevel = Mathf.FloorToInt(GameManager.instance.mPlayerData.GameTime / 10f);
-        mLevel = mLevel > GameManager.instance.mEnemyJsonData.Length ? GameManager.instance.mEnemyJsonData.Length - 1 : mLevel;
+        mLevel = mLevel >= GameManager.instance.mEnemyJsonData.Length ? GameManager.instance.mEnemyJsonData.Length - 1 : mLevel;
         if (mTimer > GameManager.instance.mEnemyJsonData[mLevel].SpawnTime)
         {
             mTimer = 0;

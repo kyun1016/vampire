@@ -6,10 +6,12 @@ public class WeaponCtrl : MonoBehaviour
 {
     int mId;
     float mTime;
+    bool mEnable;
     PoolManager mWeaponPool;
 
     public void Init(int id)
     {
+        mEnable = true;
         if (id >= GameManager.instance.mWeaponSize)
             Debug.Assert(false, "Error");
         mId = id;
@@ -23,6 +25,8 @@ public class WeaponCtrl : MonoBehaviour
     void Update()
     {
         if (!GameManager.instance.mIsLive)
+            return;
+        if (!mEnable)
             return;
 
         switch (GameManager.instance.mWeaponLastData[mId].WeaponType)
@@ -76,14 +80,25 @@ public class WeaponCtrl : MonoBehaviour
             return;
 
         Vector3 targetPos = GameManager.instance.mPlayer.mScanner.mNearestTarget.position;
-        Vector3 dir = targetPos - GameManager.instance.mPlayer.transform.position;
-        dir = dir.normalized;
+        Vector3 rootDir = targetPos - GameManager.instance.mPlayer.transform.position;
+        rootDir = rootDir.normalized;
 
-        Transform bullet = mWeaponPool.Get().transform; // 부족한 것을 오브젝트 풀로 추가
-        bullet.parent = mWeaponPool.transform;
+        // 방사형 공격 로직
+        for (int i = 0; i < GameManager.instance.mWeaponLastData[mId].Projectile; ++i)
+        {
+            Vector3 dir = rootDir;
+            if(GameManager.instance.mWeaponLastData[mId].Projectile != 1)
+            {
+                float rot = 30 * (i / ((float)GameManager.instance.mWeaponLastData[mId].Projectile - 1)) - 15;
+                // dir = Quaternion.AngleAxis(rot, Vector3.forward) * dir;
+                dir = Quaternion.Euler(0, 0, rot) * dir;
+            }
 
-        bullet.position = GameManager.instance.mPlayer.transform.position;
-        bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
-        bullet.GetComponent<Range>().Init(Mathf.RoundToInt(GameManager.instance.mWeaponLastData[mId].Damage), GameManager.instance.mWeaponLastData[mId].Pierce, dir, GameManager.instance.mWeaponLastData[mId].Speed); // -1 is Infinity Per
+            Transform bullet = mWeaponPool.Get().transform; // 부족한 것을 오브젝트 풀로 추가
+            bullet.parent = mWeaponPool.transform;
+            bullet.position = GameManager.instance.mPlayer.transform.position;
+            bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
+            bullet.GetComponent<Range>().Init(Mathf.RoundToInt(GameManager.instance.mWeaponLastData[mId].Damage), GameManager.instance.mWeaponLastData[mId].Pierce, dir, GameManager.instance.mWeaponLastData[mId].Speed); // -1 is Infinity Per
+        }
     }
 }

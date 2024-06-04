@@ -85,7 +85,9 @@ public class GameManager : MonoBehaviour
         
         mPlayerData.Health = mPlayerJsonData[mPlayerJsonId].MaxHealth;
 
-        mHUDLevelUp.Select(0);
+        mHUDLevelUp.Select(1);
+        mHUDLevelUp.Select(1);
+        mHUDLevelUp.Select(1);
     }
 
     void Update()

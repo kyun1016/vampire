@@ -7,7 +7,7 @@ public class Range : MonoBehaviour
     bool mIsLive;
     public float mDamage;
     int mPer;
-    Vector3 mDir;
+    public Vector3 mDir;
     float mSpeed;
 
     private void FixedUpdate()
@@ -16,7 +16,8 @@ public class Range : MonoBehaviour
             return;
 
         transform.position += mDir * mSpeed * Time.deltaTime;
-        
+        // transform.position += transform.forward * mSpeed * Time.deltaTime;
+
         if (Vector3.Distance(transform.position, GameManager.instance.mPlayer.transform.position) > 20)
         {
             mIsLive = false;
