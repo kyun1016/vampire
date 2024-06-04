@@ -11,9 +11,14 @@ public class GameManager : MonoBehaviour
     public bool mIsLive = true;
     [Header("# Player Info")]
     public int[] mNextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
-    [Header("# Item Info")]
-    public Sprite[] mItemSprite;
+    [Header("# Unity Data Info")]
+    public Sprite[] mSprite;
+    public GameObject[] mPrefabs;               // 프리펩들을 보관할 변수
+    public RuntimeAnimatorController[] mPlayerAnimCtrl;
+    public RuntimeAnimatorController[] mEnemyAnimCtrl;
     [Header("# Json Info")]
+    public int mPlayerJsonId;
+    public PlayerJsonData[] mPlayerJsonData;
     public WeaponJsonData[] mWeaponJsonData;
     public PerkJsonData[] mPerkJsonData;
     public EnemyJsonData[] mEnemyJsonData;
@@ -27,12 +32,9 @@ public class GameManager : MonoBehaviour
     public WeaponData[] mWeaponData;
     public WeaponData[] mWeaponLastData;
     [Header("# Game Object")]
-    public GameObject[] mPrefabs;               // 프리펩들을 보관할 변수
-    public RuntimeAnimatorController[] mPlayerAnimCtrl;
-    public RuntimeAnimatorController[] mEnemyAnimCtrl;
     public Player mPlayer;
     public PoolManager mEnemyPool;
-    public LevelUp mUILevelUp;
+    public LevelUp mHUDLevelUp;
 
     void Awake()
     {
@@ -42,6 +44,13 @@ public class GameManager : MonoBehaviour
         mEnemyPool.transform.name = "EnemyPool";
         mEnemyPool.transform.parent = GameManager.instance.transform;
         mEnemyPool.Init(mEnemyJsonData[0].PrefabId);
+
+        mWeaponCtrlData = new ItemCtrlData[2];
+        mPerkCtrlData = new ItemCtrlData[2];
+        mWeaponData = new WeaponData[2];
+        mWeaponLastData = new WeaponData[2];
+
+        FuncWeapon.ClearPerk();
     }
 
     public void SaveToJson()
@@ -52,16 +61,21 @@ public class GameManager : MonoBehaviour
         File.WriteAllText(Application.dataPath + "/Datas/WeaponJsonData.json", json);
         json = JsonConvert.SerializeObject(mPerkJsonData);
         File.WriteAllText(Application.dataPath + "/Datas/PerkJsonData.json", json);
+        json = JsonConvert.SerializeObject(mPlayerJsonData);
+        File.WriteAllText(Application.dataPath + "/Datas/PlayerJsonData.json", json);
     }
     private void LoadFromJson()
     {
-        string json = File.ReadAllText(Application.dataPath + "/Datas/EnemyData.json");
+        string json = File.ReadAllText(Application.dataPath + "/Datas/EnemyJsonData.json");
         mEnemyJsonData = JsonConvert.DeserializeObject<EnemyJsonData[]>(json);
 
-        json = File.ReadAllText(Application.dataPath + "/Datas/WeaponData.json");
+        json = File.ReadAllText(Application.dataPath + "/Datas/PlayerJsonData.json");
+        mPlayerJsonData = JsonConvert.DeserializeObject<PlayerJsonData[]>(json);
+
+        json = File.ReadAllText(Application.dataPath + "/Datas/WeaponJsonData.json");
         mWeaponJsonData = JsonConvert.DeserializeObject<WeaponJsonData[]>(json);
 
-        json = File.ReadAllText(Application.dataPath + "/Datas/PerkData.json");
+        json = File.ReadAllText(Application.dataPath + "/Datas/PerkJsonData.json");
         mPerkJsonData = JsonConvert.DeserializeObject<PerkJsonData[]>(json);
     }
 
@@ -69,9 +83,9 @@ public class GameManager : MonoBehaviour
     {
         LoadFromJson();
         
-        mPlayerData.Health = mPlayerData.MaxHealth;
+        mPlayerData.Health = mPlayerJsonData[mPlayerJsonId].MaxHealth;
 
-        mUILevelUp.Select(0);
+        mHUDLevelUp.Select(0);
     }
 
     void Update()
@@ -81,9 +95,9 @@ public class GameManager : MonoBehaviour
 
         mPlayerData.GameTime += Time.deltaTime;
 
-        if (mPlayerData.GameTime > mPlayerData.MaxGameTime)
+        if (mPlayerData.GameTime > mPlayerJsonData[mPlayerJsonId].MaxGameTime)
         {
-            mPlayerData.GameTime = mPlayerData.MaxGameTime;
+            mPlayerData.GameTime = mPlayerJsonData[mPlayerJsonId].MaxGameTime;
         }
     }
 
@@ -95,8 +109,8 @@ public class GameManager : MonoBehaviour
         {
             mPlayerData.Exp -= mNextExp[Mathf.Min(mPlayerData.Level, mNextExp.Length - 1)];
             mPlayerData.Level++;
-            mPlayerData.Health = mPlayerData.MaxHealth;
-            mUILevelUp.Show();
+            mPlayerData.Health = mPlayerJsonData[mPlayerJsonId].MaxHealth;
+            mHUDLevelUp.Show();
         }
     }
 

@@ -33,14 +33,14 @@ public class HUDDefault : MonoBehaviour
                 mText.text = string.Format("{0:F0}", GameManager.instance.mPlayerData.Kill);
                 break;
             case InfoType.Time:
-                float remainTime = GameManager.instance.mPlayerData.MaxGameTime - GameManager.instance.mPlayerData.GameTime;
+                float remainTime = GameManager.instance.mPlayerJsonData[GameManager.instance.mPlayerJsonId].MaxGameTime - GameManager.instance.mPlayerData.GameTime;
                 int min = Mathf.FloorToInt(remainTime / 60);
                 int sec = Mathf.FloorToInt(remainTime % 60);
                 mText.text = string.Format("{0:D2}:{1:D2}", min, sec);
                 break;
             case InfoType.Health:
                 float curHealth = GameManager.instance.mPlayerData.Health;
-                float maxHealth = GameManager.instance.mPlayerData.MaxHealth;
+                float maxHealth = GameManager.instance.mPlayerJsonData[GameManager.instance.mPlayerJsonId].MaxHealth;
                 mSlider.value = curHealth / maxHealth;
                 break;
         }

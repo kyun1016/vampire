@@ -16,8 +16,8 @@ public class WeaponCtrl : MonoBehaviour
 
         mWeaponPool = new GameObject().AddComponent<PoolManager>();
         mWeaponPool.transform.name = "WeaponPool";
-        mWeaponPool.transform.parent = GameManager.instance.mPlayer.transform;
-        mWeaponPool.Init(GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].SpriteId);
+        mWeaponPool.transform.parent = transform;
+        mWeaponPool.Init(GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].PrefabId);
     }
 
     void Update()

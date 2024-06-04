@@ -48,34 +48,35 @@ public class LevelUp : MonoBehaviour
             if (ran[0] != ran[1] && ran[0] != ran[2] && ran[1] != ran[2])
                 break;
         }
-
+        Debug.Log("Length:" + ran.Length);
         for (int index = 0; index < ran.Length; ++index) 
         {
             // 3. 만렙 아이템의 경우는 소비아이템으로 대체
             HUDItem ranItem = mItems[ran[index]];
-            int level = 0;
+            int level = -1;
             int idx = ran[index];
-            if (ran[index] < GameManager.instance.mWeaponJsonData.Length)
+            Debug.Log(idx);
+            if (idx < GameManager.instance.mWeaponJsonData.Length)
             {
                 for (int i = 0; i < GameManager.instance.mWeaponSize; ++i)
                 {
-                    if (ran[index] == GameManager.instance.mWeaponCtrlData[i].Id)
+                    if (idx == GameManager.instance.mWeaponCtrlData[i].Id)
                         level = GameManager.instance.mWeaponCtrlData[i].Level;
                 }
 
-                if (level == GameManager.instance.mWeaponJsonData[ranItem.mId].Damage.Length)
+                if (level == GameManager.instance.mWeaponJsonData[idx].Damage.Length)
                 {
                     mItems[4].gameObject.SetActive(true);
                     return;
                 }
             }
-            else
+            else if(idx < GameManager.instance.mWeaponJsonData.Length + GameManager.instance.mPerkJsonData.Length)
             {
                 idx -= GameManager.instance.mWeaponJsonData.Length;
                 for (int i = 0; i < GameManager.instance.mPerkSize; ++i)
                 {
                     if (idx == GameManager.instance.mPerkCtrlData[i].Id)
-                        level = GameManager.instance.mWeaponCtrlData[i].Level;
+                        level = GameManager.instance.mPerkCtrlData[i].Level;
                 }
 
                 if (level == GameManager.instance.mPerkJsonData[idx].Damage.Length)

@@ -6,12 +6,12 @@ using UnityEngine;
 public struct PerkJsonData
 {
     public int SpriteId;
-    public int PrefabId;
     public string Name;
     public Enum.DescType DescType;
     [TextArea]
     public string Desc;
 
+    public int[] MovementSpeed;
     public int[] Projectile;
     public float[] Damage;
     public float[] Speed;
@@ -20,8 +20,9 @@ public struct PerkJsonData
     // Range
     public float[] CoolTime;
     public int[] Pierce;
-    
+
     // Coeffcient
+    public float[] MovementSpeedCoef;
     public float[] ProjectileCoef;
     public float[] DamageCoef;
     public float[] SpeedCoef;

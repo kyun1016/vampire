@@ -27,7 +27,7 @@ static public class FuncWeapon
     }
     public static void UpdatePerkIdx(int idx)
     {
-        if (idx >= GameManager.instance.mWeaponSize)
+        if (idx >= GameManager.instance.mPerkSize)
             Debug.Assert(false, "Error");
 
         int id = GameManager.instance.mPerkCtrlData[idx].Id;
@@ -107,20 +107,9 @@ static public class FuncWeapon
         GameManager.instance.mWeaponData[idx].Projectile = GameManager.instance.mWeaponJsonData[id].Projectile[level];
         GameManager.instance.mWeaponData[idx].Damage = GameManager.instance.mWeaponJsonData[id].Damage[level];
         GameManager.instance.mWeaponData[idx].Speed = GameManager.instance.mWeaponJsonData[id].Speed[level];
-
-        switch (GameManager.instance.mWeaponData[idx].WeaponType)
-        {
-            case Enum.WeaponType.Melee:
-                GameManager.instance.mWeaponData[idx].Range = GameManager.instance.mWeaponJsonData[id].Range[level];
-                break;
-            case Enum.WeaponType.Range:
-                GameManager.instance.mWeaponData[idx].CoolTime = GameManager.instance.mWeaponJsonData[id].CoolTime[level];
-                GameManager.instance.mWeaponData[idx].Pierce = GameManager.instance.mWeaponJsonData[id].Pierce[level];
-                break;
-            default:
-                Debug.Assert(false, "Error");
-                break;
-        }
+        GameManager.instance.mWeaponData[idx].Range = GameManager.instance.mWeaponJsonData[id].Range[level];
+        GameManager.instance.mWeaponData[idx].CoolTime = GameManager.instance.mWeaponJsonData[id].CoolTime[level];
+        GameManager.instance.mWeaponData[idx].Pierce = GameManager.instance.mWeaponJsonData[id].Pierce[level];
     }
     public static void InitWeaponLoad()
     {
@@ -141,20 +130,9 @@ static public class FuncWeapon
         GameManager.instance.mWeaponLastData[idx].Projectile = Mathf.RoundToInt((GameManager.instance.mWeaponData[idx].Projectile + GameManager.instance.mPerkData.Projectile) * GameManager.instance.mPerkData.ProjectileCoef);
         GameManager.instance.mWeaponLastData[idx].Damage = Mathf.RoundToInt((GameManager.instance.mWeaponData[idx].Damage + GameManager.instance.mPerkData.Damage) * GameManager.instance.mPerkData.DamageCoef);
         GameManager.instance.mWeaponLastData[idx].Speed = Mathf.RoundToInt((GameManager.instance.mWeaponData[idx].Speed + GameManager.instance.mPerkData.Speed) * GameManager.instance.mPerkData.SpeedCoef);
-
-        switch (GameManager.instance.mWeaponData[idx].WeaponType)
-        {
-            case Enum.WeaponType.Melee:
-                GameManager.instance.mWeaponLastData[idx].Range = Mathf.RoundToInt((GameManager.instance.mWeaponData[idx].Range + GameManager.instance.mPerkData.Range) * GameManager.instance.mPerkData.RangeCoef);
-                break;
-            case Enum.WeaponType.Range:
-                GameManager.instance.mWeaponLastData[idx].CoolTime = Mathf.Clamp(Mathf.RoundToInt((GameManager.instance.mWeaponData[idx].CoolTime - GameManager.instance.mPerkData.CoolTime) / GameManager.instance.mPerkData.CoolTimeCoef), 0.05f, 100);
-                GameManager.instance.mWeaponLastData[idx].Pierce = Mathf.RoundToInt((GameManager.instance.mWeaponData[idx].Pierce + GameManager.instance.mPerkData.Pierce) * GameManager.instance.mPerkData.PierceCoef);
-                break;
-            default:
-                Debug.Assert(false, "Error");
-                break;
-        }
+        GameManager.instance.mWeaponLastData[idx].Range = Mathf.RoundToInt((GameManager.instance.mWeaponData[idx].Range + GameManager.instance.mPerkData.Range) * GameManager.instance.mPerkData.RangeCoef);
+        GameManager.instance.mWeaponLastData[idx].CoolTime = Mathf.Clamp((GameManager.instance.mWeaponData[idx].CoolTime - GameManager.instance.mPerkData.CoolTime) * (1 / GameManager.instance.mPerkData.CoolTimeCoef), 0.05f, 100);
+        GameManager.instance.mWeaponLastData[idx].Pierce = Mathf.RoundToInt((GameManager.instance.mWeaponData[idx].Pierce + GameManager.instance.mPerkData.Pierce) * GameManager.instance.mPerkData.PierceCoef);
     }
     public static void ReloadWeaponLast()
     {

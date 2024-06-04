@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("# Enemy Data")]
     bool mIsLive;
-    public float mSpeed;
+    public float mMovementSpeed;
     public float mHealth;
     public float mMaxHealth;
     public float mKnockBackForce;
@@ -32,8 +32,8 @@ public class Enemy : MonoBehaviour
     public void Init(int id)
     {
         EnemyJsonData data = GameManager.instance.mEnemyJsonData[id];
-        mAnim.runtimeAnimatorController = GameManager.instance.mEnemyAnimCtrl[data.SpriteId];
-        mSpeed = data.Speed;
+        mAnim.runtimeAnimatorController = GameManager.instance.mEnemyAnimCtrl[data.AnimCtrlId];
+        mMovementSpeed = data.MovementSpeed;
         mMaxHealth = data.MaxHealth;
         mHealth = data.MaxHealth;
         mKnockBackForce = data.KnockBackForce;
@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
             return;
 
         Vector2 dirVec = mTarget.position - mRigid.position;
-        Vector2 nextVec = dirVec.normalized * mSpeed * Time.fixedDeltaTime;
+        Vector2 nextVec = dirVec.normalized * mMovementSpeed * Time.fixedDeltaTime;
         mRigid.MovePosition(mRigid.position + nextVec);
 
         mRigid.velocity = Vector2.zero;

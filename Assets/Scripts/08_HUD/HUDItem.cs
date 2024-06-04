@@ -22,8 +22,17 @@ public class HUDItem : MonoBehaviour
         mTextName = texts[1];
         mTextDesc = texts[2];
 
-        mIcon.sprite = GameManager.instance.mItemSprite[GameManager.instance.mWeaponJsonData[mId].SpriteId];
-        mTextName.text = GameManager.instance.mWeaponJsonData[mId].Name;
+        if (mId < GameManager.instance.mWeaponJsonData.Length)
+        {
+            mIcon.sprite = GameManager.instance.mSprite[GameManager.instance.mWeaponJsonData[mId].SpriteId];
+            mTextName.text = GameManager.instance.mWeaponJsonData[mId].Name;
+        }
+        else
+        {
+            int idx = mId - GameManager.instance.mWeaponJsonData.Length;
+            mIcon.sprite = GameManager.instance.mSprite[GameManager.instance.mPerkJsonData[idx].SpriteId];
+            mTextName.text = GameManager.instance.mPerkJsonData[idx].Name;
+        }
     }
 
     private void OnEnable()
@@ -59,13 +68,13 @@ public class HUDItem : MonoBehaviour
                     level = GameManager.instance.mPerkCtrlData[i].Level;
             }
 
-            switch (GameManager.instance.mPerkJsonData[mId].DescType)
+            switch (GameManager.instance.mPerkJsonData[idx].DescType)
             {
                 case Enum.DescType.Perk:
                     mTextDesc.text = string.Format(GameManager.instance.mPerkJsonData[idx].Desc, GameManager.instance.mPerkJsonData[idx].Damage[level] * 100);
                     break;
                 case Enum.DescType.Heal:
-                    mTextDesc.text = string.Format(GameManager.instance.mPerkJsonData[mId].Desc);
+                    mTextDesc.text = string.Format(GameManager.instance.mPerkJsonData[idx].Desc);
                     break;
                 default:
                     Debug.Assert(false, "Error");
@@ -104,8 +113,10 @@ public class HUDItem : MonoBehaviour
                         idxCtrl = GameManager.instance.mWeaponSize++;
                         GameManager.instance.mWeaponCtrlData[idxCtrl].Id = idx;
                         GameManager.instance.mWeaponCtrlData[idxCtrl].Level = 0;
+                        GameManager.instance.mPlayer.mWeaponCtrl[idxCtrl].Init(idxCtrl);
                     }
 
+                    FuncWeapon.InitWeaponIdx(idxCtrl);
                     FuncWeapon.UpdateWeaponLastIdx(idxCtrl);
                     ++GameManager.instance.mWeaponCtrlData[idxCtrl].Level;
                     break;
@@ -130,7 +141,7 @@ public class HUDItem : MonoBehaviour
                 }
 
             }
-            switch (GameManager.instance.mPerkJsonData[mId].DescType)
+            switch (GameManager.instance.mPerkJsonData[idx].DescType)
             {
                 case Enum.DescType.Perk:
                     if (level == 0)
@@ -139,24 +150,27 @@ public class HUDItem : MonoBehaviour
                         GameManager.instance.mPerkCtrlData[idxCtrl].Id = idx;
                         GameManager.instance.mPerkCtrlData[idxCtrl].Level = 0;
                     }
-                    FuncWeapon.UpdatePerkIdx(idx);
+                    FuncWeapon.UpdatePerkIdx(idxCtrl);
                     FuncWeapon.ReloadWeaponLast();
                     ++GameManager.instance.mPerkCtrlData[idxCtrl].Level;
                     break;
                 case Enum.DescType.Heal:
-                    GameManager.instance.mPlayerData.Health = GameManager.instance.mPlayerData.MaxHealth;
+                    GameManager.instance.mPlayerData.Health = GameManager.instance.mPlayerJsonData[GameManager.instance.mPlayerJsonId].MaxHealth;
                     break;
                 default:
                     Debug.Assert(false, "Error");
                     break;
 
             }
-            if (GameManager.instance.mPerkCtrlData[idxCtrl].Level == GameManager.instance.mPerkJsonData[idx].Damage.Length)
+            if ((idxCtrl != -1) && (GameManager.instance.mPerkCtrlData[idxCtrl].Level == GameManager.instance.mPerkJsonData[idx].Damage.Length))
             {
                 GetComponent<Button>().interactable = false;
             }
         }
-
-
+        for (int i = 0; i < GameManager.instance.mWeaponSize; ++i)
+        {
+            if (GameManager.instance.mWeaponData[GameManager.instance.mWeaponCtrlData[i].Id].WeaponType == Enum.WeaponType.Melee)
+                GameManager.instance.mPlayer.mWeaponCtrl[GameManager.instance.mWeaponCtrlData[i].Id].Placement();
+        }
     }
 }
