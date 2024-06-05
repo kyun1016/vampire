@@ -7,7 +7,8 @@ public class Enum
     public enum WeaponType
     {
         Melee,
-        Range
+        RangeBullet,
+        RangeDagger
     }
     public enum DescType
     {

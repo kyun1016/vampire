@@ -5,9 +5,12 @@ using UnityEngine;
 [System.Serializable]
 public struct PlayerData
 {
+    public int Id;
     public float GameTime;
     public int Health;
     public int Level;
     public int Kill;
     public int Exp;
+    public int WeaponSize;
+    public int PerkSize;
 }

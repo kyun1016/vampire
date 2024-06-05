@@ -56,7 +56,7 @@ public class LevelUp : MonoBehaviour
             int idx = ran[index];
             if (idx < GameManager.instance.mWeaponJsonData.Length)
             {
-                for (int i = 0; i < GameManager.instance.mWeaponSize; ++i)
+                for (int i = 0; i < GameManager.instance.mPlayerData.WeaponSize; ++i)
                 {
                     if (idx == GameManager.instance.mWeaponCtrlData[i].Id)
                         level = GameManager.instance.mWeaponCtrlData[i].Level;
@@ -64,14 +64,14 @@ public class LevelUp : MonoBehaviour
 
                 if (level == GameManager.instance.mWeaponJsonData[idx].Damage.Length)
                 {
-                    mItems[4].gameObject.SetActive(true);
+                    mItems[mItems.Length - 1].gameObject.SetActive(true);
                     return;
                 }
             }
             else if(idx < GameManager.instance.mWeaponJsonData.Length + GameManager.instance.mPerkJsonData.Length)
             {
                 idx -= GameManager.instance.mWeaponJsonData.Length;
-                for (int i = 0; i < GameManager.instance.mPerkSize; ++i)
+                for (int i = 0; i < GameManager.instance.mPlayerData.PerkSize; ++i)
                 {
                     if (idx == GameManager.instance.mPerkCtrlData[i].Id)
                         level = GameManager.instance.mPerkCtrlData[i].Level;
@@ -79,7 +79,7 @@ public class LevelUp : MonoBehaviour
 
                 if (level == GameManager.instance.mPerkJsonData[idx].Damage.Length)
                 {
-                    mItems[4].gameObject.SetActive(true);
+                    mItems[mItems.Length - 1].gameObject.SetActive(true);
                     return;
                 }
             }

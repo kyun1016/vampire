@@ -17,17 +17,14 @@ public class GameManager : MonoBehaviour
     public RuntimeAnimatorController[] mPlayerAnimCtrl;
     public RuntimeAnimatorController[] mEnemyAnimCtrl;
     [Header("# Json Info")]
-    public int mPlayerJsonId;
     public PlayerJsonData[] mPlayerJsonData;
     public WeaponJsonData[] mWeaponJsonData;
     public PerkJsonData[] mPerkJsonData;
     public EnemyJsonData[] mEnemyJsonData;
     [Header("# Level & Item Info")]
     public PlayerData mPlayerData;
-    public int mWeaponSize;
-    public int mPerkSize;
-    public ItemCtrlData[] mWeaponCtrlData;
     public ItemCtrlData[] mPerkCtrlData;
+    public ItemCtrlData[] mWeaponCtrlData;
     public PerkData mPerkData;
     public WeaponData[] mWeaponData;
     public WeaponData[] mWeaponLastData;
@@ -45,10 +42,14 @@ public class GameManager : MonoBehaviour
         mEnemyPool.transform.parent = GameManager.instance.transform;
         mEnemyPool.Init(mEnemyJsonData[0].PrefabId);
 
-        mWeaponCtrlData = new ItemCtrlData[2];
-        mPerkCtrlData = new ItemCtrlData[2];
-        mWeaponData = new WeaponData[2];
-        mWeaponLastData = new WeaponData[2];
+        mPerkCtrlData = new ItemCtrlData[mPlayerJsonData[0].MaxPerkSize];
+        mWeaponCtrlData = new ItemCtrlData[mPlayerJsonData[0].MaxWeaponSize];
+        mWeaponData = new WeaponData[mPlayerJsonData[0].MaxWeaponSize];
+        mWeaponLastData = new WeaponData[mPlayerJsonData[0].MaxWeaponSize];
+
+        mPlayerData.Id = 0;
+        mPlayerData.WeaponSize = 0;
+        mPlayerData.PerkSize = 0;
 
         FuncWeapon.ClearPerk();
     }
@@ -83,10 +84,8 @@ public class GameManager : MonoBehaviour
     {
         LoadFromJson();
         
-        mPlayerData.Health = mPlayerJsonData[mPlayerJsonId].MaxHealth;
+        mPlayerData.Health = mPlayerJsonData[mPlayerData.Id].MaxHealth;
 
-        mHUDLevelUp.Select(1);
-        mHUDLevelUp.Select(1);
         mHUDLevelUp.Select(1);
     }
 
@@ -97,9 +96,9 @@ public class GameManager : MonoBehaviour
 
         mPlayerData.GameTime += Time.deltaTime;
 
-        if (mPlayerData.GameTime > mPlayerJsonData[mPlayerJsonId].MaxGameTime)
+        if (mPlayerData.GameTime > mPlayerJsonData[mPlayerData.Id].MaxGameTime)
         {
-            mPlayerData.GameTime = mPlayerJsonData[mPlayerJsonId].MaxGameTime;
+            mPlayerData.GameTime = mPlayerJsonData[mPlayerData.Id].MaxGameTime;
         }
     }
 
@@ -111,7 +110,7 @@ public class GameManager : MonoBehaviour
         {
             mPlayerData.Exp -= mNextExp[Mathf.Min(mPlayerData.Level, mNextExp.Length - 1)];
             mPlayerData.Level++;
-            mPlayerData.Health = mPlayerJsonData[mPlayerJsonId].MaxHealth;
+            mPlayerData.Health = mPlayerJsonData[mPlayerData.Id].MaxHealth;
             mHUDLevelUp.Show();
         }
     }

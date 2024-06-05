@@ -27,7 +27,7 @@ static public class FuncWeapon
     }
     public static void UpdatePerkIdx(int idx)
     {
-        if (idx >= GameManager.instance.mPerkSize)
+        if (idx >= GameManager.instance.mPlayerData.PerkSize)
             Debug.Assert(false, "Error");
 
         int id = GameManager.instance.mPerkCtrlData[idx].Id;
@@ -66,7 +66,7 @@ static public class FuncWeapon
 
     public static void InitPerkIdx(int idx)
     {
-        if (idx >= GameManager.instance.mWeaponSize)
+        if (idx >= GameManager.instance.mPlayerData.WeaponSize)
             Debug.Assert(false, "Error");
 
         int id = GameManager.instance.mPerkCtrlData[idx].Id;
@@ -90,14 +90,14 @@ static public class FuncWeapon
     {
         ClearPerk();
 
-        for (int i = 0; i < GameManager.instance.mPerkSize; ++i)
+        for (int i = 0; i < GameManager.instance.mPlayerData.PerkSize; ++i)
         {
             UpdatePerkIdx(i);
         }
     }
     public static void InitWeaponIdx(int idx)
     {
-        if (idx >= GameManager.instance.mWeaponSize)
+        if (idx >= GameManager.instance.mPlayerData.WeaponSize)
             Debug.Assert(false, "Error");
 
         int id = GameManager.instance.mWeaponCtrlData[idx].Id;
@@ -113,7 +113,7 @@ static public class FuncWeapon
     }
     public static void InitWeaponLoad()
     {
-        for (int i=0; i< GameManager.instance.mWeaponSize;++i)
+        for (int i=0; i< GameManager.instance.mPlayerData.WeaponSize;++i)
         {
             InitWeaponIdx(i);
         }
@@ -123,7 +123,7 @@ static public class FuncWeapon
 
     public static void UpdateWeaponLastIdx(int idx)
     {
-        if (idx >= GameManager.instance.mWeaponSize)
+        if (idx >= GameManager.instance.mPlayerData.WeaponSize)
             Debug.Assert(false, "Error");
 
         GameManager.instance.mWeaponLastData[idx].WeaponType = GameManager.instance.mWeaponData[idx].WeaponType;
@@ -136,7 +136,7 @@ static public class FuncWeapon
     }
     public static void ReloadWeaponLast()
     {
-        for (int i = 0; i < GameManager.instance.mWeaponSize; ++i)
+        for (int i = 0; i < GameManager.instance.mPlayerData.WeaponSize; ++i)
         {
             UpdateWeaponLastIdx(i);
         }
@@ -147,7 +147,7 @@ static public class FuncWeapon
         InitPerkLoad();
         InitWeaponLoad();
 
-        for (int i = 0; i < GameManager.instance.mWeaponSize; ++i)
+        for (int i = 0; i < GameManager.instance.mPlayerData.WeaponSize; ++i)
         {
             UpdateWeaponLastIdx(i);
         }

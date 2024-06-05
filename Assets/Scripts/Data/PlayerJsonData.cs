@@ -8,4 +8,6 @@ public struct PlayerJsonData
     public float MaxGameTime;
     public int MaxHealth;
     public int MovementSpeed;
+    public int MaxWeaponSize;
+    public int MaxPerkSize;
 }
