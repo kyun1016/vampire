@@ -7,6 +7,7 @@ public struct WeaponData
 {
     public Enum.WeaponType WeaponType;
     public int Projectile;
+    public float ProjectileSize;
     public float Damage;
     public float Speed;
     // Melee

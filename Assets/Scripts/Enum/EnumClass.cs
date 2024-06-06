@@ -8,7 +8,12 @@ public class Enum
     {
         Melee,
         RangeBullet,
-        RangeDagger
+        RangeDagger,
+        RangeAxe,
+        Garlic,
+        Web,
+        Boom,
+        ThrowBoom
     }
     public enum DescType
     {

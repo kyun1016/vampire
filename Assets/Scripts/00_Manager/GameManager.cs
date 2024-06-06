@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour
     public int[] mNextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
     [Header("# Unity Data Info")]
     public Sprite[] mSprite;
-    public GameObject[] mPrefabs;               // 프리펩들을 보관할 변수
+    public GameObject[] mPoolPrefabs;   // 프리펩들을 보관할 변수
+    public GameObject[] mHUDPrefabs;    // 프리펩들을 보관할 변수
     public RuntimeAnimatorController[] mPlayerAnimCtrl;
     public RuntimeAnimatorController[] mEnemyAnimCtrl;
     [Header("# Json Info")]
@@ -31,11 +32,12 @@ public class GameManager : MonoBehaviour
     [Header("# Game Object")]
     public Player mPlayer;
     public PoolManager mEnemyPool;
-    public LevelUp mHUDLevelUp;
+    public HUDLevelUp mHUDLevelUp;
 
     void Awake()
     {
         instance = this;
+        LoadFromJson();
 
         mEnemyPool = new GameObject().AddComponent<PoolManager>();
         mEnemyPool.transform.name = "EnemyPool";
@@ -52,6 +54,7 @@ public class GameManager : MonoBehaviour
         mPlayerData.PerkSize = 0;
 
         FuncWeapon.ClearPerk();
+        FuncWeapon.UpdatePlayerMovement();
     }
 
     public void SaveToJson()
@@ -82,11 +85,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        LoadFromJson();
-        
         mPlayerData.Health = mPlayerJsonData[mPlayerData.Id].MaxHealth;
 
-        mHUDLevelUp.Select(1);
+        mHUDLevelUp.Select(4);
     }
 
     void Update()

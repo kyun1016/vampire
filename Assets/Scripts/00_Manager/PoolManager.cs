@@ -31,7 +31,7 @@ public class PoolManager : MonoBehaviour
         }
 
         // ... 못찾은 경우, 풀 등록
-        select = Instantiate(GameManager.instance.mPrefabs[mSpriteId], transform);
+        select = Instantiate(GameManager.instance.mPoolPrefabs[mSpriteId], transform);
         mPool.Add(select);
 
         return select;

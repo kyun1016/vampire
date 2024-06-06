@@ -7,8 +7,8 @@ public class WeaponCtrl : MonoBehaviour
     int mId;
     float mTime;
     bool mEnable;
-    int mDaggerCnt;
-    bool mDaggerEn;
+    int mShotCnt;
+    bool mShotEn;
     PoolManager mWeaponPool;
 
     public void Init(int id)
@@ -35,6 +35,8 @@ public class WeaponCtrl : MonoBehaviour
 
         switch (GameManager.instance.mWeaponLastData[mId].WeaponType)
         {
+            case Enum.WeaponType.Garlic:
+                break;
             case Enum.WeaponType.Melee:
                 transform.Rotate(Vector3.back * GameManager.instance.mWeaponLastData[mId].Speed * Time.deltaTime);
                 break;
@@ -47,28 +49,39 @@ public class WeaponCtrl : MonoBehaviour
                 }
                 break;
             case Enum.WeaponType.RangeDagger:
+            case Enum.WeaponType.RangeAxe:
                 mTime += Time.deltaTime;
                 if (mTime > GameManager.instance.mWeaponLastData[mId].CoolTime)
                 {
-                    if (!mDaggerEn)
+                    if (!mShotEn)
                     {
                         mTime = 0f;
-                        mDaggerEn = true;
-                        mDaggerCnt = 0;
+                        mShotEn = true;
+                        mShotCnt = 0;
                     }
                     else
                     {
-                        
-                        FireDagger();
-                        ++mDaggerCnt;
-                        if (mDaggerCnt == GameManager.instance.mWeaponLastData[mId].Projectile)
+                        switch (GameManager.instance.mWeaponLastData[mId].WeaponType)
                         {
-                            mDaggerEn = false;
+                            case Enum.WeaponType.RangeDagger:
+                                FireDagger();
+                                break;
+                            case Enum.WeaponType.RangeAxe:
+                                FireAxe();
+                                break;
+                            default:
+                                Debug.Assert(false, "Error");
+                                break;
+                        }
+                        ++mShotCnt;
+                        if (mShotCnt == GameManager.instance.mWeaponLastData[mId].Projectile)
+                        {
+                            mShotEn = false;
                             mTime = 0f;
                         }
                         else
                         {
-                            mTime = GameManager.instance.mWeaponLastData[mId].CoolTime - 0.02f;
+                            mTime = GameManager.instance.mWeaponLastData[mId].CoolTime - 0.1f;
                         }
                     }
                 }
@@ -79,7 +92,21 @@ public class WeaponCtrl : MonoBehaviour
         }
     }
 
-    public void Placement()
+    public void PlacementGarlic()
+    {
+        Transform melee;
+        if (mWeaponPool.mPool.Count == 0)
+            melee = mWeaponPool.Get().transform; // 부족한 것을 오브젝트 풀로 추가
+        else
+            melee = mWeaponPool.mPool[0].transform;
+
+        melee.parent = mWeaponPool.transform;
+        melee.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
+        melee.localPosition = Vector3.zero;
+        melee.localRotation = Quaternion.identity;
+        melee.GetComponent<Melee>().Init(GameManager.instance.mWeaponLastData[mId].Damage);
+    }
+    public void PlacementCircle()
     {
         for (int i = 0; i < GameManager.instance.mWeaponLastData[mId].Projectile; ++i)
         {
@@ -135,12 +162,29 @@ public class WeaponCtrl : MonoBehaviour
 
     void FireDagger()
     {
-        if (!GameManager.instance.mPlayer.mScanner.mNearestTarget)
-            return;
-
-        Vector3 targetPos = GameManager.instance.mPlayer.mScanner.mNearestTarget.position;
-        Vector3 dir = targetPos - GameManager.instance.mPlayer.transform.position;
+        Transform bullet = mWeaponPool.Get().transform; // 부족한 것을 오브젝트 풀로 추가
+        bullet.parent = mWeaponPool.transform;
+        bullet.position = GameManager.instance.mPlayer.transform.position;
+        bullet.rotation = Quaternion.FromToRotation(Vector3.up, GameManager.instance.mPlayer.mLastDir);
+        bullet.GetComponent<Range>().Init(Mathf.RoundToInt(GameManager.instance.mWeaponLastData[mId].Damage), GameManager.instance.mWeaponLastData[mId].Pierce, GameManager.instance.mPlayer.mLastDir, GameManager.instance.mWeaponLastData[mId].Speed);
+    }
+    void FireAxe()
+    {
+        Vector3 dir;
+        if(mShotCnt % 2 == 0)
+        {
+            dir.x = 1;
+            dir.y = 2;
+            dir.z = 0;
+        }
+        else
+        {
+            dir.x = -1;
+            dir.y = 2;
+            dir.z = 0;
+        }
         dir = dir.normalized;
+        // Debug.Log(dir);
 
         Transform bullet = mWeaponPool.Get().transform; // 부족한 것을 오브젝트 풀로 추가
         bullet.parent = mWeaponPool.transform;

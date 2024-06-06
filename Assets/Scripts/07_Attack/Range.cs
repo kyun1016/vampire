@@ -16,7 +16,6 @@ public class Range : MonoBehaviour
             return;
 
         transform.position += mDir * mSpeed * Time.deltaTime;
-        // transform.position += transform.forward * mSpeed * Time.deltaTime;
 
         if (Vector3.Distance(transform.position, GameManager.instance.mPlayer.transform.position) > 20)
         {

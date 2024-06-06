@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - Melee
   - AreaCollider
+  - Garlic
   layers:
   - Default
   - TransparentFX

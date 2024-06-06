@@ -103,7 +103,7 @@
     <Compile Include="Assets\Scripts\Data\WeaponJsonData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
-    <Compile Include="Assets\Scripts\08_HUD\LevelUp.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDLevelUp.cs" />
     <Compile Include="Assets\Scripts\06_EnemyCtrl\EnemySpawnManager.cs" />
     <Compile Include="Assets\Scripts\Data\EnemyJsonData.cs" />
     <Compile Include="Assets\Scripts\Data\PerkJsonData.cs" />

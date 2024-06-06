@@ -5,7 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public struct PerkData
 {
+    public float MovementSpeed;
     public int Projectile;
+    public float ProjectileSize;
     public float Damage;
     public float Speed;
     // Melee
@@ -15,7 +17,9 @@ public struct PerkData
     public int Pierce;
 
     // Coeffcient
+    public float MovementSpeedCoef;
     public float ProjectileCoef;
+    public float ProjectileSizeCoef;
     public float DamageCoef;
     public float SpeedCoef;
     // Melee

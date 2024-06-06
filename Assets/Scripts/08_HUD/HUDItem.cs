@@ -41,18 +41,29 @@ public class HUDItem : MonoBehaviour
         int level = 0;
         if (mId < GameManager.instance.mWeaponJsonData.Length)
         {
+            mIcon.sprite = GameManager.instance.mSprite[GameManager.instance.mWeaponJsonData[mId].SpriteId];
+            mTextName.text = GameManager.instance.mWeaponJsonData[mId].Name;
+        }
+        else
+        {
+            idx = mId - GameManager.instance.mWeaponJsonData.Length;
+            mIcon.sprite = GameManager.instance.mSprite[GameManager.instance.mPerkJsonData[idx].SpriteId];
+            mTextName.text = GameManager.instance.mPerkJsonData[idx].Name;
+        }
+        idx = mId;
+        if (mId < GameManager.instance.mWeaponJsonData.Length)
+        {
             for (int i = 0; i < GameManager.instance.mPlayerData.WeaponSize; ++i)
             {
                 if (idx == GameManager.instance.mWeaponCtrlData[i].Id)
                     level = GameManager.instance.mWeaponCtrlData[i].Level;
             }
-            switch (GameManager.instance.mWeaponJsonData[mId].WeaponType)
+            switch (GameManager.instance.mWeaponJsonData[mId].DescType)
             {
-                case Enum.WeaponType.Melee:
+                case Enum.DescType.Melee:
                     mTextDesc.text = string.Format(GameManager.instance.mWeaponJsonData[idx].Desc, GameManager.instance.mWeaponJsonData[idx].Damage[level] * 100, GameManager.instance.mWeaponJsonData[idx].Projectile[level], GameManager.instance.mWeaponJsonData[idx].Speed[level]);
                     break;
-                case Enum.WeaponType.RangeBullet:
-                case Enum.WeaponType.RangeDagger:
+                case Enum.DescType.Range:
                     mTextDesc.text = string.Format(GameManager.instance.mWeaponJsonData[idx].Desc, GameManager.instance.mWeaponJsonData[idx].Damage[level] * 100, GameManager.instance.mWeaponJsonData[idx].Projectile[level], GameManager.instance.mWeaponJsonData[idx].CoolTime[level], GameManager.instance.mWeaponJsonData[idx].Pierce[level]);
                     break;
                 default:
@@ -105,11 +116,10 @@ public class HUDItem : MonoBehaviour
                     level = GameManager.instance.mWeaponCtrlData[i].Level;
                 }
             }
-            switch (GameManager.instance.mWeaponJsonData[mId].WeaponType)
+            switch (GameManager.instance.mWeaponJsonData[mId].DescType)
             {
-                case Enum.WeaponType.Melee:
-                case Enum.WeaponType.RangeBullet:
-                case Enum.WeaponType.RangeDagger:
+                case Enum.DescType.Melee:
+                case Enum.DescType.Range:
                     if (level == 0)
                     {
                         idxCtrl = GameManager.instance.mPlayerData.WeaponSize++;
@@ -153,6 +163,7 @@ public class HUDItem : MonoBehaviour
                         GameManager.instance.mPerkCtrlData[idxCtrl].Level = 0;
                     }
                     FuncWeapon.UpdatePerkIdx(idxCtrl);
+                    FuncWeapon.UpdatePlayerMovement();
                     FuncWeapon.ReloadWeaponLast();
                     ++GameManager.instance.mPerkCtrlData[idxCtrl].Level;
                     break;
@@ -171,9 +182,14 @@ public class HUDItem : MonoBehaviour
         }
         for (int i = 0; i < GameManager.instance.mPlayerData.WeaponSize; ++i)
         {
-            if (GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[i].Id].WeaponType == Enum.WeaponType.Melee)
+            switch (GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[i].Id].WeaponType)
             {
-                GameManager.instance.mPlayer.mWeaponCtrl[i].Placement();
+                case Enum.WeaponType.Melee:
+                    GameManager.instance.mPlayer.mWeaponCtrl[i].PlacementCircle();
+                    break;
+                case Enum.WeaponType.Garlic:
+                    GameManager.instance.mPlayer.mWeaponCtrl[i].PlacementGarlic();
+                    break;
             }
                 
         }

@@ -2,14 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelUp : MonoBehaviour
+public class HUDLevelUp : MonoBehaviour
 {
     RectTransform mRect;
-    HUDItem[] mItems;
+    public GameObject mRootHUD;
+    GameObject[] mItems;
     void Awake()
     {
         mRect = GetComponent<RectTransform>();
-        mItems = GetComponentsInChildren<HUDItem>(true);
+        mItems = new GameObject[GameManager.instance.mWeaponJsonData.Length + GameManager.instance.mPerkJsonData.Length];
+        mItems[0] = mRootHUD;
+        for (int i = 1; i < mItems.Length; ++i)
+        {
+            mItems[i] = Instantiate(mRootHUD);
+            mItems[i].GetComponent<HUDItem>().mId = i;
+            mItems[i].transform.SetParent(mRootHUD.transform.parent);
+            mItems[i].transform.name = "Item " + i;
+            mItems[i].transform.localScale = mRootHUD.transform.localScale;
+        }    
     }
 
     public void Show()
@@ -27,15 +37,15 @@ public class LevelUp : MonoBehaviour
 
     public void Select(int index)
     {
-        mItems[index].OnClick();
+        mItems[index].GetComponent<HUDItem>().OnClick();
     }
 
     void Next()
     {
         // 1. 모든 아이템 비활성화
-        foreach(HUDItem item in mItems)
+        foreach(GameObject item in mItems)
         {
-            item.gameObject.SetActive(false);
+            item.SetActive(false);
         }
 
         // 2. 그 중에서 랜덤 3개 아이템 활성화
@@ -51,7 +61,7 @@ public class LevelUp : MonoBehaviour
         for (int index = 0; index < ran.Length; ++index) 
         {
             // 3. 만렙 아이템의 경우는 소비아이템으로 대체
-            HUDItem ranItem = mItems[ran[index]];
+            GameObject ranItem = mItems[ran[index]];
             int level = -1;
             int idx = ran[index];
             if (idx < GameManager.instance.mWeaponJsonData.Length)
@@ -64,7 +74,13 @@ public class LevelUp : MonoBehaviour
 
                 if (level == GameManager.instance.mWeaponJsonData[idx].Damage.Length)
                 {
-                    mItems[mItems.Length - 1].gameObject.SetActive(true);
+                    mItems[mItems.Length - 1].SetActive(true);
+                    return;
+                }
+                if ((GameManager.instance.mPlayerData.WeaponSize == GameManager.instance.mPlayerJsonData[GameManager.instance.mPlayerData.Id].MaxWeaponSize) &&
+                    (level == -1))
+                {
+                    mItems[mItems.Length - 1].SetActive(true);
                     return;
                 }
             }
@@ -79,11 +95,17 @@ public class LevelUp : MonoBehaviour
 
                 if (level == GameManager.instance.mPerkJsonData[idx].Damage.Length)
                 {
-                    mItems[mItems.Length - 1].gameObject.SetActive(true);
+                    mItems[mItems.Length - 1].SetActive(true);
+                    return;
+                }
+                if ((GameManager.instance.mPlayerData.PerkSize == GameManager.instance.mPlayerJsonData[GameManager.instance.mPlayerData.Id].MaxPerkSize) && 
+                    (level == -1))
+                {
+                    mItems[mItems.Length - 1].SetActive(true);
                     return;
                 }
             }
-            ranItem.gameObject.SetActive(true);
+            ranItem.SetActive(true);
         }
     }
 }

@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
 {
     [Header("# Enemy Data")]
     bool mIsLive;
+    public bool mIsGarlic;
+    public float mGarlicDamage;
     public float mMovementSpeed;
     public float mHealth;
     public float mMaxHealth;
@@ -43,6 +45,7 @@ public class Enemy : MonoBehaviour
     {
         mTarget = GameManager.instance.mPlayer.GetComponent<Rigidbody2D>();
         mIsLive = true;
+        mIsGarlic = false;
         mColl.enabled = true;
         mRigid.simulated = true;
         mSpriter.sortingOrder = 2;
@@ -55,6 +58,10 @@ public class Enemy : MonoBehaviour
             return;
         if (!mIsLive || mAnim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
             return;
+        if(mIsGarlic)
+        {
+            StartCoroutine(HitGalic());
+        }
 
         Vector2 dirVec = mTarget.position - mRigid.position;
         Vector2 nextVec = dirVec.normalized * mMovementSpeed * Time.fixedDeltaTime;
@@ -74,8 +81,15 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!(collision.CompareTag("Bullet") || collision.CompareTag("Melee")) || !mIsLive)
+        if (!(collision.CompareTag("Bullet") || collision.CompareTag("Melee") || collision.CompareTag("Garlic")) || !mIsLive)
             return;
+        if (collision.CompareTag("Garlic"))
+        {
+            mIsGarlic = true;
+            mGarlicDamage = collision.GetComponent<Melee>().mDamage;
+            return;
+        }
+
         if (collision.CompareTag("Bullet"))
             mHealth -= collision.GetComponent<Range>().mDamage;
         else if (collision.CompareTag("Melee"))
@@ -89,12 +103,20 @@ public class Enemy : MonoBehaviour
         else
         {
             mIsLive = false;
+            mIsGarlic = false;
             mColl.enabled = false;
             mRigid.simulated = false;
             mSpriter.sortingOrder = 1;
             mAnim.SetBool("Dead", true);
             GameManager.instance.mPlayerData.Kill++;
             GameManager.instance.GetExp(mDropExp);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Garlic"))
+        {
+            mIsGarlic = false;
         }
     }
 
@@ -109,7 +131,31 @@ public class Enemy : MonoBehaviour
 
         mRigid.AddForce(dirVec.normalized * mKnockBackForce, ForceMode2D.Impulse);
     }
-    
+
+    IEnumerator HitGalic()
+    {
+        yield return mWaitFixedFrame;
+
+        mHealth -= mGarlicDamage;
+
+        if (mHealth > 0)
+        {
+            StartCoroutine(KnockBack());
+            mAnim.SetTrigger("Hit");
+        }
+        else
+        {
+            mIsLive = false;
+            mIsGarlic = false;
+            mColl.enabled = false;
+            mRigid.simulated = false;
+            mSpriter.sortingOrder = 1;
+            mAnim.SetBool("Dead", true);
+            GameManager.instance.mPlayerData.Kill++;
+            GameManager.instance.GetExp(mDropExp);
+        }
+    }
+
     void Dead()
     {
         gameObject.SetActive(false);

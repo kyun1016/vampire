@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     public Vector2 mInputVec;
-    public float mSpeed;
+    public Vector2 mLastDir;
     public EnemyScanner mScanner;
 
     public WeaponCtrl[] mWeaponCtrl;
@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
             mWeaponCtrl[i] = new GameObject().AddComponent<WeaponCtrl>();
             mWeaponCtrl[i].transform.name = "WeaponCtrl" + i;
             mWeaponCtrl[i].transform.parent = GameManager.instance.mPlayer.transform;
+            mWeaponCtrl[i].transform.localPosition = Vector3.zero;
+            mWeaponCtrl[i].transform.localRotation = Quaternion.identity;
         }
     }
     void Start()
@@ -37,12 +39,14 @@ public class Player : MonoBehaviour
         if (!GameManager.instance.mIsLive)
             return;
         mInputVec = value.Get<Vector2>();
+        if (mInputVec.magnitude != 0)
+            mLastDir = mInputVec.normalized;
     }
     void FixedUpdate()
     {
         if (!GameManager.instance.mIsLive)
             return;
-        Vector2 nextVec = mInputVec * mSpeed * Time.fixedDeltaTime;
+        Vector2 nextVec = mInputVec * GameManager.instance.mPlayerData.MovementSpeed * Time.fixedDeltaTime;
         mRigid.MovePosition(mRigid.position + nextVec);
     }
     void LateUpdate()

@@ -6,7 +6,9 @@ static public class FuncWeapon
 {
     public static void ClearPerk()
     {
+        GameManager.instance.mPerkData.MovementSpeed = 0;
         GameManager.instance.mPerkData.Projectile = 0;
+        GameManager.instance.mPerkData.ProjectileSize = 0;
         GameManager.instance.mPerkData.Damage = 0;
         GameManager.instance.mPerkData.Speed = 0;
         // Melee
@@ -16,7 +18,9 @@ static public class FuncWeapon
         GameManager.instance.mPerkData.Pierce = 0;
 
         // Coeffcient
+        GameManager.instance.mPerkData.MovementSpeedCoef = 1;
         GameManager.instance.mPerkData.ProjectileCoef = 1;
+        GameManager.instance.mPerkData.ProjectileSizeCoef = 1;
         GameManager.instance.mPerkData.DamageCoef = 1;
         GameManager.instance.mPerkData.SpeedCoef = 1;
         // Melee
@@ -33,13 +37,17 @@ static public class FuncWeapon
         int id = GameManager.instance.mPerkCtrlData[idx].Id;
         int level = GameManager.instance.mPerkCtrlData[idx].Level;
 
+        GameManager.instance.mPerkData.MovementSpeed += GameManager.instance.mPerkJsonData[id].MovementSpeed[level];
         GameManager.instance.mPerkData.Projectile += GameManager.instance.mPerkJsonData[id].Projectile[level];
+        GameManager.instance.mPerkData.ProjectileSize+= GameManager.instance.mPerkJsonData[id].ProjectileSize[level];
         GameManager.instance.mPerkData.Damage += GameManager.instance.mPerkJsonData[id].Damage[level];
         GameManager.instance.mPerkData.Speed += GameManager.instance.mPerkJsonData[id].Speed[level];
         GameManager.instance.mPerkData.Range += GameManager.instance.mPerkJsonData[id].Range[level];
         GameManager.instance.mPerkData.CoolTime += GameManager.instance.mPerkJsonData[id].CoolTime[level];
         GameManager.instance.mPerkData.Pierce += GameManager.instance.mPerkJsonData[id].Pierce[level];
+        GameManager.instance.mPerkData.MovementSpeedCoef += GameManager.instance.mPerkJsonData[id].MovementSpeedCoef[level];
         GameManager.instance.mPerkData.ProjectileCoef += GameManager.instance.mPerkJsonData[id].ProjectileCoef[level];
+        GameManager.instance.mPerkData.ProjectileSizeCoef += GameManager.instance.mPerkJsonData[id].ProjectileSizeCoef[level];
         GameManager.instance.mPerkData.DamageCoef += GameManager.instance.mPerkJsonData[id].DamageCoef[level];
         GameManager.instance.mPerkData.SpeedCoef += GameManager.instance.mPerkJsonData[id].SpeedCoef[level];
         GameManager.instance.mPerkData.RangeCoef += GameManager.instance.mPerkJsonData[id].RangeCoef[level];
@@ -49,13 +57,17 @@ static public class FuncWeapon
         if (level != 0)
         {
             --level;
+            GameManager.instance.mPerkData.MovementSpeed -= GameManager.instance.mPerkJsonData[id].MovementSpeed[level];
             GameManager.instance.mPerkData.Projectile -= GameManager.instance.mPerkJsonData[id].Projectile[level];
+            GameManager.instance.mPerkData.ProjectileSize -= GameManager.instance.mPerkJsonData[id].ProjectileSize[level];
             GameManager.instance.mPerkData.Damage -= GameManager.instance.mPerkJsonData[id].Damage[level];
             GameManager.instance.mPerkData.Speed -= GameManager.instance.mPerkJsonData[id].Speed[level];
             GameManager.instance.mPerkData.Range -= GameManager.instance.mPerkJsonData[id].Range[level];
             GameManager.instance.mPerkData.CoolTime -= GameManager.instance.mPerkJsonData[id].CoolTime[level];
             GameManager.instance.mPerkData.Pierce -= GameManager.instance.mPerkJsonData[id].Pierce[level];
+            GameManager.instance.mPerkData.MovementSpeedCoef -= GameManager.instance.mPerkJsonData[id].MovementSpeedCoef[level];
             GameManager.instance.mPerkData.ProjectileCoef -= GameManager.instance.mPerkJsonData[id].ProjectileCoef[level];
+            GameManager.instance.mPerkData.ProjectileSizeCoef -= GameManager.instance.mPerkJsonData[id].ProjectileSizeCoef[level];
             GameManager.instance.mPerkData.DamageCoef -= GameManager.instance.mPerkJsonData[id].DamageCoef[level];
             GameManager.instance.mPerkData.SpeedCoef -= GameManager.instance.mPerkJsonData[id].SpeedCoef[level];
             GameManager.instance.mPerkData.RangeCoef -= GameManager.instance.mPerkJsonData[id].RangeCoef[level];
@@ -72,13 +84,17 @@ static public class FuncWeapon
         int id = GameManager.instance.mPerkCtrlData[idx].Id;
         int level = GameManager.instance.mPerkCtrlData[idx].Level;
 
+        GameManager.instance.mPerkData.MovementSpeed += GameManager.instance.mPerkJsonData[id].MovementSpeed[level];
         GameManager.instance.mPerkData.Projectile += GameManager.instance.mPerkJsonData[id].Projectile[level];
+        GameManager.instance.mPerkData.ProjectileSize += GameManager.instance.mPerkJsonData[id].ProjectileSize[level];
         GameManager.instance.mPerkData.Damage += GameManager.instance.mPerkJsonData[id].Damage[level];
         GameManager.instance.mPerkData.Speed += GameManager.instance.mPerkJsonData[id].Speed[level];
         GameManager.instance.mPerkData.Range += GameManager.instance.mPerkJsonData[id].Range[level];
         GameManager.instance.mPerkData.CoolTime += GameManager.instance.mPerkJsonData[id].CoolTime[level];
         GameManager.instance.mPerkData.Pierce += GameManager.instance.mPerkJsonData[id].Pierce[level];
+        GameManager.instance.mPerkData.MovementSpeedCoef += GameManager.instance.mPerkJsonData[id].MovementSpeedCoef[level];
         GameManager.instance.mPerkData.ProjectileCoef += GameManager.instance.mPerkJsonData[id].ProjectileCoef[level];
+        GameManager.instance.mPerkData.ProjectileSizeCoef += GameManager.instance.mPerkJsonData[id].ProjectileSizeCoef[level];
         GameManager.instance.mPerkData.DamageCoef += GameManager.instance.mPerkJsonData[id].DamageCoef[level];
         GameManager.instance.mPerkData.SpeedCoef += GameManager.instance.mPerkJsonData[id].SpeedCoef[level];
         GameManager.instance.mPerkData.RangeCoef += GameManager.instance.mPerkJsonData[id].RangeCoef[level];
@@ -105,6 +121,7 @@ static public class FuncWeapon
 
         GameManager.instance.mWeaponData[idx].WeaponType = GameManager.instance.mWeaponJsonData[id].WeaponType;
         GameManager.instance.mWeaponData[idx].Projectile = GameManager.instance.mWeaponJsonData[id].Projectile[level];
+        GameManager.instance.mWeaponData[idx].ProjectileSize = GameManager.instance.mWeaponJsonData[id].ProjectileSize[level];
         GameManager.instance.mWeaponData[idx].Damage = GameManager.instance.mWeaponJsonData[id].Damage[level];
         GameManager.instance.mWeaponData[idx].Speed = GameManager.instance.mWeaponJsonData[id].Speed[level];
         GameManager.instance.mWeaponData[idx].Range = GameManager.instance.mWeaponJsonData[id].Range[level];
@@ -118,9 +135,6 @@ static public class FuncWeapon
             InitWeaponIdx(i);
         }
     }
-
-
-
     public static void UpdateWeaponLastIdx(int idx)
     {
         if (idx >= GameManager.instance.mPlayerData.WeaponSize)
@@ -128,6 +142,7 @@ static public class FuncWeapon
 
         GameManager.instance.mWeaponLastData[idx].WeaponType = GameManager.instance.mWeaponData[idx].WeaponType;
         GameManager.instance.mWeaponLastData[idx].Projectile = Mathf.RoundToInt((GameManager.instance.mWeaponData[idx].Projectile + GameManager.instance.mPerkData.Projectile) * GameManager.instance.mPerkData.ProjectileCoef);
+        GameManager.instance.mWeaponLastData[idx].ProjectileSize = Mathf.RoundToInt((GameManager.instance.mWeaponData[idx].ProjectileSize + GameManager.instance.mPerkData.ProjectileSize) * GameManager.instance.mPerkData.ProjectileSizeCoef);
         GameManager.instance.mWeaponLastData[idx].Damage = Mathf.RoundToInt((GameManager.instance.mWeaponData[idx].Damage + GameManager.instance.mPerkData.Damage) * GameManager.instance.mPerkData.DamageCoef);
         GameManager.instance.mWeaponLastData[idx].Speed = Mathf.RoundToInt((GameManager.instance.mWeaponData[idx].Speed + GameManager.instance.mPerkData.Speed) * GameManager.instance.mPerkData.SpeedCoef);
         GameManager.instance.mWeaponLastData[idx].Range = Mathf.RoundToInt((GameManager.instance.mWeaponData[idx].Range + GameManager.instance.mPerkData.Range) * GameManager.instance.mPerkData.RangeCoef);
@@ -151,5 +166,12 @@ static public class FuncWeapon
         {
             UpdateWeaponLastIdx(i);
         }
+    }
+
+    public static void UpdatePlayerMovement()
+    {
+        GameManager.instance.mPlayerData.MovementSpeed =
+            (GameManager.instance.mPlayerJsonData[GameManager.instance.mPlayerData.Id].MovementSpeed +
+            GameManager.instance.mPerkData.MovementSpeed) * GameManager.instance.mPerkData.MovementSpeedCoef;
     }
 }

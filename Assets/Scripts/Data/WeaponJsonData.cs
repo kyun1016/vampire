@@ -13,6 +13,7 @@ public struct WeaponJsonData
     [TextArea]
     public string Desc;
     public int[] Projectile;
+    public float[] ProjectileSize;
     public float[] Damage;
     public float[] Speed;
 
