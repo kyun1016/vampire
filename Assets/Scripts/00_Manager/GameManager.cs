@@ -49,15 +49,6 @@ public class GameManager : MonoBehaviour
         mEnemyPool.transform.parent = GameManager.instance.transform;
         mEnemyPool.Init(mEnemyJsonData[0].PrefabId);
 
-        mPerkCtrlData = new ItemCtrlData[mPlayerJsonData[0].MaxPerkSize];
-        mWeaponCtrlData = new ItemCtrlData[mPlayerJsonData[0].MaxWeaponSize];
-        mWeaponData = new WeaponData[mPlayerJsonData[0].MaxWeaponSize];
-        mWeaponLastData = new WeaponData[mPlayerJsonData[0].MaxWeaponSize];
-
-        mPlayerData.Id = 0;
-        mPlayerData.WeaponSize = 0;
-        mPlayerData.PerkSize = 0;
-
         FuncWeapon.ClearPerk();
         FuncWeapon.UpdatePlayerMovement();
     }
@@ -88,10 +79,27 @@ public class GameManager : MonoBehaviour
         mPerkJsonData = JsonConvert.DeserializeObject<PerkJsonData[]>(json);
     }
 
-    public void GameStart()
+    public void GameStart(int i)
     {
-        mPlayerData.Health = mPlayerJsonData[mPlayerData.Id].MaxHealth;
-        mHUDLevelUp.Select(5);
+        mPlayerData.Id = i;
+        mPlayerData.SpriteId = mPlayerJsonData[i].SpriteId;
+        mPlayerData.GameTime = 0;
+        mPlayerData.MovementSpeed = mPlayerJsonData[i].MovementSpeed;
+        mPlayerData.Health = mPlayerJsonData[i].MaxHealth;
+        mPlayerData.Level = 0;
+        mPlayerData.Kill = 0;
+        mPlayerData.Exp = 0;
+        mPlayerData.WeaponSize = 0;
+        mPlayerData.PerkSize = 0;
+
+        mPerkCtrlData = new ItemCtrlData[mPlayerJsonData[i].MaxPerkSize];
+        mWeaponCtrlData = new ItemCtrlData[mPlayerJsonData[i].MaxWeaponSize];
+        mWeaponData = new WeaponData[mPlayerJsonData[i].MaxWeaponSize];
+        mWeaponLastData = new WeaponData[mPlayerJsonData[i].MaxWeaponSize];
+
+        mPlayer.init();
+        mHUDLevelUp.Select(mPlayerJsonData[i].StartWeaponId);
+
         Resume();
     }
 

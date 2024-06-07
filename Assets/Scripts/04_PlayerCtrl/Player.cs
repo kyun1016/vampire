@@ -14,9 +14,10 @@ public class Player : MonoBehaviour
     Animator mAnim;
     SpriteRenderer mSpriter;
     Rigidbody2D mRigid;
-    void Awake()
+    public void init()
     {
-        mWeaponCtrl = new WeaponCtrl[8];
+        mAnim.runtimeAnimatorController = GameManager.instance.mPlayerAnimCtrl[GameManager.instance.mPlayerData.SpriteId];
+        mWeaponCtrl = new WeaponCtrl[GameManager.instance.mWeaponCtrlData.Length];
 
         for (int i = 0; i < mWeaponCtrl.Length; ++i)
         {

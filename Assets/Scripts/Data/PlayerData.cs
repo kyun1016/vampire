@@ -6,6 +6,7 @@ using UnityEngine;
 public struct PlayerData
 {
     public int Id;
+    public int SpriteId;
     public float GameTime;
     public float MovementSpeed;
     public float Health;

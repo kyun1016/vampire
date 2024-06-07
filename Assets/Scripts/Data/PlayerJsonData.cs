@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public struct PlayerJsonData
 {
+    public int SpriteId;
+    public int StartWeaponId;
     public float MaxGameTime;
     public float MaxHealth;
     public int MovementSpeed;

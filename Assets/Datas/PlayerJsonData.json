@@ -1,1 +1,1 @@
-[{"MaxGameTime":60.0,"MaxHealth":100.0,"MovementSpeed":20,"MaxWeaponSize":5,"MaxPerkSize":2}]
+[{"SpriteId":0,"StartWeaponId":0,"MaxGameTime":60.0,"MaxHealth":100.0,"MovementSpeed":20,"MaxWeaponSize":5,"MaxPerkSize":2},{"SpriteId":1,"StartWeaponId":1,"MaxGameTime":120.0,"MaxHealth":100.0,"MovementSpeed":20,"MaxWeaponSize":5,"MaxPerkSize":2}]
