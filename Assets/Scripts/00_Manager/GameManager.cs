@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
+using UnityEngine.U2D;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     [Header("# Player Info")]
     public int[] mNextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
     [Header("# Unity Data Info")]
+    public SpriteAtlas mSpriteAtlas;
     public Sprite[] mSprite;
     public GameObject[] mPoolPrefabs;   // 프리펩들을 보관할 변수
     public GameObject[] mHUDPrefabs;    // 프리펩들을 보관할 변수
@@ -87,7 +89,7 @@ public class GameManager : MonoBehaviour
     {
         mPlayerData.Health = mPlayerJsonData[mPlayerData.Id].MaxHealth;
 
-        mHUDLevelUp.Select(4);
+        mHUDLevelUp.Select(5);
     }
 
     void Update()

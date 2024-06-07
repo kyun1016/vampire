@@ -6,7 +6,7 @@ using UnityEngine;
 public struct PlayerJsonData
 {
     public float MaxGameTime;
-    public int MaxHealth;
+    public float MaxHealth;
     public int MovementSpeed;
     public int MaxWeaponSize;
     public int MaxPerkSize;

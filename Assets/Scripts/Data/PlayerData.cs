@@ -8,7 +8,7 @@ public struct PlayerData
     public int Id;
     public float GameTime;
     public float MovementSpeed;
-    public int Health;
+    public float Health;
     public int Level;
     public int Kill;
     public int Exp;

@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public bool mIsGarlic;
     public float mGarlicDamage;
     public float mMovementSpeed;
+    public float mMovementSpeedCoef;
     public float mHealth;
     public float mMaxHealth;
     public float mKnockBackForce;
@@ -46,6 +47,7 @@ public class Enemy : MonoBehaviour
         mTarget = GameManager.instance.mPlayer.GetComponent<Rigidbody2D>();
         mIsLive = true;
         mIsGarlic = false;
+        mMovementSpeedCoef = 1f;
         mColl.enabled = true;
         mRigid.simulated = true;
         mSpriter.sortingOrder = 2;
@@ -64,7 +66,7 @@ public class Enemy : MonoBehaviour
         }
 
         Vector2 dirVec = mTarget.position - mRigid.position;
-        Vector2 nextVec = dirVec.normalized * mMovementSpeed * Time.fixedDeltaTime;
+        Vector2 nextVec = dirVec.normalized * mMovementSpeed * mMovementSpeedCoef * Time.fixedDeltaTime;
         mRigid.MovePosition(mRigid.position + nextVec);
 
         mRigid.velocity = Vector2.zero;
@@ -81,7 +83,7 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!(collision.CompareTag("Bullet") || collision.CompareTag("Melee") || collision.CompareTag("Garlic")) || !mIsLive)
+        if (!(collision.CompareTag("Bullet") || collision.CompareTag("Melee") || collision.CompareTag("Garlic") || collision.CompareTag("SpiderWeb")) || !mIsLive)
             return;
         if (collision.CompareTag("Garlic"))
         {
@@ -89,8 +91,14 @@ public class Enemy : MonoBehaviour
             mGarlicDamage = collision.GetComponent<Melee>().mDamage;
             return;
         }
+        if (collision.CompareTag("SpiderWeb"))
+        {
+            mMovementSpeedCoef *= 0.5f;
+            collision.GetComponent<Range>().transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            collision.GetComponent<Range>().mSpeed = 0f;
+        }
 
-        if (collision.CompareTag("Bullet"))
+        if (collision.CompareTag("Bullet") || collision.CompareTag("SpiderWeb"))
             mHealth -= collision.GetComponent<Range>().mDamage;
         else if (collision.CompareTag("Melee"))
             mHealth -= collision.GetComponent<Melee>().mDamage;
@@ -104,6 +112,7 @@ public class Enemy : MonoBehaviour
         {
             mIsLive = false;
             mIsGarlic = false;
+            mMovementSpeedCoef = 1.0f;
             mColl.enabled = false;
             mRigid.simulated = false;
             mSpriter.sortingOrder = 1;
@@ -115,9 +124,9 @@ public class Enemy : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Garlic"))
-        {
             mIsGarlic = false;
-        }
+        if (collision.CompareTag("SpiderWeb"))
+            mMovementSpeedCoef = 2f;
     }
 
     IEnumerator KnockBack()

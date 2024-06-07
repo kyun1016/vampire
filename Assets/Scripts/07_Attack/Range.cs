@@ -7,8 +7,8 @@ public class Range : MonoBehaviour
     bool mIsLive;
     public float mDamage;
     int mPer;
-    public Vector3 mDir;
-    float mSpeed;
+    Vector3 mDir;
+    public float mSpeed;
 
     private void FixedUpdate()
     {

@@ -1855,6 +1855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mIsLive: 1
   mNextExp: 01000000020000000300000004000000050000000600000007000000080000000900000032000000
+  mSpriteAtlas: {fileID: 4343727234628468602, guid: 5296267dff2b76c46bdb9306c1a649cd, type: 2}
   mSprite:
   - {fileID: -181907988, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
   - {fileID: -1786786079, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
@@ -1873,6 +1874,7 @@ MonoBehaviour:
   - {fileID: 5062590192128352943, guid: 5124c4c76efbd52449e1a640561fb1a7, type: 3}
   - {fileID: 3689801654976592762, guid: 12d0c8d00f5fcfa4e8373e59093593d2, type: 3}
   - {fileID: 8191004797206358391, guid: e85d3e5ffbbe59649aafe63397a23563, type: 3}
+  - {fileID: 8423841932751943487, guid: a5410486e18fee74a9600e5edaca1829, type: 3}
   mHUDPrefabs:
   - {fileID: 5007043125245770417, guid: bdeecb0295e8f644a9b18a42f359b3c2, type: 3}
   mPlayerAnimCtrl:

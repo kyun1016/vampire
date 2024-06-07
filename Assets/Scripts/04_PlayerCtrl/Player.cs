@@ -59,4 +59,12 @@ public class Player : MonoBehaviour
             mSpriter.flipX = mInputVec.x < 0;
         }
     }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (!GameManager.instance.mIsLive)
+            return;
+
+        GameManager.instance.mPlayerData.Health -= 10 * Time.deltaTime;
+    }
 }

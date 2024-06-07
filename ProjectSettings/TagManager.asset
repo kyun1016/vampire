@@ -11,6 +11,7 @@ TagManager:
   - Melee
   - AreaCollider
   - Garlic
+  - SpiderWeb
   layers:
   - Default
   - TransparentFX
