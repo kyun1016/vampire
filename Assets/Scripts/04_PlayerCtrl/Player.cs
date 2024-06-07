@@ -66,5 +66,14 @@ public class Player : MonoBehaviour
             return;
 
         GameManager.instance.mPlayerData.Health -= 10 * Time.deltaTime;
+
+        if (GameManager.instance.mPlayerData.Health < 0)
+        {
+            for (int i = 1; i < GameManager.instance.mPlayer.transform.childCount; ++i)
+                GameManager.instance.mPlayer.transform.GetChild(i).gameObject.SetActive(false);
+
+            mAnim.SetTrigger("Dead");
+            GameManager.instance.GameOver();
+        }
     }
 }

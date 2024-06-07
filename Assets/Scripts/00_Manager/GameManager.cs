@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
 using UnityEngine.U2D;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,10 +36,12 @@ public class GameManager : MonoBehaviour
     public Player mPlayer;
     public PoolManager mEnemyPool;
     public HUDLevelUp mHUDLevelUp;
+    public HUDResult mHUDResult;
 
     void Awake()
     {
         instance = this;
+        mIsLive = false;
         LoadFromJson();
 
         mEnemyPool = new GameObject().AddComponent<PoolManager>();
@@ -85,11 +88,45 @@ public class GameManager : MonoBehaviour
         mPerkJsonData = JsonConvert.DeserializeObject<PerkJsonData[]>(json);
     }
 
-    private void Start()
+    public void GameStart()
     {
         mPlayerData.Health = mPlayerJsonData[mPlayerData.Id].MaxHealth;
-
         mHUDLevelUp.Select(5);
+        Resume();
+    }
+
+    public void GameOver()
+    {
+        StartCoroutine(GameOverRoutine());
+    }
+
+    IEnumerator GameOverRoutine()
+    {
+        mIsLive = false;
+        yield return new WaitForSeconds(0.5f);
+        mHUDResult.Win();
+        mHUDResult.gameObject.SetActive(true);
+        Stop();
+    }
+
+    public void GameVictory()
+    {
+        StartCoroutine(GameVictoryRoutine());
+    }
+
+    IEnumerator GameVictoryRoutine()
+    {
+        mIsLive = false;
+        for (int i = 0; i < mEnemyPool.mPool.Count; ++i)
+            mEnemyPool.mPool[i].SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        mHUDResult.Win();
+        mHUDResult.gameObject.SetActive(true);
+        Stop();
+    }
+    public void GameRetry()
+    {
+        SceneManager.LoadScene(0);
     }
 
     void Update()
@@ -102,11 +139,15 @@ public class GameManager : MonoBehaviour
         if (mPlayerData.GameTime > mPlayerJsonData[mPlayerData.Id].MaxGameTime)
         {
             mPlayerData.GameTime = mPlayerJsonData[mPlayerData.Id].MaxGameTime;
+            GameVictory();
         }
     }
 
     public void GetExp(int exp)
     {
+        if (!mIsLive)
+            return;
+
         mPlayerData.Exp += exp;
 
         if (mPlayerData.Exp >= mNextExp[Mathf.Min(mPlayerData.Level, mNextExp.Length - 1)])
