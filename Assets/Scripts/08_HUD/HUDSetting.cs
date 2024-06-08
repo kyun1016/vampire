@@ -6,12 +6,21 @@ using UnityEngine.UI;
 
 public class HUDSetting : MonoBehaviour
 {
-    public Image mIcon;
-    public TMP_Text mText;
+    public TMP_Dropdown mDropdownResoultion;
+    public Toggle mToggleResoultion;
+    public TMP_Dropdown mDropdownLanguage;
 
     private void Awake()
     {
-        mIcon = GetComponentsInChildren<Image>()[1];
-        mText = GetComponentsInChildren<TMP_Text>()[0];
+        for(int i=0; i< Screen.resolutions.Length; ++i)
+        {
+            TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData();
+            option.text = Screen.resolutions[i].width + "x " + Screen.resolutions[i].height + " " + Screen.resolutions[i].refreshRate + "hz";
+            mDropdownResoultion.options.Add(option);
+            if (Screen.resolutions[i].width == Screen.width && Screen.resolutions[i].height == Screen.height)
+                mDropdownResoultion.value = i;
+        }
+        mDropdownResoultion.RefreshShownValue();
+        mToggleResoultion.isOn = Screen.fullScreenMode.Equals(FullScreenMode.FullScreenWindow) ? true : false;
     }
 }

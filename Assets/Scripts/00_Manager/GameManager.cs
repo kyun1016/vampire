@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     public HUDInGame mHUDInGame;
     public HUDLevelUp mHUDLevelUp;
     public HUDResult mHUDResult;
+    public HUDSetting mHUDSetting;
     public WaitForSeconds mWait0_5s;
     public WaitForSecondsRealtime mWait5s;
 
@@ -180,8 +181,11 @@ public class GameManager : MonoBehaviour
             mSFXPlayer[i].bypassListenerEffects = true;
             mSFXPlayer[i].volume = mSFXVolume;
             // mSFXPlayer[i].clip = mSFXClip[i];
-        }
-            
+        }       
+    }
+    void InitWindowScreen()
+    {
+
     }
     // Part 3. Awake
     void Awake()
@@ -190,6 +194,7 @@ public class GameManager : MonoBehaviour
         mIsLive = false;
         // Part 1. Json Load
         LoadFromJson();
+        InitWindowScreen();
         InitDelay();
         InitEnemyPool();
         InitDropPool();
@@ -351,5 +356,13 @@ public class GameManager : MonoBehaviour
             mSFXPlayer[i].Play();
             break;
         }
+    }
+
+
+    // Part 8. Screen Control
+    public void SetWindowScreen()
+    {
+        Debug.Log("hi");
+        Screen.SetResolution(Screen.resolutions[mHUDSetting.mDropdownResoultion.value].width, Screen.resolutions[mHUDSetting.mDropdownResoultion.value].height, mHUDSetting.mToggleResoultion.isOn, Screen.resolutions[mHUDSetting.mDropdownResoultion.value].refreshRate);
     }
 }
