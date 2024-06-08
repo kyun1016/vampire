@@ -9,6 +9,7 @@ public struct PlayerData
     public int AnimCtrlId;
     public float GameTime;
     public float MovementSpeed;
+    public float MaxHealth;
     public float Health;
     public int Level;
     public int Kill;

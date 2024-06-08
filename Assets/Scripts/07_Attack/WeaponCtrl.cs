@@ -208,8 +208,6 @@ public class WeaponCtrl : MonoBehaviour
             mWeaponPool.mPool[0].SetActive(true);
             melee = mWeaponPool.mPool[0].transform;
         }
-
-        melee.parent = mWeaponPool.transform;
         melee.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
         melee.localPosition = Vector3.zero;
         melee.localRotation = Quaternion.identity;
@@ -258,12 +256,10 @@ public class WeaponCtrl : MonoBehaviour
             if (GameManager.instance.mWeaponLastData[mId].Projectile != 1)
             {
                 float rot = 30 * (i / ((float)GameManager.instance.mWeaponLastData[mId].Projectile - 1)) - 15;
-                // dir = Quaternion.AngleAxis(rot, Vector3.forward) * dir;
                 dir = Quaternion.Euler(0, 0, rot) * dir;
             }
 
             Transform bullet = mWeaponPool.Get().transform; // 부족한 것을 오브젝트 풀로 추가
-            bullet.parent = mWeaponPool.transform;
             bullet.position = GameManager.instance.mPlayer.transform.position;
             bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
             bullet.GetComponent<Range>().Init(Mathf.RoundToInt(GameManager.instance.mWeaponLastData[mId].Damage), GameManager.instance.mWeaponLastData[mId].Pierce, dir, GameManager.instance.mWeaponLastData[mId].Speed); // -1 is Infinity Per
@@ -287,12 +283,10 @@ public class WeaponCtrl : MonoBehaviour
             if (GameManager.instance.mWeaponLastData[mId].Projectile != 1)
             {
                 float rot = 30 * (i / ((float)GameManager.instance.mWeaponLastData[mId].Projectile - 1)) - 15;
-                // dir = Quaternion.AngleAxis(rot, Vector3.forward) * dir;
                 dir = Quaternion.Euler(0, 0, rot) * dir;
             }
 
             Transform bullet = mWeaponPool.Get().transform; // 부족한 것을 오브젝트 풀로 추가
-            bullet.parent = mWeaponPool.transform;
             bullet.position = GameManager.instance.mPlayer.transform.position;
             bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
             bullet.localScale = new Vector3(0.02f, 0.4f, 1f);
@@ -304,7 +298,6 @@ public class WeaponCtrl : MonoBehaviour
     void FireDagger()
     {
         Transform bullet = mWeaponPool.Get().transform; // 부족한 것을 오브젝트 풀로 추가
-        bullet.parent = mWeaponPool.transform;
         bullet.position = GameManager.instance.mPlayer.transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, GameManager.instance.mPlayer.mLastDir);
         bullet.GetComponent<Range>().Init(Mathf.RoundToInt(GameManager.instance.mWeaponLastData[mId].Damage), GameManager.instance.mWeaponLastData[mId].Pierce, GameManager.instance.mPlayer.mLastDir, GameManager.instance.mWeaponLastData[mId].Speed);
@@ -327,10 +320,8 @@ public class WeaponCtrl : MonoBehaviour
             dir.z = 0;
         }
         dir = dir.normalized;
-        // Debug.Log(dir);
 
         Transform bullet = mWeaponPool.Get().transform; // 부족한 것을 오브젝트 풀로 추가
-        bullet.parent = mWeaponPool.transform;
         bullet.position = GameManager.instance.mPlayer.transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
         bullet.GetComponent<Range>().Init(Mathf.RoundToInt(GameManager.instance.mWeaponLastData[mId].Damage), GameManager.instance.mWeaponLastData[mId].Pierce, dir, GameManager.instance.mWeaponLastData[mId].Speed);

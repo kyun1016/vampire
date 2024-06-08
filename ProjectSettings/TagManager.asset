@@ -12,6 +12,8 @@ TagManager:
   - AreaCollider
   - Garlic
   - SpiderWeb
+  - DropItem
+  - PickupCollider
   layers:
   - Default
   - TransparentFX

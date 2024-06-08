@@ -28,7 +28,16 @@ public class Enum
         MeleeBox,
         MeleeCircle,
         RangeBox,
-        RangeCircle
+        RangeCircle,
+        DropItem
+    }
+    public enum DropItemSprite
+    {
+        Exp0,
+        Exp1,
+        Exp2,
+        Health,
+        Mag
     }
     public enum WeaponTag
     {

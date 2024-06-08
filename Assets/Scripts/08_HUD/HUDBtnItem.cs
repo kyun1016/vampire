@@ -168,7 +168,7 @@ public class HUDBtnItem : MonoBehaviour
                     ++GameManager.instance.mPerkCtrlData[idxCtrl].Level;
                     break;
                 case Enum.DescType.Heal:
-                    GameManager.instance.mPlayerData.Health = GameManager.instance.mPlayerJsonData[GameManager.instance.mPlayerData.Id].MaxHealth;
+                    GameManager.instance.mPlayerData.Health = GameManager.instance.mPlayerData.MaxHealth;
                     break;
                 default:
                     Debug.Assert(false, "Error");

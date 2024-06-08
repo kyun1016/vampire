@@ -133,7 +133,14 @@ public class GameManager : MonoBehaviour
     {
         mEnemyPool = new GameObject("EnemyPool").AddComponent<PoolManager>();
         mEnemyPool.transform.parent = GameManager.instance.transform;
-        mEnemyPool.Init((int)mEnemyJsonData[0].PrefabType);
+        mEnemyPool.Init((int)mEnemyJsonData[0].PrefabEnemy);
+    }
+    void InitDropPool()
+    {
+        mDropPool = new GameObject("DropPool").AddComponent<PoolManager>();
+        mDropPool.transform.parent = GameManager.instance.transform;
+        mDropPool.Init((int)Enum.PrefabType.DropItem);
+        mDropPool.mPool[0].tag = "DropItem";
     }
     void InitPlayerData()
     {
@@ -185,6 +192,7 @@ public class GameManager : MonoBehaviour
         LoadFromJson();
         InitDelay();
         InitEnemyPool();
+        InitDropPool();
         InitPlayerData();
         InitBGM();
         InitSFX();
@@ -229,9 +237,15 @@ public class GameManager : MonoBehaviour
         {
             mPlayerData.Exp -= mNextExp[Mathf.Min(mPlayerData.Level, mNextExp.Length - 1)];
             mPlayerData.Level++;
-            mPlayerData.Health = mPlayerJsonData[mPlayerData.Id].MaxHealth;
             mHUDLevelUp.Show();
         }
+    }
+    public void GetHealth(int value)
+    {
+        if (!mIsLive)
+            return;
+        mPlayerData.Health += value;
+        mPlayerData.Health = mPlayerData.Health < mPlayerData.MaxHealth ? mPlayerData.Health : mPlayerData.MaxHealth;
     }
 
     // Part 6. Game Start & End
@@ -283,6 +297,7 @@ public class GameManager : MonoBehaviour
         mPlayerData.AnimCtrlId = mPlayerJsonData[i].AnimCtrlId;
         mPlayerData.GameTime = 0;
         mPlayerData.MovementSpeed = mPlayerJsonData[i].MovementSpeed;
+        mPlayerData.MaxHealth = mPlayerJsonData[i].MaxHealth;
         mPlayerData.Health = mPlayerJsonData[i].MaxHealth;
         mPlayerData.Level = 0;
         mPlayerData.Kill = 0;

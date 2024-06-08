@@ -120,7 +120,27 @@ public class Enemy : MonoBehaviour
             mSpriter.sortingOrder = 1;
             mAnim.SetBool("Dead", true);
             GameManager.instance.mPlayerData.Kill++;
-            GameManager.instance.GetExp(mDropExp);
+            
+            // 경험치 드롭
+            GameObject item = GameManager.instance.mDropPool.Get();
+            item.transform.position = transform.position;
+            item.transform.rotation = Quaternion.identity;
+            item.GetComponent<DropItem>().mData = mDropExp;
+            switch (mDropExp)
+            {
+                case > 50:
+                    item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Exp2;
+                    item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Exp2];
+                    break;
+                case > 10:
+                    item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Exp1;
+                    item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Exp1];
+                    break;
+                default:
+                    item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Exp0;
+                    item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Exp0];
+                    break;
+            }
 
             GameManager.instance.PlaySFX(Enum.SFX.Dead);
         }
