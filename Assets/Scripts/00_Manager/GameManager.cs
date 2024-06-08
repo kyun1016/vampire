@@ -13,6 +13,16 @@ public class GameManager : MonoBehaviour
     public bool mIsLive = true;
     [Header("# Player Info")]
     public int[] mNextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
+    [Header("# BGM")]
+    public AudioClip mBGMClip;
+    public float mBGMVolume;
+    public AudioSource mBGMPlayer;
+    public AudioHighPassFilter mBGMFffect;
+    [Header("# SFX")]
+    public AudioClip[] mSFXClip;
+    public float mSFXVolume;
+    public int mMaxSFXChannel;
+    public AudioSource[] mSFXPlayer;
     [Header("# Unity Data Info")]
     public SpriteAtlas mSpriteAtlas;
     public Sprite[] mHUDBtnPlayerSprite;
@@ -20,6 +30,7 @@ public class GameManager : MonoBehaviour
     public Sprite[] mHUDAchiveSprite;
     public GameObject[] mPoolPrefabs;   // 프리펩들을 보관할 변수
     public Sprite[] mWeaponSprite;
+    public Sprite[] mDropItemSprite;
     public RuntimeAnimatorController[] mPlayerAnimCtrl;
     public RuntimeAnimatorController[] mEnemyAnimCtrl;
     [Header("# Json Info")]
@@ -113,22 +124,19 @@ public class GameManager : MonoBehaviour
         mAchiveJsonData = JsonConvert.DeserializeObject<AchiveJsonData[]>(json);
     }
 
-    // Part 3. Awake
-    void Awake()
+    void InitDelay()
     {
-        
-        instance = this;
-        mIsLive = false;
-        // Part 1. Json Load
-        LoadFromJson();
-        // Part 2. Make Dynamic Array
         mWait0_5s = new WaitForSeconds(0.5f);
         mWait5s = new WaitForSecondsRealtime(5);
-        mEnemyPool = new GameObject().AddComponent<PoolManager>();
-        // Part 3. Init Enemy Pool
-        mEnemyPool.transform.name = "EnemyPool";
+    }
+    void InitEnemyPool()
+    {
+        mEnemyPool = new GameObject("EnemyPool").AddComponent<PoolManager>();
         mEnemyPool.transform.parent = GameManager.instance.transform;
-        mEnemyPool.Init((int) mEnemyJsonData[0].PrefabType);
+        mEnemyPool.Init((int)mEnemyJsonData[0].PrefabType);
+    }
+    void InitPlayerData()
+    {
         // Part 4. Init Player Data
         FuncWeapon.ClearPerk();
         FuncWeapon.UpdatePlayerMovement();
@@ -137,6 +145,49 @@ public class GameManager : MonoBehaviour
         {
             InitAchive();
         }
+    }
+    void InitBGM()
+    {
+        // Part 6. Init Audio Player
+        mBGMPlayer = new GameObject("BGMPlayer").AddComponent<AudioSource>();
+        mBGMPlayer.transform.parent = GameManager.instance.transform;
+        mBGMPlayer.playOnAwake = false;
+        mBGMPlayer.loop = true;
+        mBGMPlayer.volume = mBGMVolume;
+        mBGMPlayer.clip = mBGMClip;
+
+        mBGMFffect = Camera.main.GetComponent<AudioHighPassFilter>();
+    }
+    void InitSFX()
+    {
+        // Part 6. Init Audio Player
+        GameObject sfxPlayer = new GameObject("SFXPlayer");
+        sfxPlayer.transform.parent = GameManager.instance.transform;
+        mSFXPlayer = new AudioSource[mMaxSFXChannel];
+            
+        for(int i=0; i<mSFXPlayer.Length; ++i)
+        {
+            mSFXPlayer[i] = sfxPlayer.AddComponent<AudioSource>();
+            mSFXPlayer[i].playOnAwake = false;
+            mSFXPlayer[i].loop = false;
+            mSFXPlayer[i].bypassListenerEffects = true;
+            mSFXPlayer[i].volume = mSFXVolume;
+            // mSFXPlayer[i].clip = mSFXClip[i];
+        }
+            
+    }
+    // Part 3. Awake
+    void Awake()
+    {
+        instance = this;
+        mIsLive = false;
+        // Part 1. Json Load
+        LoadFromJson();
+        InitDelay();
+        InitEnemyPool();
+        InitPlayerData();
+        InitBGM();
+        InitSFX();
     }
     // Part 4. Update
     void Update()
@@ -191,6 +242,9 @@ public class GameManager : MonoBehaviour
         mHUDResult.Lose();
         mHUDResult.gameObject.SetActive(true);
         Stop();
+
+        GameManager.instance.PlayBGM(false);
+        GameManager.instance.PlaySFX(Enum.SFX.Lose);
     }
     IEnumerator GameVictoryRoutine()
     {
@@ -201,6 +255,9 @@ public class GameManager : MonoBehaviour
         mHUDResult.Win();
         mHUDResult.gameObject.SetActive(true);
         Stop();
+
+        GameManager.instance.PlayBGM(false);
+        GameManager.instance.PlaySFX(Enum.SFX.Win);
     }
     IEnumerator NoticeRoutine(int i)
     {
@@ -209,6 +266,8 @@ public class GameManager : MonoBehaviour
         mHUDAchive.mText.text = mAchiveJsonData[i].Desc;
         yield return mWait5s;
         mHUDAchive.gameObject.SetActive(false);
+
+        GameManager.instance.PlaySFX(Enum.SFX.LevelUp);
     }
     public void GameOver()
     {
@@ -242,9 +301,40 @@ public class GameManager : MonoBehaviour
         mHUDGameStart.gameObject.SetActive(false);
         mHUDInGame.gameObject.SetActive(true);
         Resume();
+
+        GameManager.instance.PlayBGM(true);
+        GameManager.instance.PlaySFX(Enum.SFX.Select);
     }
     public void GameRetry()
     {
         SceneManager.LoadScene(0);
+    }
+
+    // Part 7. Sound Control
+    public void PlayBGM(bool en)
+    {
+        if (en)
+        {
+            mBGMPlayer.Play();
+        }
+        else
+        {
+            mBGMPlayer.Stop();
+        }
+    }
+    public void PlayEffect(bool en)
+    {
+        mBGMFffect.enabled = en;
+    }
+    public void PlaySFX(Enum.SFX sfx)
+    {
+        for(int i=0; i < mSFXPlayer.Length; ++i)
+        {
+            if (mSFXPlayer[i].isPlaying)
+                continue;
+            mSFXPlayer[i].clip = mSFXClip[(int)sfx];
+            mSFXPlayer[i].Play();
+            break;
+        }
     }
 }

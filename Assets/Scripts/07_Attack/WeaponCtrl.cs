@@ -19,8 +19,7 @@ public class WeaponCtrl : MonoBehaviour
         mId = id;
 
         // initialize Pool Manager (general setting)
-        mWeaponPool = new GameObject().AddComponent<PoolManager>();
-        mWeaponPool.transform.name = "WeaponPool";
+        mWeaponPool = new GameObject("WeaponPool").AddComponent<PoolManager>();
         mWeaponPool.transform.parent = transform;
         mWeaponPool.transform.localPosition = Vector3.zero;
         mWeaponPool.transform.localRotation = Quaternion.identity;
@@ -269,6 +268,8 @@ public class WeaponCtrl : MonoBehaviour
             bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
             bullet.GetComponent<Range>().Init(Mathf.RoundToInt(GameManager.instance.mWeaponLastData[mId].Damage), GameManager.instance.mWeaponLastData[mId].Pierce, dir, GameManager.instance.mWeaponLastData[mId].Speed); // -1 is Infinity Per
         }
+
+        GameManager.instance.PlaySFX(Enum.SFX.Range);
     }
     void FireWeb()
     {
@@ -297,6 +298,7 @@ public class WeaponCtrl : MonoBehaviour
             bullet.localScale = new Vector3(0.02f, 0.4f, 1f);
             bullet.GetComponent<Range>().Init(Mathf.RoundToInt(GameManager.instance.mWeaponLastData[mId].Damage), GameManager.instance.mWeaponLastData[mId].Pierce, dir, GameManager.instance.mWeaponLastData[mId].Speed); // -1 is Infinity Per
         }
+        GameManager.instance.PlaySFX(Enum.SFX.Range);
     }
 
     void FireDagger()
@@ -306,6 +308,8 @@ public class WeaponCtrl : MonoBehaviour
         bullet.position = GameManager.instance.mPlayer.transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, GameManager.instance.mPlayer.mLastDir);
         bullet.GetComponent<Range>().Init(Mathf.RoundToInt(GameManager.instance.mWeaponLastData[mId].Damage), GameManager.instance.mWeaponLastData[mId].Pierce, GameManager.instance.mPlayer.mLastDir, GameManager.instance.mWeaponLastData[mId].Speed);
+
+        GameManager.instance.PlaySFX(Enum.SFX.Range);
     }
     void FireAxe()
     {
@@ -330,5 +334,7 @@ public class WeaponCtrl : MonoBehaviour
         bullet.position = GameManager.instance.mPlayer.transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
         bullet.GetComponent<Range>().Init(Mathf.RoundToInt(GameManager.instance.mWeaponLastData[mId].Damage), GameManager.instance.mWeaponLastData[mId].Pierce, dir, GameManager.instance.mWeaponLastData[mId].Speed);
+
+        GameManager.instance.PlaySFX(Enum.SFX.Range);
     }
 }

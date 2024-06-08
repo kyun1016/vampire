@@ -30,8 +30,7 @@ public class Player : MonoBehaviour
 
         for (int i = 0; i < mWeaponCtrl.Length; ++i)
         {
-            mWeaponCtrl[i] = new GameObject().AddComponent<WeaponCtrl>();
-            mWeaponCtrl[i].transform.name = "WeaponCtrl" + i;
+            mWeaponCtrl[i] = new GameObject("WeaponCtrl" + i).AddComponent<WeaponCtrl>();
             mWeaponCtrl[i].transform.parent = GameManager.instance.mPlayer.transform;
             mWeaponCtrl[i].transform.localPosition = Vector3.zero;
             mWeaponCtrl[i].transform.localRotation = Quaternion.identity;

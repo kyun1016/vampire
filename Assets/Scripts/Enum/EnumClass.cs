@@ -9,6 +9,19 @@ public class Enum
         UnlockChar2,
         UnlockChar3,
     }
+    public enum SFX
+    {
+        Dead,
+        Hit0,
+        Hit1,
+        LevelUp,
+        Lose,
+        Melee0,
+        Melee1,
+        Range,
+        Select,
+        Win
+    }
     public enum PrefabType
     {
         Enemy,

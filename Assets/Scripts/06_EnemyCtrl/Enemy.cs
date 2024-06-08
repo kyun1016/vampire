@@ -103,6 +103,8 @@ public class Enemy : MonoBehaviour
         else if (collision.CompareTag("Melee"))
             mHealth -= collision.GetComponent<Melee>().mDamage;
 
+        GameManager.instance.PlaySFX(Enum.SFX.Hit0);
+
         if (mHealth > 0)
         {
             StartCoroutine(KnockBack());
@@ -119,6 +121,8 @@ public class Enemy : MonoBehaviour
             mAnim.SetBool("Dead", true);
             GameManager.instance.mPlayerData.Kill++;
             GameManager.instance.GetExp(mDropExp);
+
+            GameManager.instance.PlaySFX(Enum.SFX.Dead);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

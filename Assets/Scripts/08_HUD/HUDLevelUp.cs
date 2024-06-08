@@ -27,12 +27,18 @@ public class HUDLevelUp : MonoBehaviour
         Next();
         GameManager.instance.Stop();
         mRect.localScale = Vector3.one;
+
+        GameManager.instance.PlayEffect(true);
+        GameManager.instance.PlaySFX(Enum.SFX.LevelUp);
     }
 
     public void Hide()
     {
         GameManager.instance.Resume();
         mRect.localScale = Vector3.zero;
+
+        GameManager.instance.PlayEffect(false);
+        GameManager.instance.PlaySFX(Enum.SFX.Select);
     }
 
     public void Select(int index)
