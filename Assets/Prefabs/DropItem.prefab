@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 7682948272489869177}
   - component: {fileID: 325390092325806305}
   - component: {fileID: 5550831435453115037}
-  - component: {fileID: 277240529384655510}
+  - component: {fileID: -6068606257316760536}
   - component: {fileID: 8215902745780970612}
   m_Layer: 0
-  m_Name: RangeWeapon
+  m_Name: DropItem
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: -537537479, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -108,8 +108,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &277240529384655510
-BoxCollider2D:
+--- !u!58 &-6068606257316760536
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -122,18 +122,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.22222222, y: 0.44444445}
-    newSize: {x: 0.3888889, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.22222222, y: 0.44444445}
-  m_EdgeRadius: 0
+  m_Radius: 0.2
 --- !u!114 &8215902745780970612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,4 +137,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mDamage: 0
-  mDir: {x: 0, y: 0, z: 0}
+  mSpeed: 0

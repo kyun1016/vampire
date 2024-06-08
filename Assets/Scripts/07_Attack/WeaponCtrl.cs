@@ -18,12 +18,105 @@ public class WeaponCtrl : MonoBehaviour
             Debug.Assert(false, "Error");
         mId = id;
 
+        // initialize Pool Manager (general setting)
         mWeaponPool = new GameObject().AddComponent<PoolManager>();
         mWeaponPool.transform.name = "WeaponPool";
         mWeaponPool.transform.parent = transform;
         mWeaponPool.transform.localPosition = Vector3.zero;
         mWeaponPool.transform.localRotation = Quaternion.identity;
-        mWeaponPool.Init(GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].PrefabId);
+        mWeaponPool.Init((int) GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].PrefabType);
+        mWeaponPool.mPool[0].GetComponent<SpriteRenderer>().sprite = GameManager.instance.mWeaponSprite[GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].SpriteId];
+        mWeaponPool.mPool[0].tag = GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].WeaponTag.ToString();
+
+        // initialize Root Prefab (particular setting)
+        switch (GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].WeaponType)
+        {
+            case Enum.WeaponType.Melee:
+            case Enum.WeaponType.RangeDagger:
+                mWeaponPool.mPool[0].GetComponent<BoxCollider2D>().size = new Vector2(0.4f, 1);
+                break;
+            case Enum.WeaponType.RangeBullet:
+                mWeaponPool.mPool[0].GetComponent<BoxCollider2D>().size = new Vector2(0.4f, 0.4f);
+                break;
+            case Enum.WeaponType.RangeAxe:
+                mWeaponPool.mPool[0].GetComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.7f);
+                mWeaponPool.mPool[0].GetComponent<Rigidbody2D>().gravityScale = 1;
+                break;
+            case Enum.WeaponType.Garlic:
+                mWeaponPool.mPool[0].GetComponent<CircleCollider2D>().radius = 0.5f;
+                break;
+            case Enum.WeaponType.Web:
+                mWeaponPool.mPool[0].GetComponent<BoxCollider2D>().size = new Vector2(3, 3);
+                break;
+            case Enum.WeaponType.Boom:
+                mWeaponPool.mPool[0].GetComponent<CircleCollider2D>().radius = 1;
+                break;
+            case Enum.WeaponType.ThrowBoom:
+                mWeaponPool.mPool[0].GetComponent<CircleCollider2D>().radius = 1;
+                break;
+            default:
+                Debug.Assert(false, "Error");
+                break;
+        }
+    }
+
+    public void updatePool()
+    {
+        switch (GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].WeaponType)
+        {
+            case Enum.WeaponType.Melee:
+                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
+                break;
+            case Enum.WeaponType.RangeBullet:
+                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
+                break;
+            case Enum.WeaponType.RangeDagger:
+                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
+                break;
+            case Enum.WeaponType.RangeAxe:
+                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
+                break;
+            case Enum.WeaponType.Garlic:
+                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
+                break;
+            case Enum.WeaponType.Web:
+                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
+                break;
+            case Enum.WeaponType.Boom:
+                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
+                break;
+            case Enum.WeaponType.ThrowBoom:
+                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
+                break;
+            default:
+                Debug.Assert(false, "Error");
+                break;
+        }
+
+        for(int i=1; i < mWeaponPool.mPool.Count; ++i)
+        {
+            mWeaponPool.mPool[i].transform.localScale = mWeaponPool.mPool[0].transform.localScale;
+        }
+
+        switch (GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].WeaponType)
+        {
+            case Enum.WeaponType.Melee:
+                PlacementCircle();
+                break;
+            case Enum.WeaponType.Garlic:
+                PlacementGarlic();
+                break;
+            case Enum.WeaponType.RangeBullet:
+            case Enum.WeaponType.RangeDagger:
+            case Enum.WeaponType.RangeAxe:
+            case Enum.WeaponType.Web:
+            case Enum.WeaponType.Boom:
+            case Enum.WeaponType.ThrowBoom:
+                break;
+            default:
+                Debug.Assert(false, "Error");
+                break;
+        }
     }
 
     void Update()
@@ -35,8 +128,6 @@ public class WeaponCtrl : MonoBehaviour
 
         switch (GameManager.instance.mWeaponLastData[mId].WeaponType)
         {
-            case Enum.WeaponType.Garlic:
-                break;
             case Enum.WeaponType.Melee:
                 transform.Rotate(Vector3.back * GameManager.instance.mWeaponLastData[mId].Speed * Time.deltaTime);
                 break;
@@ -98,6 +189,10 @@ public class WeaponCtrl : MonoBehaviour
                     }
                 }
                 break;
+            case Enum.WeaponType.Boom:
+            case Enum.WeaponType.ThrowBoom:
+            case Enum.WeaponType.Garlic:
+                break;
             default:
                 Debug.Assert(false, "Error");
                 break;
@@ -110,7 +205,10 @@ public class WeaponCtrl : MonoBehaviour
         if (mWeaponPool.mPool.Count == 0)
             melee = mWeaponPool.Get().transform; // 부족한 것을 오브젝트 풀로 추가
         else
+        {
+            mWeaponPool.mPool[0].SetActive(true);
             melee = mWeaponPool.mPool[0].transform;
+        }
 
         melee.parent = mWeaponPool.transform;
         melee.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
@@ -126,6 +224,7 @@ public class WeaponCtrl : MonoBehaviour
 
             if (i < mWeaponPool.mPool.Count)
             {
+                mWeaponPool.mPool[i].SetActive(true);
                 melee = mWeaponPool.mPool[i].transform;
             }
             else

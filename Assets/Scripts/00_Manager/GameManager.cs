@@ -15,10 +15,11 @@ public class GameManager : MonoBehaviour
     public int[] mNextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
     [Header("# Unity Data Info")]
     public SpriteAtlas mSpriteAtlas;
-    public Sprite[] mPlayerSprite;
-    public Sprite[] mItemSprite;
-    public Sprite[] mAchiveSprite;
+    public Sprite[] mHUDBtnPlayerSprite;
+    public Sprite[] mHUDBtnItemSprite;
+    public Sprite[] mHUDAchiveSprite;
     public GameObject[] mPoolPrefabs;   // 프리펩들을 보관할 변수
+    public Sprite[] mWeaponSprite;
     public RuntimeAnimatorController[] mPlayerAnimCtrl;
     public RuntimeAnimatorController[] mEnemyAnimCtrl;
     [Header("# Json Info")]
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     [Header("# Game Object")]
     public Player mPlayer;
     public PoolManager mEnemyPool;
+    public PoolManager mDropPool;
     public HUDGameStart mHUDGameStart;
     public HUDAchive mHUDAchive;
     public HUDInGame mHUDInGame;
@@ -126,7 +128,7 @@ public class GameManager : MonoBehaviour
         // Part 3. Init Enemy Pool
         mEnemyPool.transform.name = "EnemyPool";
         mEnemyPool.transform.parent = GameManager.instance.transform;
-        mEnemyPool.Init(mEnemyJsonData[0].PrefabId);
+        mEnemyPool.Init((int) mEnemyJsonData[0].PrefabType);
         // Part 4. Init Player Data
         FuncWeapon.ClearPerk();
         FuncWeapon.UpdatePlayerMovement();
@@ -203,7 +205,7 @@ public class GameManager : MonoBehaviour
     IEnumerator NoticeRoutine(int i)
     {
         mHUDAchive.gameObject.SetActive(true);
-        mHUDAchive.mIcon.sprite = mAchiveSprite[mAchiveJsonData[i].SpriteId];
+        mHUDAchive.mIcon.sprite = mHUDAchiveSprite[mAchiveJsonData[i].SpriteId];
         mHUDAchive.mText.text = mAchiveJsonData[i].Desc;
         yield return mWait5s;
         mHUDAchive.gameObject.SetActive(false);

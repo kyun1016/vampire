@@ -5,9 +5,12 @@ using UnityEngine;
 [System.Serializable]
 public struct WeaponJsonData
 {
+    public bool Enable;
+    public int HUDBtnItemSpriteId;
     public int SpriteId;
-    public int PrefabId;
+    public Enum.PrefabType PrefabType;
     public Enum.WeaponType WeaponType;
+    public Enum.WeaponTag WeaponTag;
     public string Name;
     public Enum.DescType DescType;
     [TextArea]

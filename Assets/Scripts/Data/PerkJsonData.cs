@@ -5,7 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public struct PerkJsonData
 {
-    public int SpriteId;
+    public bool Enable;
+    public int HUDBtnItemSpriteId;
     public string Name;
     public Enum.DescType DescType;
     [TextArea]

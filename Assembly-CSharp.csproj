@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\Data\PerkData.cs" />
     <Compile Include="Assets\Scripts\00_Manager\PoolManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDInGame.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Scripts\05_PositionCtrl\Reposition.cs" />
     <Compile Include="Assets\Scripts\06_EnemyCtrl\EnemyScanner.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\Scripts\01_BtnCtrl\BtnSceneChange.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
+    <Compile Include="Assets\Scripts\Data\AchiveJsonData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
@@ -95,10 +97,14 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Scripts\00_Manager\GameManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDResult.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDAchive.cs" />
     <Compile Include="Assets\Scripts\02_TextCtrl\TextFlash.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDBtnItem.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\Scripts\Data\WeaponJsonData.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDBtnPlayer.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\Scripts\08_HUD\HUDLevelUp.cs" />
@@ -111,19 +117,14 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\Scripts\01_BtnCtrl\BtnPanelSync.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDGameStart.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Scripts\04_PlayerCtrl\Player.cs" />
     <Compile Include="Assets\Scripts\07_Attack\Range.cs" />
     <Compile Include="Assets\Scripts\Data\WeaponData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\Enum\WeaponFunc.cs" />
-    <Compile Include="Assets\Scripts\08_HUD\HUDResult.cs" />
-    <Compile Include="Assets\Scripts\08_HUD\HUDInGame.cs" />
-    <Compile Include="Assets\Scripts\08_HUD\HUDBtnItem.cs" />
-    <Compile Include="Assets\Scripts\08_HUD\HUDBtnPlayer.cs" />
-    <Compile Include="Assets\Scripts\08_HUD\HUDGameStart.cs" />
-    <Compile Include="Assets\Scripts\08_HUD\HUDAchive.cs" />
-    <Compile Include="Assets\Scripts\Data\AchiveJsonData.cs" />
+    <Compile Include="Assets\Scripts\07_Attack\DropItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

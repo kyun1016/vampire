@@ -24,13 +24,13 @@ public class HUDBtnItem : MonoBehaviour
 
         if (mId < GameManager.instance.mWeaponJsonData.Length)
         {
-            mIcon.sprite = GameManager.instance.mItemSprite[GameManager.instance.mWeaponJsonData[mId].SpriteId];
+            mIcon.sprite = GameManager.instance.mHUDBtnItemSprite[GameManager.instance.mWeaponJsonData[mId].HUDBtnItemSpriteId];
             mTextName.text = GameManager.instance.mWeaponJsonData[mId].Name;
         }
         else
         {
             int idx = mId - GameManager.instance.mWeaponJsonData.Length;
-            mIcon.sprite = GameManager.instance.mItemSprite[GameManager.instance.mPerkJsonData[idx].SpriteId];
+            mIcon.sprite = GameManager.instance.mHUDBtnItemSprite[GameManager.instance.mPerkJsonData[idx].HUDBtnItemSpriteId];
             mTextName.text = GameManager.instance.mPerkJsonData[idx].Name;
         }
     }
@@ -41,13 +41,13 @@ public class HUDBtnItem : MonoBehaviour
         int level = 0;
         if (mId < GameManager.instance.mWeaponJsonData.Length)
         {
-            mIcon.sprite = GameManager.instance.mItemSprite[GameManager.instance.mWeaponJsonData[mId].SpriteId];
+            mIcon.sprite = GameManager.instance.mHUDBtnItemSprite[GameManager.instance.mWeaponJsonData[mId].HUDBtnItemSpriteId];
             mTextName.text = GameManager.instance.mWeaponJsonData[mId].Name;
         }
         else
         {
             idx = mId - GameManager.instance.mWeaponJsonData.Length;
-            mIcon.sprite = GameManager.instance.mItemSprite[GameManager.instance.mPerkJsonData[idx].SpriteId];
+            mIcon.sprite = GameManager.instance.mHUDBtnItemSprite[GameManager.instance.mPerkJsonData[idx].HUDBtnItemSpriteId];
             mTextName.text = GameManager.instance.mPerkJsonData[idx].Name;
         }
         idx = mId;
@@ -182,16 +182,7 @@ public class HUDBtnItem : MonoBehaviour
         }
         for (int i = 0; i < GameManager.instance.mPlayerData.WeaponSize; ++i)
         {
-            switch (GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[i].Id].WeaponType)
-            {
-                case Enum.WeaponType.Melee:
-                    GameManager.instance.mPlayer.mWeaponCtrl[i].PlacementCircle();
-                    break;
-                case Enum.WeaponType.Garlic:
-                    GameManager.instance.mPlayer.mWeaponCtrl[i].PlacementGarlic();
-                    break;
-            }
-                
+            GameManager.instance.mPlayer.mWeaponCtrl[i].updatePool();       
         }
     }
 }

@@ -6,12 +6,14 @@ public class PoolManager : MonoBehaviour
 {
     // 2. 풀 담당을 하는 리스트들
     public List<GameObject> mPool;
-    int mSpriteId;
+    int mPoolId;
 
     public void Init(int id)
     {
-        mSpriteId = id;
+        mPoolId = id;
         mPool = new List<GameObject>();
+        mPool.Add(Instantiate(GameManager.instance.mPoolPrefabs[mPoolId], transform));
+        mPool[0].SetActive(false);
     }
 
     public GameObject Get()
@@ -31,7 +33,9 @@ public class PoolManager : MonoBehaviour
         }
 
         // ... 못찾은 경우, 풀 등록
-        select = Instantiate(GameManager.instance.mPoolPrefabs[mSpriteId], transform);
+        select = Instantiate(mPool[0], transform);
+        select.name = mPool[0].name;
+        select.SetActive(true);
         mPool.Add(select);
 
         return select;

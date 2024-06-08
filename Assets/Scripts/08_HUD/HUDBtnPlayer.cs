@@ -25,7 +25,7 @@ public class HUDBtnPlayer : MonoBehaviour
     }
     public void Init()
     {
-        mImgChar.sprite = GameManager.instance.mPlayerSprite[mId];
+        mImgChar.sprite = GameManager.instance.mHUDBtnPlayerSprite[mId];
         mTextName.text = GameManager.instance.mPlayerJsonData[mId].Name;
         mTextDesc.text = GameManager.instance.mPlayerJsonData[mId].Desc;
         if (!GameManager.instance.mPlayerJsonData[mId].Enable)
