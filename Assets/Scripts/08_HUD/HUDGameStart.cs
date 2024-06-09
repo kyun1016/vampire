@@ -8,6 +8,15 @@ public class HUDGameStart : MonoBehaviour
     RectTransform mRect;
     public GameObject mRootHUD;
     GameObject[] mPlayers;
+
+    public void UpdateText()
+    {
+        for (int i = 0; i < mPlayers.Length; ++i)
+        {
+            mPlayers[i].GetComponent<HUDBtnPlayer>().UpdateText();
+        }
+    }
+
     void Awake()
     {
         mRect = GetComponent<RectTransform>();

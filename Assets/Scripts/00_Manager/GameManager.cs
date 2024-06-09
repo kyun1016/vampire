@@ -95,6 +95,11 @@ public class GameManager : MonoBehaviour
         }
     }
     // Part 2. Json
+    public void SaveSettingJson()
+    {
+        string json = JsonConvert.SerializeObject(mSettingData);
+        File.WriteAllText(Application.dataPath + "/Datas/SettingData.json", json);
+    }
     public void SaveToJson()
     {
         string json = JsonConvert.SerializeObject(mEnemyJsonData);
@@ -109,6 +114,12 @@ public class GameManager : MonoBehaviour
         File.WriteAllText(Application.dataPath + "/Datas/AchiveJsonData.json", json);
         json = JsonConvert.SerializeObject(mTextJsonData);
         File.WriteAllText(Application.dataPath + "/Datas/TextJsonData.json", json);
+        SaveSettingJson();
+    }
+    public void LoadSettingJson()
+    {
+        string json = File.ReadAllText(Application.dataPath + "/Datas/SettingData.json");
+        mSettingData = JsonConvert.DeserializeObject<SettingData>(json);
     }
     private void LoadFromJson()
     {
@@ -129,6 +140,8 @@ public class GameManager : MonoBehaviour
 
         json = File.ReadAllText(Application.dataPath + "/Datas/TextJsonData.json");
         mTextJsonData = JsonConvert.DeserializeObject<TextJsonData[]>(json);
+
+        LoadSettingJson();
     }
 
     void InitDelay()
@@ -193,8 +206,7 @@ public class GameManager : MonoBehaviour
     {
 
     }
-    // Part 3. Awake
-    void Awake()
+    void Init()
     {
         instance = this;
         mIsLive = false;
@@ -208,9 +220,30 @@ public class GameManager : MonoBehaviour
         InitBGM();
         InitSFX();
     }
+    // Part 3. Awake
+    void Awake()
+    {
+        Init();
+    }
     // Part 4. Update
+    void InputCheck()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            mHUDSetting.Toggle();
+            SaveSettingJson();
+        }
+    }
+    public void UpdateText()
+    {
+        mHUDGameStart.UpdateText();
+        mHUDLevelUp.UpdateText();
+        mHUDSetting.UpdateText();
+    }
+
     void Update()
     {
+        InputCheck();
         if (!mIsLive)
             return;
 
@@ -288,7 +321,7 @@ public class GameManager : MonoBehaviour
     {
         mHUDAchive.gameObject.SetActive(true);
         mHUDAchive.mIcon.sprite = mHUDAchiveSprite[mAchiveJsonData[i].SpriteId];
-        mHUDAchive.mText.text = mAchiveJsonData[i].Desc;
+        mHUDAchive.mText.text = mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].AchiveDesc[i];
         yield return mWait5s;
         mHUDAchive.gameObject.SetActive(false);
 
@@ -334,6 +367,7 @@ public class GameManager : MonoBehaviour
     public void GameRetry()
     {
         SceneManager.LoadScene(0);
+        Init();
     }
 
     // Part 7. Sound Control
@@ -361,33 +395,6 @@ public class GameManager : MonoBehaviour
             mSFXPlayer[i].clip = mSFXClip[(int)sfx];
             mSFXPlayer[i].Play();
             break;
-        }
-    }
-
-
-    // Part 8. Setting Control
-    public void SetLanguage()
-    {
-        mSettingData.LanguageType = (Enum.Language) mHUDSetting.mDropdownLanguage.value;
-    }
-    public void SetWindowScreen()
-    {
-        mSettingData.Width = Screen.resolutions[mHUDSetting.mDropdownWindow.value].width;
-        mSettingData.Height = Screen.resolutions[mHUDSetting.mDropdownWindow.value].height;
-        mSettingData.Fullscreen = mHUDSetting.mToggleWindow.isOn;
-        mSettingData.RefreshRate = Screen.resolutions[mHUDSetting.mDropdownWindow.value].refreshRate;
-        Screen.SetResolution(mSettingData.Width, mSettingData.Height, mSettingData.Fullscreen, mSettingData.RefreshRate);
-    }
-    public void SetVolume()
-    {
-        mSettingData.MasterVolume = mHUDSetting.mMasterVolume.value;
-        mSettingData.BGMVolume = mHUDSetting.mBGMVolume.value;
-        mSettingData.SFXVolume = mHUDSetting.mSFXVolume.value;
-
-        mBGMPlayer.volume = mSettingData.BGMVolume * mSettingData.MasterVolume;
-        for (int i = 0; i < mSFXPlayer.Length; ++i)
-        {
-            mSFXPlayer[i].volume = mSettingData.SFXVolume * mSettingData.MasterVolume;
         }
     }
 }

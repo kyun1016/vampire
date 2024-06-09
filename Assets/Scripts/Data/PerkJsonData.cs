@@ -7,10 +7,7 @@ public struct PerkJsonData
 {
     public bool Enable;
     public int HUDBtnItemSpriteId;
-    public string Name;
     public Enum.DescType DescType;
-    [TextArea]
-    public string Desc;
 
     public float[] MovementSpeed;
     public int[] Projectile;

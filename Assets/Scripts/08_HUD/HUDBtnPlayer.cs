@@ -23,15 +23,27 @@ public class HUDBtnPlayer : MonoBehaviour
         mTextName = texts[0];
         mTextDesc = texts[1];
     }
-    public void Init()
+
+    public void UpdateText()
     {
-        mImgChar.sprite = GameManager.instance.mHUDBtnPlayerSprite[mId];
-        mTextName.text = GameManager.instance.mPlayerJsonData[mId].Name;
-        mTextDesc.text = GameManager.instance.mPlayerJsonData[mId].Desc;
         if (!GameManager.instance.mPlayerJsonData[mId].Enable)
         {
-            mTextName.text = "Unlocked";
-            mTextDesc.text = GameManager.instance.mPlayerJsonData[mId].UnlockDesc;
+            mTextName.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].PlayerUnlockName[mId];
+            mTextDesc.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].PlayerUnlockDesc[mId];
+        }
+        else
+        {
+            mTextName.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].PlayerName[mId];
+            mTextDesc.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].PlayerDesc[mId];
+        }
+    }
+
+    public void Init()
+    {
+        UpdateText();
+        mImgChar.sprite = GameManager.instance.mHUDBtnPlayerSprite[mId];
+        if (!GameManager.instance.mPlayerJsonData[mId].Enable)
+        {
             mImgBackground.color = new Color(150, 150, 150);
             mImgChar.color = new Color(0, 0, 0);
         }

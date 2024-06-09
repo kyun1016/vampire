@@ -6,9 +6,6 @@ using UnityEngine;
 public struct PlayerJsonData
 {
     public bool Enable;
-    public string Name;
-    public string Desc;
-    public string UnlockDesc;
     public int AnimCtrlId;
     public int StartWeaponId;
     public float MaxGameTime;

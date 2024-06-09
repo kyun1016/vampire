@@ -12,9 +12,6 @@ public struct WeaponJsonData
     public Enum.WeaponType WeaponType;
     public Enum.WeaponTag WeaponTag;
     public Enum.DescType DescType;
-    public string Name;
-    [TextArea]
-    public string Desc;
     public int[] Projectile;
     public float[] ProjectileSize;
     public float[] Damage;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class HUDLevelUp : MonoBehaviour
@@ -7,6 +8,18 @@ public class HUDLevelUp : MonoBehaviour
     RectTransform mRect;
     public GameObject mRootHUD;
     GameObject[] mItems;
+    public TMP_Text mTextTitle;
+
+
+    public void UpdateText()
+    {
+        mTextTitle.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].HUDLevelUpTitle;
+        for (int i = 0; i < mItems.Length; ++i)
+        {
+            mItems[i].GetComponent<HUDBtnItem>().UpdateText();
+        }
+    }
+
     void Awake()
     {
         mRect = GetComponent<RectTransform>();
@@ -24,6 +37,7 @@ public class HUDLevelUp : MonoBehaviour
 
     public void Show()
     {
+        mTextTitle.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].HUDLevelUpTitle;
         Next();
         GameManager.instance.Stop();
         mRect.localScale = Vector3.one;

@@ -75,6 +75,7 @@
     <Compile Include="Assets\Modern UI Pack\Scripts\Button\ButtonManager.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Rendering\Ripple.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Slider\RangeSlider.cs" />
+    <Compile Include="Assets\Scripts\Data\TextJsonData.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerButtonEditor.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Layout Group\LayoutGroupFix.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\01_BtnCtrl\LoginManager.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Tooltip\TooltipManagerEditor.cs" />
+    <Compile Include="Assets\Scripts\Data\SettingData.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Icon\IconLibraryEditor.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerButton.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
@@ -216,8 +218,6 @@
     <Compile Include="Assets\Scripts\Data\WeaponData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\Enum\WeaponFunc.cs" />
-    <Compile Include="Assets\Scripts\Data\TextJsonData.cs" />
-    <Compile Include="Assets\Scripts\Data\SettingData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -9,6 +9,7 @@ public struct SettingData
     public float MasterVolume;
     public float BGMVolume;
     public float SFXVolume;
+    public int ResolutionNum;
     public int Width;
     public int Height;
     public bool Fullscreen;
