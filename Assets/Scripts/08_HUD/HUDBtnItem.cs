@@ -90,16 +90,8 @@ public class HUDBtnItem : MonoBehaviour
         UpdateTextDesc();
     }
 
-
-    private void Awake()
+    void UpdateSprite()
     {
-        mIcon = GetComponentsInChildren<Image>()[1];
-
-        TMP_Text[] texts = GetComponentsInChildren<TMP_Text>();
-        mTextLevel = texts[0];
-        mTextName = texts[1];
-        mTextDesc = texts[2];
-
         if (mId < GameManager.instance.mWeaponJsonData.Length)
         {
             mIcon.sprite = GameManager.instance.mHUDBtnItemSprite[GameManager.instance.mWeaponJsonData[mId].HUDBtnItemSpriteId];
@@ -110,10 +102,23 @@ public class HUDBtnItem : MonoBehaviour
             mIcon.sprite = GameManager.instance.mHUDBtnItemSprite[GameManager.instance.mPerkJsonData[idx].HUDBtnItemSpriteId];
         }
     }
+    private void Awake()
+    {
+        mIcon = GetComponentsInChildren<Image>()[1];
+
+        TMP_Text[] texts = GetComponentsInChildren<TMP_Text>();
+        mTextLevel = texts[0];
+        mTextName = texts[1];
+        mTextDesc = texts[2];
+
+        UpdateText();
+        UpdateSprite();
+    }
 
     private void OnEnable()
     {
         UpdateText();
+        UpdateSprite();
     }
 
     private void LateUpdate()

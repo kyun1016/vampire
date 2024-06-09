@@ -3280,7 +3280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mIsLive: 1
-  mNextExp: 01000000020000000300000004000000050000000600000007000000080000000900000032000000
+  mNextExp: 02000000040000000800000010000000190000001e00000023000000280000002d00000064000000
   mSettingData:
     LanguageType: 0
     MasterVolume: 0
@@ -20462,7 +20462,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &876391386
 RectTransform:
   m_ObjectHideFlags: 0
