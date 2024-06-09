@@ -13,14 +13,14 @@ public class GameManager : MonoBehaviour
     public bool mIsLive = true;
     [Header("# Player Info")]
     public int[] mNextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
+    [Header("# Setting")]
+    public SettingData mSettingData;
     [Header("# BGM")]
     public AudioClip mBGMClip;
-    public float mBGMVolume;
     public AudioSource mBGMPlayer;
     public AudioHighPassFilter mBGMFffect;
     [Header("# SFX")]
     public AudioClip[] mSFXClip;
-    public float mSFXVolume;
     public int mMaxSFXChannel;
     public AudioSource[] mSFXPlayer;
     [Header("# Unity Data Info")]
@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     public RuntimeAnimatorController[] mPlayerAnimCtrl;
     public RuntimeAnimatorController[] mEnemyAnimCtrl;
     [Header("# Json Info")]
+    public TextJsonData[] mTextJsonData;
     public AchiveJsonData[] mAchiveJsonData;
     public PlayerJsonData[] mPlayerJsonData;
     public WeaponJsonData[] mWeaponJsonData;
@@ -106,6 +107,8 @@ public class GameManager : MonoBehaviour
         File.WriteAllText(Application.dataPath + "/Datas/PlayerJsonData.json", json);
         json = JsonConvert.SerializeObject(mAchiveJsonData);
         File.WriteAllText(Application.dataPath + "/Datas/AchiveJsonData.json", json);
+        json = JsonConvert.SerializeObject(mTextJsonData);
+        File.WriteAllText(Application.dataPath + "/Datas/TextJsonData.json", json);
     }
     private void LoadFromJson()
     {
@@ -123,6 +126,9 @@ public class GameManager : MonoBehaviour
 
         json = File.ReadAllText(Application.dataPath + "/Datas/AchiveJsonData.json");
         mAchiveJsonData = JsonConvert.DeserializeObject<AchiveJsonData[]>(json);
+
+        json = File.ReadAllText(Application.dataPath + "/Datas/TextJsonData.json");
+        mTextJsonData = JsonConvert.DeserializeObject<TextJsonData[]>(json);
     }
 
     void InitDelay()
@@ -161,7 +167,7 @@ public class GameManager : MonoBehaviour
         mBGMPlayer.transform.parent = GameManager.instance.transform;
         mBGMPlayer.playOnAwake = false;
         mBGMPlayer.loop = true;
-        mBGMPlayer.volume = mBGMVolume;
+        mBGMPlayer.volume = mSettingData.BGMVolume * mSettingData.MasterVolume;
         mBGMPlayer.clip = mBGMClip;
 
         mBGMFffect = Camera.main.GetComponent<AudioHighPassFilter>();
@@ -179,7 +185,7 @@ public class GameManager : MonoBehaviour
             mSFXPlayer[i].playOnAwake = false;
             mSFXPlayer[i].loop = false;
             mSFXPlayer[i].bypassListenerEffects = true;
-            mSFXPlayer[i].volume = mSFXVolume;
+            mSFXPlayer[i].volume = mSettingData.SFXVolume * mSettingData.MasterVolume;
             // mSFXPlayer[i].clip = mSFXClip[i];
         }       
     }
@@ -359,10 +365,29 @@ public class GameManager : MonoBehaviour
     }
 
 
-    // Part 8. Screen Control
+    // Part 8. Setting Control
+    public void SetLanguage()
+    {
+        mSettingData.LanguageType = (Enum.Language) mHUDSetting.mDropdownLanguage.value;
+    }
     public void SetWindowScreen()
     {
-        Debug.Log("hi");
-        Screen.SetResolution(Screen.resolutions[mHUDSetting.mDropdownResoultion.value].width, Screen.resolutions[mHUDSetting.mDropdownResoultion.value].height, mHUDSetting.mToggleResoultion.isOn, Screen.resolutions[mHUDSetting.mDropdownResoultion.value].refreshRate);
+        mSettingData.Width = Screen.resolutions[mHUDSetting.mDropdownWindow.value].width;
+        mSettingData.Height = Screen.resolutions[mHUDSetting.mDropdownWindow.value].height;
+        mSettingData.Fullscreen = mHUDSetting.mToggleWindow.isOn;
+        mSettingData.RefreshRate = Screen.resolutions[mHUDSetting.mDropdownWindow.value].refreshRate;
+        Screen.SetResolution(mSettingData.Width, mSettingData.Height, mSettingData.Fullscreen, mSettingData.RefreshRate);
+    }
+    public void SetVolume()
+    {
+        mSettingData.MasterVolume = mHUDSetting.mMasterVolume.value;
+        mSettingData.BGMVolume = mHUDSetting.mBGMVolume.value;
+        mSettingData.SFXVolume = mHUDSetting.mSFXVolume.value;
+
+        mBGMPlayer.volume = mSettingData.BGMVolume * mSettingData.MasterVolume;
+        for (int i = 0; i < mSFXPlayer.Length; ++i)
+        {
+            mSFXPlayer[i].volume = mSettingData.SFXVolume * mSettingData.MasterVolume;
+        }
     }
 }

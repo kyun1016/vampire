@@ -216,6 +216,8 @@
     <Compile Include="Assets\Scripts\Data\WeaponData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\Enum\WeaponFunc.cs" />
+    <Compile Include="Assets\Scripts\Data\TextJsonData.cs" />
+    <Compile Include="Assets\Scripts\Data\SettingData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

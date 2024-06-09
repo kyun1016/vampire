@@ -9,6 +9,11 @@ public class Enum
         UnlockChar2,
         UnlockChar3,
     }
+    public enum Language
+    {
+        English,
+        Korean
+    }
     public enum SFX
     {
         Dead,

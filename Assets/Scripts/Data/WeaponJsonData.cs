@@ -11,8 +11,8 @@ public struct WeaponJsonData
     public Enum.PrefabType PrefabType;
     public Enum.WeaponType WeaponType;
     public Enum.WeaponTag WeaponTag;
-    public string Name;
     public Enum.DescType DescType;
+    public string Name;
     [TextArea]
     public string Desc;
     public int[] Projectile;
