@@ -8,8 +8,10 @@ public class Player : MonoBehaviour
     public Vector2 mInputVec;
     public Vector2 mLastDir;
     public EnemyScanner mScanner;
-
     public WeaponCtrl[] mWeaponCtrl;
+    float mTimerEnemyLevel;
+    float mTimerEnemySpawn;
+    int mEnemyLevel;
 
     Animator mAnim;
     SpriteRenderer mSpriter;
@@ -27,6 +29,8 @@ public class Player : MonoBehaviour
     {
         mAnim.runtimeAnimatorController = GameManager.instance.mPlayerAnimCtrl[GameManager.instance.mPlayerData.AnimCtrlId];
         mWeaponCtrl = new WeaponCtrl[GameManager.instance.mWeaponCtrlData.Length];
+        mTimerEnemySpawn = 0;
+        mTimerEnemyLevel = 0;
 
         for (int i = 0; i < mWeaponCtrl.Length; ++i)
         {
@@ -35,6 +39,18 @@ public class Player : MonoBehaviour
             mWeaponCtrl[i].transform.localPosition = Vector3.zero;
             mWeaponCtrl[i].transform.localRotation = Quaternion.identity;
         }
+    }
+
+    void SpawnEnemy()
+    {
+        GameObject enemy = GameManager.instance.mEnemyPool.Get();
+        enemy.transform.position = GameManager.instance.mPlayer.transform.position;
+        Vector3 pos = Random.insideUnitCircle;
+        if (pos.magnitude == 0)
+            pos.x = 1;
+        pos = pos.normalized;
+        enemy.transform.position += pos * 20;
+        enemy.GetComponent<Enemy>().Init(mEnemyLevel);
     }
 
     void OnMove(InputValue value)
@@ -49,8 +65,25 @@ public class Player : MonoBehaviour
     {
         if (!GameManager.instance.mIsLive)
             return;
+        // 이동
         Vector2 nextVec = mInputVec * GameManager.instance.mPlayerData.MovementSpeed * Time.fixedDeltaTime;
         mRigid.MovePosition(mRigid.position + nextVec);
+
+        // 적 레벨업
+        mTimerEnemyLevel += Time.fixedDeltaTime;
+        if (mTimerEnemyLevel > GameManager.instance.mEnemyJsonData[mEnemyLevel].LevelUpTime && mEnemyLevel < GameManager.instance.mEnemyJsonData.Length - 1)
+        {
+            mTimerEnemyLevel = 0;
+            ++mEnemyLevel;
+        }
+        // 적 생성
+        mTimerEnemySpawn += Time.fixedDeltaTime;
+        if (mTimerEnemySpawn > GameManager.instance.mEnemyJsonData[mEnemyLevel].SpawnTime)
+        {
+            mTimerEnemySpawn = 0;
+            for (int i = 0; i < GameManager.instance.mEnemyJsonData[mEnemyLevel].SpawnCount; ++i)
+                SpawnEnemy();
+        }
     }
     void LateUpdate()
     {

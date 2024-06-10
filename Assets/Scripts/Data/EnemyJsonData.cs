@@ -4,6 +4,8 @@ public struct EnemyJsonData
 {
     public int AnimCtrlId;
     public Enum.PrefabType PrefabEnemy;
+    public float LevelUpTime;
+    public int SpawnCount;
     public float SpawnTime;
     public int MaxHealth;
     public float MovementSpeed;

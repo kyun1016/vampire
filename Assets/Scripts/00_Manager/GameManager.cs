@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     [Header("# Json Info")]
     public TextJsonData[] mTextJsonData;
     public AchiveJsonData[] mAchiveJsonData;
+    public LevelJsonData mLevelJsonData;
     public PlayerJsonData[] mPlayerJsonData;
     public WeaponJsonData[] mWeaponJsonData;
     public PerkJsonData[] mPerkJsonData;
@@ -114,6 +115,8 @@ public class GameManager : MonoBehaviour
         File.WriteAllText(Application.dataPath + "/Datas/AchiveJsonData.json", json);
         json = JsonConvert.SerializeObject(mTextJsonData);
         File.WriteAllText(Application.dataPath + "/Datas/TextJsonData.json", json);
+        json = JsonConvert.SerializeObject(mLevelJsonData);
+        File.WriteAllText(Application.dataPath + "/Datas/LevelJsonData.json", json);
         SaveSettingJson();
     }
     public void LoadSettingJson()
@@ -140,6 +143,9 @@ public class GameManager : MonoBehaviour
 
         json = File.ReadAllText(Application.dataPath + "/Datas/TextJsonData.json");
         mTextJsonData = JsonConvert.DeserializeObject<TextJsonData[]>(json);
+
+        json = File.ReadAllText(Application.dataPath + "/Datas/LevelJsonData.json");
+        mLevelJsonData = JsonConvert.DeserializeObject<LevelJsonData>(json);
 
         LoadSettingJson();
     }

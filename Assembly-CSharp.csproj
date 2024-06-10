@@ -191,7 +191,6 @@
     <Compile Include="Assets\Modern UI Pack\Scripts\Icon\IconManagerEditor.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Input Field\CustomInputField.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Tools\ElementTabbing.cs" />
-    <Compile Include="Assets\Scripts\06_EnemyCtrl\EnemySpawnManager.cs" />
     <Compile Include="Assets\Scripts\Data\EnemyJsonData.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Tooltip\TooltipContent.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerCustom.cs" />
@@ -218,6 +217,7 @@
     <Compile Include="Assets\Scripts\Data\WeaponData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\Enum\WeaponFunc.cs" />
+    <Compile Include="Assets\Scripts\Data\LevelJsonData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
