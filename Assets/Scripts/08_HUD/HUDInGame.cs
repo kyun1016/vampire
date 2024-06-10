@@ -40,7 +40,7 @@ public class HUDInGame : MonoBehaviour
         mTextTime.text = string.Format("{0:D2}:{1:D2}", min, sec);
         // Exp
         float curExp = GameManager.instance.mPlayerData.Exp;
-        float maxExp = GameManager.instance.mNextExp[Mathf.Min(GameManager.instance.mPlayerData.Level, GameManager.instance.mNextExp.Length - 1)];
+        float maxExp = GameManager.instance.mLevelJsonData.PlayerExp[Mathf.Min(GameManager.instance.mPlayerData.Level, GameManager.instance.mLevelJsonData.PlayerExp.Length - 1)];
         mSliderExp.value = curExp / maxExp;
         // Health
         float curHealth = GameManager.instance.mPlayerData.Health;

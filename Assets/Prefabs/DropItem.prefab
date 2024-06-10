@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -1435796866770346359}
   m_Layer: 0
   m_Name: DropItem
-  m_TagString: Bullet
+  m_TagString: DropItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,4 +136,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fd999018b512f94aa16b55038226f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mDamage: 0
+  mType: 0
+  mData: 0
+  mEnable: 0

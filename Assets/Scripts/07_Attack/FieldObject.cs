@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class FieldObject : MonoBehaviour
 {
-    public Enum.FieldObjectSprite mObjectType;
     public Enum.FieldObjectSprite mType;
 
-    private void OnEnable()
+    public void Init(int value)
     {
-        gameObject.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mFieldObjectSprite[(int)mObjectType];
+        mType = (Enum.FieldObjectSprite) value;
+        gameObject.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mFieldObjectSprite[value];
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

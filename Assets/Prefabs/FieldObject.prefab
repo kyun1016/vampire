@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 325390092325806305}
   - component: {fileID: 5550831435453115037}
   - component: {fileID: -6068606257316760536}
-  - component: {fileID: -1435796866770346359}
+  - component: {fileID: -4151559577396018869}
   m_Layer: 0
-  m_Name: Object
-  m_TagString: Bullet
+  m_Name: FieldObject
+  m_TagString: FieldObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,7 +124,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.2
---- !u!114 &-1435796866770346359
+--- !u!114 &-4151559577396018869
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9022744534048549305}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fd999018b512f94aa16b55038226f16, type: 3}
+  m_Script: {fileID: 11500000, guid: 56f723776c7b59c489fe49524dc6537b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mDamage: 0
+  mType: 0

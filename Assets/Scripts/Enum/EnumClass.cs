@@ -34,10 +34,12 @@ public class Enum
         MeleeCircle,
         RangeBox,
         RangeCircle,
-        DropItem
+        DropItem,
+        FieldObject
     }
     public enum DebuffType
     {
+        None,
         TicDamage,
         Slow
     }

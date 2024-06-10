@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public WeaponCtrl[] mWeaponCtrl;
     float mTimerEnemyLevel;
     float mTimerEnemySpawn;
+    float mTimerFieldObjectSpawn;
     int mEnemyLevel;
 
     Animator mAnim;
@@ -53,17 +54,19 @@ public class Player : MonoBehaviour
         enemy.GetComponent<Enemy>().Init(mEnemyLevel);
     }
 
-    void SpawnObject()
+    void SpawnFieldObject()
     {
-        GameObject enemy = GameManager.instance.mDropPool.Get();
-        enemy.transform.position = GameManager.instance.mPlayer.transform.position;
+        GameObject item = GameManager.instance.mFieldObjectPool.Get();
+        item.transform.position = GameManager.instance.mPlayer.transform.position;
         Vector3 pos = Random.insideUnitCircle;
         if (pos.magnitude == 0)
             pos.x = 1;
         pos = pos.normalized;
-        enemy.transform.position += pos * 20;
-        enemy.GetComponent<Enemy>().Init(mEnemyLevel);
+        item.transform.position += pos * 20;
+        int value = Random.Range(0, GameManager.instance.mFieldObjectSprite.Length);
+        item.GetComponent<FieldObject>().Init(value);
     }
+
 
     void OnMove(InputValue value)
     {
@@ -97,6 +100,14 @@ public class Player : MonoBehaviour
             mTimerEnemyLevel = 0;
             mTimerEnemySpawn = 0;
             ++mEnemyLevel;
+        }
+
+        // 필드 오브젝트 생성
+        mTimerFieldObjectSpawn += Time.fixedDeltaTime;
+        if (mTimerFieldObjectSpawn > GameManager.instance.mObjectGenTime)
+        {
+            mTimerFieldObjectSpawn = 0;
+            SpawnFieldObject();
         }
     }
     void LateUpdate()

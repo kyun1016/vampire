@@ -10,9 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     [Header("# Game Control")]
-    public bool mIsLive = true;
-    [Header("# Player Info")]
-    public int[] mNextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
+    public bool mIsLive = false;
     [Header("# Setting")]
     public SettingData mSettingData;
     [Header("# BGM")]
@@ -35,6 +33,7 @@ public class GameManager : MonoBehaviour
     public RuntimeAnimatorController[] mPlayerAnimCtrl;
     public RuntimeAnimatorController[] mEnemyAnimCtrl;
     [Header("# Json Info")]
+    public float mObjectGenTime;
     public TextJsonData[] mTextJsonData;
     public AchiveJsonData[] mAchiveJsonData;
     public LevelJsonData mLevelJsonData;
@@ -53,6 +52,7 @@ public class GameManager : MonoBehaviour
     public Player mPlayer;
     public PoolManager mEnemyPool;
     public PoolManager mDropPool;
+    public PoolManager mFieldObjectPool;
     public HUDGameStart mHUDGameStart;
     public HUDAchive mHUDAchive;
     public HUDInGame mHUDInGame;
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
     }
     void CheckAchive()
     {
-        for (int i= 0; i< mAchiveJsonData.Length; ++i)
+        for (int i = 0; i < mAchiveJsonData.Length; ++i)
         {
             bool isAchive = false;
             switch (mAchiveJsonData[i].Name)
@@ -167,8 +167,15 @@ public class GameManager : MonoBehaviour
         mDropPool = new GameObject("DropPool").AddComponent<PoolManager>();
         mDropPool.transform.parent = GameManager.instance.transform;
         mDropPool.Init((int)Enum.PrefabType.DropItem);
-        mDropPool.mPool[0].tag = "DropItem";
     }
+    void InitFieldObjectPool()
+    {
+        mFieldObjectPool = new GameObject("FieldObjectPool").AddComponent<PoolManager>();
+        mFieldObjectPool.transform.parent = GameManager.instance.transform;
+        mFieldObjectPool.Init((int)Enum.PrefabType.FieldObject);
+    }
+
+
     void InitPlayerData()
     {
         // Part 4. Init Player Data
@@ -221,8 +228,11 @@ public class GameManager : MonoBehaviour
         LoadFromJson();
         InitWindowScreen();
         InitDelay();
+
         InitEnemyPool();
         InitDropPool();
+        InitFieldObjectPool();
+
         InitPlayerData();
         InitBGM();
         InitSFX();
@@ -231,6 +241,10 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Init();
+        Debug.Assert(mFieldObjectSprite.Length == System.Enum.GetValues(typeof(Enum.FieldObjectSprite)).Length, "Error");
+        // Debug.Assert(mWeaponSprite.Length == System.Enum.GetValues(typeof(Enum.WeaponType)).Length, "Error");
+        Debug.Assert(mPlayerAnimCtrl.Length == mPlayerJsonData.Length, "Error");
+
     }
     // Part 4. Update
     void InputCheck()
@@ -284,9 +298,9 @@ public class GameManager : MonoBehaviour
 
         mPlayerData.Exp += value;
 
-        if (mPlayerData.Exp >= mNextExp[Mathf.Min(mPlayerData.Level, mNextExp.Length - 1)])
+        if (mPlayerData.Exp >= mLevelJsonData.PlayerExp[Mathf.Min(mPlayerData.Level, mLevelJsonData.PlayerExp.Length - 1)])
         {
-            mPlayerData.Exp -= mNextExp[Mathf.Min(mPlayerData.Level, mNextExp.Length - 1)];
+            mPlayerData.Exp -= mLevelJsonData.PlayerExp[Mathf.Min(mPlayerData.Level, mLevelJsonData.PlayerExp.Length - 1)];
             mPlayerData.Level++;
             mHUDLevelUp.Show();
         }
