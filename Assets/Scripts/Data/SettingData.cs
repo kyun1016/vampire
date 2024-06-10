@@ -14,4 +14,5 @@ public struct SettingData
     public int Height;
     public bool Fullscreen;
     public int RefreshRate;
+    public int TotalGold;
 }

@@ -42,7 +42,10 @@ public class Enum
         Exp1,
         Exp2,
         Health,
-        Mag
+        Mag,
+        Gold0,
+        Gold1,
+        Gold2
     }
     public enum WeaponTag
     {

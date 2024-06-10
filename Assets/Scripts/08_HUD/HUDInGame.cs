@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class HUDInGame : MonoBehaviour
 {
     TMP_Text mTextKill;
+    TMP_Text mTextGold;
     TMP_Text mTextLevel;
     TMP_Text mTextTime;
     Slider mSliderExp;
@@ -17,8 +18,9 @@ public class HUDInGame : MonoBehaviour
         TMP_Text[] texts = GetComponentsInChildren<TMP_Text>();
         Slider[] sliders = GetComponentsInChildren<Slider>();
         mTextKill = texts[0];
-        mTextLevel = texts[1];
-        mTextTime = texts[2];
+        mTextGold = texts[1];
+        mTextLevel = texts[2];
+        mTextTime = texts[3];
         mSliderExp = sliders[0];
         mSliderHealth = sliders[1];
     }
@@ -27,6 +29,8 @@ public class HUDInGame : MonoBehaviour
     {
         // Kill
         mTextKill.text = string.Format("{0:F0}", GameManager.instance.mPlayerData.Kill);
+        // Gold
+        mTextGold.text = string.Format("{0:F0}", GameManager.instance.mPlayerData.Gold);
         // Level
         mTextLevel.text = string.Format("Lv.{0:F0}", GameManager.instance.mPlayerData.Level);
         // Time

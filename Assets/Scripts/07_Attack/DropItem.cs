@@ -55,6 +55,11 @@ public class DropItem : MonoBehaviour
                             item.GetComponent<DropItem>().mEnable = true;
                     }
                     break;
+                case Enum.DropItemSprite.Gold0:
+                case Enum.DropItemSprite.Gold1:
+                case Enum.DropItemSprite.Gold2:
+                    GameManager.instance.GetGold(mData);
+                    break;
                 default:
                     Debug.Assert(false, "Error");
                     break;

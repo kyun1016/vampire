@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour
     public float mMaxHealth;
     public float mKnockBackForce;
     public int mDropExp;
+    public int mDropGold;
+    public float mDropGoldChance;
     
     [Header("# Game Object")]
     public Rigidbody2D mTarget;
@@ -41,6 +43,8 @@ public class Enemy : MonoBehaviour
         mHealth = data.MaxHealth;
         mKnockBackForce = data.KnockBackForce;
         mDropExp = data.DropExp;
+        mDropGold = data.DropGold;
+        mDropGoldChance = data.DropGoldChance;
     }
     private void OnEnable()
     {
@@ -54,6 +58,78 @@ public class Enemy : MonoBehaviour
         mAnim.SetBool("Dead", false);
         mHealth = mMaxHealth;
     }
+    void Hit(float damage)
+    {
+        mHealth -= damage;
+        GameManager.instance.PlaySFX(Enum.SFX.Hit0);
+
+        if (mHealth > 0)
+        {
+            StartCoroutine(KnockBack());
+            mAnim.SetTrigger("Hit");
+        }
+        else
+        {
+            mIsLive = false;
+            mIsGarlic = false;
+            mMovementSpeedCoef = 1.0f;
+            mColl.enabled = false;
+            mRigid.simulated = false;
+            mSpriter.sortingOrder = 1;
+            mAnim.SetBool("Dead", true);
+            GameManager.instance.mPlayerData.Kill++;
+
+            // 경험치 드롭
+            GameObject item = GameManager.instance.mDropPool.Get();
+            item.transform.position = transform.position;
+            item.transform.rotation = Quaternion.identity;
+            item.GetComponent<DropItem>().mData = mDropExp;
+            switch (mDropExp)
+            {
+                case > 50:
+                    item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Exp2;
+                    item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Exp2];
+                    break;
+                case > 10:
+                    item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Exp1;
+                    item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Exp1];
+                    break;
+                default:
+                    item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Exp0;
+                    item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Exp0];
+                    break;
+            }
+            item.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.5f);
+
+            // 골드 드롭
+            if (Random.value >= mDropGoldChance)
+            {
+                item = GameManager.instance.mDropPool.Get();
+                item.transform.position = transform.position;
+                item.transform.position += new Vector3(Random.value * 2 - 1, Random.value * 2 - 1);
+                item.transform.rotation = Quaternion.identity;
+                item.GetComponent<DropItem>().mData = mDropGold;
+                switch (mDropGold)
+                {
+                    case > 50:
+                        item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Gold2;
+                        item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Gold2];
+                        break;
+                    case > 10:
+                        item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Gold1;
+                        item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Gold1];
+                        break;
+                    default:
+                        item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Gold0;
+                        item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Gold0];
+                        break;
+                }
+                item.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+            }
+
+            GameManager.instance.PlaySFX(Enum.SFX.Dead);
+        }
+    }
     private void FixedUpdate()
     {
         if (!GameManager.instance.mIsLive)
@@ -62,7 +138,7 @@ public class Enemy : MonoBehaviour
             return;
         if(mIsGarlic)
         {
-            StartCoroutine(HitGalic());
+            Hit(mGarlicDamage);
         }
 
         Vector2 dirVec = mTarget.position - mRigid.position;
@@ -96,61 +172,20 @@ public class Enemy : MonoBehaviour
             mMovementSpeedCoef *= 0.5f;
             collision.GetComponent<Range>().transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             collision.GetComponent<Range>().mSpeed = 0f;
+            Hit(collision.GetComponent<Range>().mDamage);
         }
 
         if (collision.CompareTag("Bullet") || collision.CompareTag("SpiderWeb"))
-            mHealth -= collision.GetComponent<Range>().mDamage;
+            Hit(collision.GetComponent<Range>().mDamage);
         else if (collision.CompareTag("Melee"))
-            mHealth -= collision.GetComponent<Melee>().mDamage;
-
-        GameManager.instance.PlaySFX(Enum.SFX.Hit0);
-
-        if (mHealth > 0)
-        {
-            StartCoroutine(KnockBack());
-            mAnim.SetTrigger("Hit");
-        }
-        else
-        {
-            mIsLive = false;
-            mIsGarlic = false;
-            mMovementSpeedCoef = 1.0f;
-            mColl.enabled = false;
-            mRigid.simulated = false;
-            mSpriter.sortingOrder = 1;
-            mAnim.SetBool("Dead", true);
-            GameManager.instance.mPlayerData.Kill++;
-            
-            // 경험치 드롭
-            GameObject item = GameManager.instance.mDropPool.Get();
-            item.transform.position = transform.position;
-            item.transform.rotation = Quaternion.identity;
-            item.GetComponent<DropItem>().mData = mDropExp;
-            switch (mDropExp)
-            {
-                case > 50:
-                    item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Exp2;
-                    item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Exp2];
-                    break;
-                case > 10:
-                    item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Exp1;
-                    item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Exp1];
-                    break;
-                default:
-                    item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Exp0;
-                    item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Exp0];
-                    break;
-            }
-
-            GameManager.instance.PlaySFX(Enum.SFX.Dead);
-        }
+            Hit(collision.GetComponent<Melee>().mDamage);
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Garlic"))
             mIsGarlic = false;
         if (collision.CompareTag("SpiderWeb"))
-            mMovementSpeedCoef = 2f;
+            mMovementSpeedCoef *= 2f;
     }
 
     IEnumerator KnockBack()
@@ -163,30 +198,6 @@ public class Enemy : MonoBehaviour
         Vector3 dirVec = transform.position - playerPos;
 
         mRigid.AddForce(dirVec.normalized * mKnockBackForce, ForceMode2D.Impulse);
-    }
-
-    IEnumerator HitGalic()
-    {
-        yield return mWaitFixedFrame;
-
-        mHealth -= mGarlicDamage;
-
-        if (mHealth > 0)
-        {
-            StartCoroutine(KnockBack());
-            mAnim.SetTrigger("Hit");
-        }
-        else
-        {
-            mIsLive = false;
-            mIsGarlic = false;
-            mColl.enabled = false;
-            mRigid.simulated = false;
-            mSpriter.sortingOrder = 1;
-            mAnim.SetBool("Dead", true);
-            GameManager.instance.mPlayerData.Kill++;
-            GameManager.instance.GetExp(mDropExp);
-        }
     }
 
     void Dead()

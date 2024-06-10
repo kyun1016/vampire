@@ -270,12 +270,12 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 1;
     }
-    public void GetExp(int exp)
+    public void GetExp(int value)
     {
         if (!mIsLive)
             return;
 
-        mPlayerData.Exp += exp;
+        mPlayerData.Exp += value;
 
         if (mPlayerData.Exp >= mNextExp[Mathf.Min(mPlayerData.Level, mNextExp.Length - 1)])
         {
@@ -283,6 +283,14 @@ public class GameManager : MonoBehaviour
             mPlayerData.Level++;
             mHUDLevelUp.Show();
         }
+    }
+    public void GetGold(int value)
+    {
+        if (!mIsLive)
+            return;
+
+        mPlayerData.Gold += value;
+        mSettingData.TotalGold += value;
     }
     public void GetHealth(int value)
     {
@@ -366,6 +374,7 @@ public class GameManager : MonoBehaviour
     }
     public void GameRetry()
     {
+        SaveSettingJson();
         SceneManager.LoadScene(0);
         Init();
     }

@@ -10,4 +10,6 @@ public struct EnemyJsonData
     public float Speed;
     public float KnockBackForce;
     public int DropExp;
+    public int DropGold;
+    public float DropGoldChance;
 }

@@ -14,6 +14,7 @@ public struct PlayerData
     public int Level;
     public int Kill;
     public int Exp;
+    public int Gold;
     public int WeaponSize;
     public int PerkSize;
 }
