@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8215902745780970612}
   m_Layer: 0
   m_Name: WeaponRangeBox
-  m_TagString: Bullet
+  m_TagString: Range
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,4 +148,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mDamage: 0
   mSpeed: 0
-  mObj: {fileID: 9022744534048549305}

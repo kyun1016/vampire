@@ -53,6 +53,18 @@ public class Player : MonoBehaviour
         enemy.GetComponent<Enemy>().Init(mEnemyLevel);
     }
 
+    void SpawnObject()
+    {
+        GameObject enemy = GameManager.instance.mDropPool.Get();
+        enemy.transform.position = GameManager.instance.mPlayer.transform.position;
+        Vector3 pos = Random.insideUnitCircle;
+        if (pos.magnitude == 0)
+            pos.x = 1;
+        pos = pos.normalized;
+        enemy.transform.position += pos * 20;
+        enemy.GetComponent<Enemy>().Init(mEnemyLevel);
+    }
+
     void OnMove(InputValue value)
     {
         if (!GameManager.instance.mIsLive)
@@ -69,13 +81,6 @@ public class Player : MonoBehaviour
         Vector2 nextVec = mInputVec * GameManager.instance.mPlayerData.MovementSpeed * Time.fixedDeltaTime;
         mRigid.MovePosition(mRigid.position + nextVec);
 
-        // 적 레벨업
-        mTimerEnemyLevel += Time.fixedDeltaTime;
-        if (mTimerEnemyLevel > GameManager.instance.mEnemyJsonData[mEnemyLevel].LevelUpTime && mEnemyLevel < GameManager.instance.mEnemyJsonData.Length - 1)
-        {
-            mTimerEnemyLevel = 0;
-            ++mEnemyLevel;
-        }
         // 적 생성
         mTimerEnemySpawn += Time.fixedDeltaTime;
         if (mTimerEnemySpawn > GameManager.instance.mEnemyJsonData[mEnemyLevel].SpawnTime)
@@ -83,6 +88,15 @@ public class Player : MonoBehaviour
             mTimerEnemySpawn = 0;
             for (int i = 0; i < GameManager.instance.mEnemyJsonData[mEnemyLevel].SpawnCount; ++i)
                 SpawnEnemy();
+        }
+
+        // 적 레벨업
+        mTimerEnemyLevel += Time.fixedDeltaTime;
+        if (mTimerEnemyLevel > GameManager.instance.mEnemyJsonData[mEnemyLevel].LevelUpTime && mEnemyLevel < GameManager.instance.mEnemyJsonData.Length - 1)
+        {
+            mTimerEnemyLevel = 0;
+            mTimerEnemySpawn = 0;
+            ++mEnemyLevel;
         }
     }
     void LateUpdate()

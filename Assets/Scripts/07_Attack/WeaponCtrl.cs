@@ -25,7 +25,6 @@ public class WeaponCtrl : MonoBehaviour
         mWeaponPool.transform.localRotation = Quaternion.identity;
         mWeaponPool.Init((int) GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].PrefabType);
         mWeaponPool.mPool[0].GetComponent<SpriteRenderer>().sprite = GameManager.instance.mWeaponSprite[GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].SpriteId];
-        mWeaponPool.mPool[0].tag = GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].WeaponTag.ToString();
 
         // initialize Root Prefab (particular setting)
         switch (GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].WeaponType)

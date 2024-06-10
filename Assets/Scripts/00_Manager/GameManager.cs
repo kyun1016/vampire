@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public Sprite[] mHUDAchiveSprite;
     public GameObject[] mPoolPrefabs;   // 프리펩들을 보관할 변수
     public Sprite[] mWeaponSprite;
+    public Sprite[] mFieldObjectSprite;
     public Sprite[] mDropItemSprite;
     public RuntimeAnimatorController[] mPlayerAnimCtrl;
     public RuntimeAnimatorController[] mEnemyAnimCtrl;

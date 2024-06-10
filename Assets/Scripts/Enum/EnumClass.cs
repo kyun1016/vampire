@@ -36,6 +36,11 @@ public class Enum
         RangeCircle,
         DropItem
     }
+    public enum DebuffType
+    {
+        TicDamage,
+        Slow
+    }
     public enum DropItemSprite
     {
         Exp0,
@@ -46,6 +51,12 @@ public class Enum
         Gold0,
         Gold1,
         Gold2
+    }
+    public enum FieldObjectSprite
+    {
+        Box,
+        Candle,
+        Bush
     }
     public enum WeaponTag
     {

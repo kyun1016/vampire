@@ -159,33 +159,33 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!(collision.CompareTag("Bullet") || collision.CompareTag("Melee") || collision.CompareTag("Garlic") || collision.CompareTag("SpiderWeb")) || !mIsLive)
+        if (!(collision.CompareTag("Melee") || collision.CompareTag("Range")) || !mIsLive)
             return;
-        if (collision.CompareTag("Garlic"))
-        {
-            mIsGarlic = true;
-            mGarlicDamage = collision.GetComponent<Melee>().mDamage;
-            return;
-        }
-        if (collision.CompareTag("SpiderWeb"))
-        {
-            mMovementSpeedCoef *= 0.5f;
-            collision.GetComponent<Range>().transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-            collision.GetComponent<Range>().mSpeed = 0f;
-            Hit(collision.GetComponent<Range>().mDamage);
-        }
+        //if (collision.CompareTag("Garlic"))
+        //{
+        //    mIsGarlic = true;
+        //    mGarlicDamage = collision.GetComponent<Melee>().mDamage;
+        //    return;
+        //}
+        //if (collision.CompareTag("SpiderWeb"))
+        //{
+        //    mMovementSpeedCoef *= 0.5f;
+        //    collision.GetComponent<Range>().transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        //    collision.GetComponent<Range>().mSpeed = 0f;
+        //    Hit(collision.GetComponent<Range>().mDamage);
+        //}
 
-        if (collision.CompareTag("Bullet") || collision.CompareTag("SpiderWeb"))
+        if (collision.CompareTag("Range"))
             Hit(collision.GetComponent<Range>().mDamage);
         else if (collision.CompareTag("Melee"))
             Hit(collision.GetComponent<Melee>().mDamage);
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Garlic"))
-            mIsGarlic = false;
-        if (collision.CompareTag("SpiderWeb"))
-            mMovementSpeedCoef *= 2f;
+        //if (collision.CompareTag("Garlic"))
+        //    mIsGarlic = false;
+        //if (collision.CompareTag("SpiderWeb"))
+        //    mMovementSpeedCoef *= 2f;
     }
 
     IEnumerator KnockBack()

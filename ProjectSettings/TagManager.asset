@@ -7,13 +7,12 @@ TagManager:
   - Ground
   - Area
   - Enemy
-  - Bullet
-  - Melee
   - AreaCollider
-  - Garlic
-  - SpiderWeb
   - DropItem
   - PickupCollider
+  - FieldObject
+  - Melee
+  - Range
   layers:
   - Default
   - TransparentFX
