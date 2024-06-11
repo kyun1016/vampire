@@ -46,6 +46,9 @@ public class Enemy : MonoBehaviour
         mDropGold = data.DropGold;
         mDropGoldChance = data.DropGoldChance;
     }
+
+
+
     private void OnEnable()
     {
         mTarget = GameManager.instance.mPlayer.GetComponent<Rigidbody2D>();
@@ -58,6 +61,32 @@ public class Enemy : MonoBehaviour
         mAnim.SetBool("Dead", false);
         mHealth = mMaxHealth;
     }
+
+    private void Dead()
+    {
+        mIsLive = false;
+        mIsGarlic = false;
+        mMovementSpeedCoef = 1.0f;
+        mColl.enabled = false;
+        mRigid.simulated = false;
+        mSpriter.sortingOrder = 1;
+        mAnim.SetBool("Dead", true);
+        GameManager.instance.mPlayerData.Kill++;
+
+        // 경험치 드롭
+        FuncPool.DropExp(mDropExp, transform);
+
+        // 골드 드롭
+        if (Random.value <= mDropGoldChance)
+        {
+            FuncPool.DropGold(mDropGold, transform);
+        }
+
+        GameManager.instance.PlaySFX(Enum.SFX.Dead);
+
+        gameObject.SetActive(false);
+    }
+
     void Hit(float damage)
     {
         mHealth -= damage;
@@ -70,64 +99,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            mIsLive = false;
-            mIsGarlic = false;
-            mMovementSpeedCoef = 1.0f;
-            mColl.enabled = false;
-            mRigid.simulated = false;
-            mSpriter.sortingOrder = 1;
-            mAnim.SetBool("Dead", true);
-            GameManager.instance.mPlayerData.Kill++;
-
-            // 경험치 드롭
-            GameObject item = GameManager.instance.mDropPool.Get();
-            item.transform.position = transform.position;
-            item.transform.rotation = Quaternion.identity;
-            item.GetComponent<DropItem>().mData = mDropExp;
-            switch (mDropExp)
-            {
-                case > 50:
-                    item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Exp2;
-                    item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Exp2];
-                    break;
-                case > 10:
-                    item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Exp1;
-                    item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Exp1];
-                    break;
-                default:
-                    item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Exp0;
-                    item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Exp0];
-                    break;
-            }
-            item.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.5f);
-
-            // 골드 드롭
-            if (Random.value >= mDropGoldChance)
-            {
-                item = GameManager.instance.mDropPool.Get();
-                item.transform.position = transform.position;
-                item.transform.position += new Vector3(Random.value * 2 - 1, Random.value * 2 - 1);
-                item.transform.rotation = Quaternion.identity;
-                item.GetComponent<DropItem>().mData = mDropGold;
-                switch (mDropGold)
-                {
-                    case > 50:
-                        item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Gold2;
-                        item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Gold2];
-                        break;
-                    case > 10:
-                        item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Gold1;
-                        item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Gold1];
-                        break;
-                    default:
-                        item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Gold0;
-                        item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Gold0];
-                        break;
-                }
-                item.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
-            }
-
-            GameManager.instance.PlaySFX(Enum.SFX.Dead);
+            Dead();
         }
     }
     private void FixedUpdate()
@@ -200,8 +172,5 @@ public class Enemy : MonoBehaviour
         mRigid.AddForce(dirVec.normalized * mKnockBackForce, ForceMode2D.Impulse);
     }
 
-    void Dead()
-    {
-        gameObject.SetActive(false);
-    }
+
 }

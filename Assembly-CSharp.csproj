@@ -148,7 +148,7 @@
     <Compile Include="Assets\Modern UI Pack\Scripts\Slider\RangeMaxSlider.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Progress Bar\ProgressBar.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerDropdownItem.cs" />
-    <Compile Include="Assets\Scripts\Enum\EnumClass.cs" />
+    <Compile Include="Assets\Scripts\General\EnumClass.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Demo\InputSystemChecker.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Layout Group\RadialLayoutGroup.cs" />
@@ -177,6 +177,7 @@
     <Compile Include="Assets\Modern UI Pack\Scripts\Demo\LaunchURL.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerEditor.cs" />
+    <Compile Include="Assets\Scripts\07_Attack\FieldObject.cs" />
     <Compile Include="Assets\Scripts\Data\WeaponJsonData.cs" />
     <Compile Include="Assets\Scripts\08_HUD\HUDBtnPlayer.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Assets\Modern UI Pack\Scripts\Horizontal Selector\HorizontalSelectorEditor.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerSwitch.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerScrollbar.cs" />
+    <Compile Include="Assets\Scripts\Data\LevelJsonData.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Switch\SwitchManager.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Toggle\CustomToggle.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
@@ -216,9 +218,8 @@
     <Compile Include="Assets\Scripts\07_Attack\Range.cs" />
     <Compile Include="Assets\Scripts\Data\WeaponData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
-    <Compile Include="Assets\Scripts\Enum\WeaponFunc.cs" />
-    <Compile Include="Assets\Scripts\Data\LevelJsonData.cs" />
-    <Compile Include="Assets\Scripts\07_Attack\FieldObject.cs" />
+    <Compile Include="Assets\Scripts\General\FuncWeapon.cs" />
+    <Compile Include="Assets\Scripts\General\FuncPool.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

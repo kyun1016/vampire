@@ -28,7 +28,7 @@ public class DropItem : MonoBehaviour
             return;
 
         Vector2 dirVec = mTarget.position - mRigid.position;
-        Vector2 nextVec = dirVec.normalized * 2 * Time.fixedDeltaTime;
+        Vector2 nextVec = dirVec.normalized * 10 * Time.fixedDeltaTime;
         mRigid.MovePosition(mRigid.position + nextVec);
         mRigid.velocity = Vector2.zero;
     }

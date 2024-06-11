@@ -39,9 +39,8 @@ public class FieldObject : MonoBehaviour
                     item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Health];
                     break;
             }
-
+            gameObject.SetActive(false);
             return;
         }
-            
     }
 }
