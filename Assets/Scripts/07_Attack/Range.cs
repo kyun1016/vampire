@@ -6,6 +6,7 @@ public class Range : Weapon
 {
     bool mIsLive;
     int mPer;
+    float mSpeed;
     Vector3 mDir;
     
     private void FixedUpdate()
@@ -39,7 +40,15 @@ public class Range : Weapon
             return;
 
         mPer--;
-        if(mPer == -1)
+
+        if (mEffect == Enum.EffectType.Stop)
+        {
+            transform.localScale = new Vector3(1.0f, 1.0f);
+            mSpeed = 0;
+        }
+
+
+        if (mPer == -1)
         {
             mIsLive = false;
             gameObject.SetActive(false);

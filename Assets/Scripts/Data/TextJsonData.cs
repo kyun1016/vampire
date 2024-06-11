@@ -21,6 +21,7 @@ public struct TextJsonData
     public string[] PlayerUnlockDesc;
     public string[] AchiveDesc;
 
-    public string HUDLevelUpTitle;
+    public string[] HUDGameStart;
+    public string[] HUDLevelUpTitle;
     public string[] HUDSetting;
 }

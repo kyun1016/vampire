@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,10 +8,12 @@ public class HUDGameStart : MonoBehaviour
 {
     RectTransform mRect;
     public GameObject mRootHUD;
+    public TMP_Text mTextPowerUp;
     GameObject[] mPlayers;
 
     public void UpdateText()
     {
+        mTextPowerUp.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].HUDGameStart[0];
         for (int i = 0; i < mPlayers.Length; ++i)
         {
             mPlayers[i].GetComponent<HUDBtnPlayer>().UpdateText();

@@ -134,12 +134,6 @@ public class Enemy : MonoBehaviour
         if (!(collision.CompareTag("Weapon")) || !mIsLive)
             return;
 
-        if (collision.GetComponent<Weapon>().mEffect == Enum.EffectType.Stop)
-        {
-            collision.GetComponent<Weapon>().transform.localScale = new Vector3(1.0f, 1.0f);
-            collision.GetComponent<Weapon>().mSpeed = 0;
-        }
-
         Hit(collision.GetComponent<Weapon>().mDamage);
         mDebuffPowers[(int)collision.GetComponent<Weapon>().mDebuff] += collision.GetComponent<Weapon>().mDebuffPower;
     }
