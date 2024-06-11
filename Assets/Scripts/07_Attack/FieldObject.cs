@@ -23,22 +23,7 @@ public class FieldObject : MonoBehaviour
 
         if (collision.CompareTag("Melee") || collision.CompareTag("Range"))
         {
-            GameObject item = GameManager.instance.mDropPool.Get();
-            item.transform.position = transform.position;
-            item.transform.rotation = Quaternion.identity;
-
-            float val = Random.value;
-            switch (val)
-            {
-                case < 0.1f:
-                    item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Mag;
-                    item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Mag];
-                    break;
-                case < 0.3f:
-                    item.GetComponent<DropItem>().mType = Enum.DropItemSprite.Health;
-                    item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Health];
-                    break;
-            }
+            FuncPool.DropItem(transform.position);
             gameObject.SetActive(false);
             return;
         }

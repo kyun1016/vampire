@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8215902745780970612}
   m_Layer: 0
   m_Name: WeaponRangeBox
-  m_TagString: Range
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,5 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4236ff811de6b6a438ea922d4f5a6400, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mDebuff: 0
+  mEffect: 0
   mDamage: 0
+  mDebuffPower: 0
   mSpeed: 0

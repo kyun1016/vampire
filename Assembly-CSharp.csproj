@@ -220,6 +220,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\General\FuncWeapon.cs" />
     <Compile Include="Assets\Scripts\General\FuncPool.cs" />
+    <Compile Include="Assets\Scripts\07_Attack\Weapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

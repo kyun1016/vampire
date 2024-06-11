@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Range : MonoBehaviour
+public class Range : Weapon
 {
     bool mIsLive;
-    public float mDamage;
-    public float mSpeed;
     int mPer;
     Vector3 mDir;
-
+    
     private void FixedUpdate()
     {
         if (!mIsLive)
@@ -22,13 +20,17 @@ public class Range : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    public void Init(float damage, int per, Vector3 dir, float speed)
+    public void Init(float damage, int per, Vector3 dir, float speed, float debuffPower = 0, Enum.DebuffType debuff = Enum.DebuffType.None, Enum.EffectType effect = Enum.EffectType.None)
     {
         mIsLive = true;
+        mDebuff = debuff;
+        mEffect = effect;
+
         mDamage = damage;
         mPer = per;
         mDir = dir;
         mSpeed = speed;
+        mDebuffPower = debuffPower;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

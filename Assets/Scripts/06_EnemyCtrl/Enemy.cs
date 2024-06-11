@@ -6,17 +6,15 @@ public class Enemy : MonoBehaviour
 {
     [Header("# Enemy Data")]
     bool mIsLive;
-    public bool mIsGarlic;
-    public float mGarlicDamage;
+    public float[] mDebuffPowers;
     public float mMovementSpeed;
-    public float mMovementSpeedCoef;
     public float mHealth;
     public float mMaxHealth;
     public float mKnockBackForce;
     public int mDropExp;
     public int mDropGold;
     public float mDropGoldChance;
-    
+
     [Header("# Game Object")]
     public Rigidbody2D mTarget;
 
@@ -32,7 +30,8 @@ public class Enemy : MonoBehaviour
         mColl = GetComponent<Collider2D>();
         mAnim = GetComponent<Animator>();
         mSpriter = GetComponent<SpriteRenderer>();
-        mWaitFixedFrame = new WaitForFixedUpdate(); 
+        mWaitFixedFrame = new WaitForFixedUpdate();
+        mDebuffPowers = new float[(int)Enum.DebuffType.Size];
     }
     public void Init(int id)
     {
@@ -53,8 +52,12 @@ public class Enemy : MonoBehaviour
     {
         mTarget = GameManager.instance.mPlayer.GetComponent<Rigidbody2D>();
         mIsLive = true;
-        mIsGarlic = false;
-        mMovementSpeedCoef = 1f;
+        for (int i = 0; i < mDebuffPowers.Length; ++i)
+        {
+            mDebuffPowers[i] = 0;
+        }
+        mDebuffPowers[(int)Enum.DebuffType.SlowCoef] = 1.0f;    // 슬로우의 경우 coef로 활용
+
         mColl.enabled = true;
         mRigid.simulated = true;
         mSpriter.sortingOrder = 2;
@@ -65,8 +68,6 @@ public class Enemy : MonoBehaviour
     private void Dead()
     {
         mIsLive = false;
-        mIsGarlic = false;
-        mMovementSpeedCoef = 1.0f;
         mColl.enabled = false;
         mRigid.simulated = false;
         mSpriter.sortingOrder = 1;
@@ -74,12 +75,12 @@ public class Enemy : MonoBehaviour
         GameManager.instance.mPlayerData.Kill++;
 
         // 경험치 드롭
-        FuncPool.DropExp(mDropExp, transform);
+        FuncPool.DropExp(mDropExp, transform.position);
 
         // 골드 드롭
         if (Random.value <= mDropGoldChance)
         {
-            FuncPool.DropGold(mDropGold, transform);
+            FuncPool.DropGold(mDropGold, transform.position);
         }
 
         GameManager.instance.PlaySFX(Enum.SFX.Dead);
@@ -108,13 +109,12 @@ public class Enemy : MonoBehaviour
             return;
         if (!mIsLive || mAnim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
             return;
-        if(mIsGarlic)
-        {
-            Hit(mGarlicDamage);
-        }
+
+        if (mDebuffPowers[(int)Enum.DebuffType.TicDamage] > 0)
+            Hit(mDebuffPowers[(int)Enum.DebuffType.TicDamage] * Time.fixedDeltaTime);
 
         Vector2 dirVec = mTarget.position - mRigid.position;
-        Vector2 nextVec = dirVec.normalized * mMovementSpeed * mMovementSpeedCoef * Time.fixedDeltaTime;
+        Vector2 nextVec = dirVec.normalized * mMovementSpeed * mDebuffPowers[(int)Enum.DebuffType.SlowCoef] * Time.fixedDeltaTime;
         mRigid.MovePosition(mRigid.position + nextVec);
 
         mRigid.velocity = Vector2.zero;
@@ -131,33 +131,24 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!(collision.CompareTag("Melee") || collision.CompareTag("Range")) || !mIsLive)
+        if (!(collision.CompareTag("Weapon")) || !mIsLive)
             return;
-        //if (collision.CompareTag("Garlic"))
-        //{
-        //    mIsGarlic = true;
-        //    mGarlicDamage = collision.GetComponent<Melee>().mDamage;
-        //    return;
-        //}
-        //if (collision.CompareTag("SpiderWeb"))
-        //{
-        //    mMovementSpeedCoef *= 0.5f;
-        //    collision.GetComponent<Range>().transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-        //    collision.GetComponent<Range>().mSpeed = 0f;
-        //    Hit(collision.GetComponent<Range>().mDamage);
-        //}
 
-        if (collision.CompareTag("Range"))
-            Hit(collision.GetComponent<Range>().mDamage);
-        else if (collision.CompareTag("Melee"))
-            Hit(collision.GetComponent<Melee>().mDamage);
+        if (collision.GetComponent<Weapon>().mEffect == Enum.EffectType.Stop)
+        {
+            collision.GetComponent<Weapon>().transform.localScale = new Vector3(1.0f, 1.0f);
+            collision.GetComponent<Weapon>().mSpeed = 0;
+        }
+
+        Hit(collision.GetComponent<Weapon>().mDamage);
+        mDebuffPowers[(int)collision.GetComponent<Weapon>().mDebuff] += collision.GetComponent<Weapon>().mDebuffPower;
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        //if (collision.CompareTag("Garlic"))
-        //    mIsGarlic = false;
-        //if (collision.CompareTag("SpiderWeb"))
-        //    mMovementSpeedCoef *= 2f;
+        if (!(collision.CompareTag("Weapon")) || !mIsLive)
+            return;
+
+        mDebuffPowers[(int)collision.GetComponent<Weapon>().mDebuff] -= collision.GetComponent<Weapon>().mDebuffPower;
     }
 
     IEnumerator KnockBack()

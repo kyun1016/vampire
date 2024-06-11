@@ -42,31 +42,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    void SpawnEnemy()
-    {
-        GameObject enemy = GameManager.instance.mEnemyPool.Get();
-        enemy.transform.position = GameManager.instance.mPlayer.transform.position;
-        Vector3 pos = Random.insideUnitCircle;
-        if (pos.magnitude == 0)
-            pos.x = 1;
-        pos = pos.normalized;
-        enemy.transform.position += pos * 20;
-        enemy.GetComponent<Enemy>().Init(mEnemyLevel);
-    }
-
-    void SpawnFieldObject()
-    {
-        GameObject item = GameManager.instance.mFieldObjectPool.Get();
-        item.transform.position = GameManager.instance.mPlayer.transform.position;
-        Vector3 pos = Random.insideUnitCircle;
-        if (pos.magnitude == 0)
-            pos.x = 1;
-        pos = pos.normalized;
-        item.transform.position += pos * 20;
-        int value = Random.Range(0, GameManager.instance.mFieldObjectSprite.Length);
-        item.GetComponent<FieldObject>().Init(value);
-    }
-
 
     void OnMove(InputValue value)
     {
@@ -90,7 +65,7 @@ public class Player : MonoBehaviour
         {
             mTimerEnemySpawn = 0;
             for (int i = 0; i < GameManager.instance.mEnemyJsonData[mEnemyLevel].SpawnCount; ++i)
-                SpawnEnemy();
+                FuncPool.SpawnEnemy(mEnemyLevel);
         }
 
         // 적 레벨업
@@ -107,7 +82,7 @@ public class Player : MonoBehaviour
         if (mTimerFieldObjectSpawn > GameManager.instance.mObjectGenTime)
         {
             mTimerFieldObjectSpawn = 0;
-            SpawnFieldObject();
+            FuncPool.SpawnFieldObject();
         }
     }
     void LateUpdate()

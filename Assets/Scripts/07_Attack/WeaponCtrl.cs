@@ -5,15 +5,15 @@ using UnityEngine;
 public class WeaponCtrl : MonoBehaviour
 {
     int mId;
+    Enum.WeaponType mWeaponType;
     float mTime;
-    bool mEnable;
     int mShotCnt;
     bool mShotEn;
     PoolManager mWeaponPool;
 
+
     public void Init(int id)
     {
-        mEnable = true;
         if (id >= GameManager.instance.mPlayerData.WeaponSize)
             Debug.Assert(false, "Error");
         mId = id;
@@ -26,8 +26,10 @@ public class WeaponCtrl : MonoBehaviour
         mWeaponPool.Init((int) GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].PrefabType);
         mWeaponPool.mPool[0].GetComponent<SpriteRenderer>().sprite = GameManager.instance.mWeaponSprite[GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].SpriteId];
 
+        mWeaponType = GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].WeaponType;
+
         // initialize Root Prefab (particular setting)
-        switch (GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].WeaponType)
+        switch (mWeaponType)
         {
             case Enum.WeaponType.Melee:
             case Enum.WeaponType.RangeDagger:
@@ -60,43 +62,14 @@ public class WeaponCtrl : MonoBehaviour
 
     public void updatePool()
     {
-        switch (GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].WeaponType)
-        {
-            case Enum.WeaponType.Melee:
-                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
-                break;
-            case Enum.WeaponType.RangeBullet:
-                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
-                break;
-            case Enum.WeaponType.RangeDagger:
-                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
-                break;
-            case Enum.WeaponType.RangeAxe:
-                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
-                break;
-            case Enum.WeaponType.Garlic:
-                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
-                break;
-            case Enum.WeaponType.Web:
-                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
-                break;
-            case Enum.WeaponType.Boom:
-                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
-                break;
-            case Enum.WeaponType.ThrowBoom:
-                mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
-                break;
-            default:
-                Debug.Assert(false, "Error");
-                break;
-        }
+        mWeaponPool.mPool[0].transform.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
 
-        for(int i=1; i < mWeaponPool.mPool.Count; ++i)
+        for (int i=1; i < mWeaponPool.mPool.Count; ++i)
         {
             mWeaponPool.mPool[i].transform.localScale = mWeaponPool.mPool[0].transform.localScale;
         }
 
-        switch (GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].WeaponType)
+        switch (mWeaponType)
         {
             case Enum.WeaponType.Melee:
                 PlacementCircle();
@@ -121,10 +94,8 @@ public class WeaponCtrl : MonoBehaviour
     {
         if (!GameManager.instance.mIsLive)
             return;
-        if (!mEnable)
-            return;
 
-        switch (GameManager.instance.mWeaponLastData[mId].WeaponType)
+        switch (mWeaponType)
         {
             case Enum.WeaponType.Melee:
                 transform.Rotate(Vector3.back * GameManager.instance.mWeaponLastData[mId].Speed * Time.deltaTime);
@@ -134,7 +105,7 @@ public class WeaponCtrl : MonoBehaviour
                 mTime += Time.deltaTime;
                 if (mTime > GameManager.instance.mWeaponLastData[mId].CoolTime)
                 {
-                    switch (GameManager.instance.mWeaponLastData[mId].WeaponType)
+                    switch (mWeaponType)
                     {
                         case Enum.WeaponType.RangeBullet:
                             Fire();
@@ -162,7 +133,7 @@ public class WeaponCtrl : MonoBehaviour
                     }
                     else
                     {
-                        switch (GameManager.instance.mWeaponLastData[mId].WeaponType)
+                        switch (mWeaponType)
                         {
                             case Enum.WeaponType.RangeDagger:
                                 FireDagger();
@@ -210,7 +181,7 @@ public class WeaponCtrl : MonoBehaviour
         melee.localScale = Vector3.one * GameManager.instance.mWeaponLastData[mId].ProjectileSize;
         melee.localPosition = Vector3.zero;
         melee.localRotation = Quaternion.identity;
-        melee.GetComponent<Melee>().Init(GameManager.instance.mWeaponLastData[mId].Damage);
+        melee.GetComponent<Melee>().Init(GameManager.instance.mWeaponLastData[mId].Damage, GameManager.instance.mWeaponLastData[mId].Damage, Enum.DebuffType.TicDamage);
     }
     public void PlacementCircle()
     {
@@ -289,7 +260,7 @@ public class WeaponCtrl : MonoBehaviour
             bullet.position = GameManager.instance.mPlayer.transform.position;
             bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
             bullet.localScale = new Vector3(0.02f, 0.4f, 1f);
-            bullet.GetComponent<Range>().Init(Mathf.RoundToInt(GameManager.instance.mWeaponLastData[mId].Damage), GameManager.instance.mWeaponLastData[mId].Pierce, dir, GameManager.instance.mWeaponLastData[mId].Speed); // -1 is Infinity Per
+            bullet.GetComponent<Range>().Init(Mathf.RoundToInt(GameManager.instance.mWeaponLastData[mId].Damage), GameManager.instance.mWeaponLastData[mId].Pierce, dir, GameManager.instance.mWeaponLastData[mId].Speed, 0.2f, Enum.DebuffType.SlowCoef, Enum.EffectType.Stop); // -1 is Infinity Per
         }
         GameManager.instance.PlaySFX(Enum.SFX.Range);
     }

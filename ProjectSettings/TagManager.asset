@@ -13,6 +13,7 @@ TagManager:
   - FieldObject
   - Melee
   - Range
+  - Weapon
   layers:
   - Default
   - TransparentFX

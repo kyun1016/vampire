@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5972792379920461001}
   m_Layer: 0
   m_Name: WeaponMeleeBox
-  m_TagString: Melee
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,4 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df3bef575899f984ca27420995bff915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mDebuff: 0
+  mEffect: 0
   mDamage: 0
+  mDebuffPower: 0

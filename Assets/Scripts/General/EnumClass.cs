@@ -41,7 +41,13 @@ public class Enum
     {
         None,
         TicDamage,
-        Slow
+        SlowCoef,
+        Size
+    }
+    public enum EffectType
+    {
+        None,
+        Stop
     }
     public enum DropItemSprite
     {
