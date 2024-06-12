@@ -34,17 +34,17 @@ public class HUDInGame : MonoBehaviour
         // Level
         mTextLevel.text = string.Format("Lv.{0:F0}", GameManager.instance.mPlayerData.Level);
         // Time
-        float remainTime = GameManager.instance.mPlayerJsonData[GameManager.instance.mPlayerData.Id].MaxGameTime - GameManager.instance.mPlayerData.GameTime;
+        float remainTime = GameManager.instance.mJsonPlayerData[GameManager.instance.mPlayerData.Id].MaxGameTime - GameManager.instance.mPlayerData.GameTime;
         int min = Mathf.FloorToInt(remainTime / 60);
         int sec = Mathf.FloorToInt(remainTime % 60);
         mTextTime.text = string.Format("{0:D2}:{1:D2}", min, sec);
         // Exp
         float curExp = GameManager.instance.mPlayerData.Exp;
-        float maxExp = GameManager.instance.mLevelJsonData.PlayerExp[Mathf.Min(GameManager.instance.mPlayerData.Level, GameManager.instance.mLevelJsonData.PlayerExp.Length - 1)];
+        float maxExp = GameManager.instance.mJsonLevelData.PlayerExp[Mathf.Min(GameManager.instance.mPlayerData.Level, GameManager.instance.mJsonLevelData.PlayerExp.Length - 1)];
         mSliderExp.value = curExp / maxExp;
         // Health
         float curHealth = GameManager.instance.mPlayerData.Health;
-        float maxHealth = GameManager.instance.mPlayerJsonData[GameManager.instance.mPlayerData.Id].MaxHealth;
+        float maxHealth = GameManager.instance.mJsonPlayerData[GameManager.instance.mPlayerData.Id].MaxHealth;
         mSliderHealth.value = curHealth / maxHealth;
     }
 }

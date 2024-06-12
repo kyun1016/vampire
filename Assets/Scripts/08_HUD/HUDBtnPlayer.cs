@@ -8,41 +8,32 @@ public class HUDBtnPlayer : MonoBehaviour
 {
     public int mId;
 
-    Image mImgBackground;
-    Image mImgChar;
-    TMP_Text mTextName;
-    TMP_Text mTextDesc;
+    public Image mImgBackground;
+    public Image mImgChar;
+    public TMP_Text mTextName;
+    public TMP_Text mTextDesc;
 
-    private void Awake()
-    {
-        Image[] imgs = GetComponentsInChildren<Image>();
-        TMP_Text[] texts = GetComponentsInChildren<TMP_Text>();
-
-        mImgBackground = imgs[0];
-        mImgChar = imgs[1];
-        mTextName = texts[0];
-        mTextDesc = texts[1];
-    }
 
     public void UpdateText()
     {
-        if (!GameManager.instance.mPlayerJsonData[mId].Enable)
+        if (!GameManager.instance.mJsonPlayerData[mId].Enable)
         {
-            mTextName.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].PlayerUnlockName[mId];
-            mTextDesc.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].PlayerUnlockDesc[mId];
+            mTextName.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].PlayerUnlockName[mId];
+            mTextDesc.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].PlayerUnlockDesc[mId];
         }
         else
         {
-            mTextName.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].PlayerName[mId];
-            mTextDesc.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].PlayerDesc[mId];
+            mTextName.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].PlayerName[mId];
+            mTextDesc.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].PlayerDesc[mId];
         }
     }
 
-    public void Init()
+    public void Init(int id)
     {
+        mId = id;
         UpdateText();
         mImgChar.sprite = GameManager.instance.mHUDBtnPlayerSprite[mId];
-        if (!GameManager.instance.mPlayerJsonData[mId].Enable)
+        if (!GameManager.instance.mJsonPlayerData[mId].Enable)
         {
             mImgBackground.color = new Color(150, 150, 150);
             mImgChar.color = new Color(0, 0, 0);

@@ -8,24 +8,29 @@ public class FieldObject : MonoBehaviour
 
     public void Init(int value)
     {
-        mType = (Enum.FieldObjectSprite) value;
+        mType = (Enum.FieldObjectSprite)value;
         gameObject.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mFieldObjectSprite[value];
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (mType == Enum.FieldObjectSprite.Box)
+        {
             if (collision.CompareTag("Player"))
             {
                 gameObject.SetActive(false);
                 return;
             }
-
-        if (collision.CompareTag("Melee") || collision.CompareTag("Range"))
+            
+        }
+        else 
         {
-            FuncPool.DropItem(transform.position);
-            gameObject.SetActive(false);
-            return;
+            if (collision.CompareTag("Weapon"))
+            {
+                FuncPool.DropItem(transform.position);
+                gameObject.SetActive(false);
+                return;
+            }
         }
     }
 }

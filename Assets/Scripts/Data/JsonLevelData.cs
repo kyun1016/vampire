@@ -1,6 +1,6 @@
 
 [System.Serializable]
-public struct LevelJsonData
+public struct JsonLevelData
 {
     public int[] PlayerExp;
 }

@@ -1,6 +1,6 @@
 
 [System.Serializable]
-public struct EnemyJsonData
+public struct JsonEnemyData
 {
     public int AnimCtrlId;
     public Enum.PrefabType PrefabEnemy;

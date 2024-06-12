@@ -62,6 +62,7 @@
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerToggle.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Dropdown\CustomDropdownEditor.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerAnimatedIcon.cs" />
+    <Compile Include="Assets\Scripts\07_Attack\Weapon.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Context Menu\ContextMenuContentMobile.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManager.cs" />
     <Compile Include="Assets\Scripts\07_Attack\Melee.cs" />
@@ -75,7 +76,7 @@
     <Compile Include="Assets\Modern UI Pack\Scripts\Button\ButtonManager.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Rendering\Ripple.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Slider\RangeSlider.cs" />
-    <Compile Include="Assets\Scripts\Data\TextJsonData.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonTextData.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerButtonEditor.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Layout Group\LayoutGroupFix.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Assets\Scripts\07_Attack\WeaponCtrl.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\ListView\ListViewItem.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
+    <Compile Include="Assets\Scripts\General\FuncPool.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Context Menu\ContextMenuContent.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
@@ -122,7 +124,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\Scripts\01_BtnCtrl\BtnSceneChange.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
-    <Compile Include="Assets\Scripts\Data\AchiveJsonData.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonAchiveData.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Notification\NotificationManager.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Window\WindowManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
@@ -178,7 +180,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerEditor.cs" />
     <Compile Include="Assets\Scripts\07_Attack\FieldObject.cs" />
-    <Compile Include="Assets\Scripts\Data\WeaponJsonData.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonWeaponData.cs" />
     <Compile Include="Assets\Scripts\08_HUD\HUDBtnPlayer.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\ListView\ListViewEditor.cs" />
@@ -192,19 +194,19 @@
     <Compile Include="Assets\Modern UI Pack\Scripts\Icon\IconManagerEditor.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Input Field\CustomInputField.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Tools\ElementTabbing.cs" />
-    <Compile Include="Assets\Scripts\Data\EnemyJsonData.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonEnemyData.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Tooltip\TooltipContent.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerCustom.cs" />
-    <Compile Include="Assets\Scripts\Data\PerkJsonData.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonPerkData.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Horizontal Selector\HorizontalSelectorEditor.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerSwitch.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerScrollbar.cs" />
-    <Compile Include="Assets\Scripts\Data\LevelJsonData.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonLevelData.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Switch\SwitchManager.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Toggle\CustomToggle.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
-    <Compile Include="Assets\Scripts\Data\PlayerJsonData.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonPlayerData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\Scripts\01_BtnCtrl\BtnPanelSync.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
@@ -219,8 +221,10 @@
     <Compile Include="Assets\Scripts\Data\WeaponData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\General\FuncWeapon.cs" />
-    <Compile Include="Assets\Scripts\General\FuncPool.cs" />
-    <Compile Include="Assets\Scripts\07_Attack\Weapon.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDPowerUp.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDBtnPowerUp.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonPowerUpData.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonFieldObjectData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

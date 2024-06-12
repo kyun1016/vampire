@@ -6,38 +6,34 @@ using UnityEngine.UI;
 
 public class HUDGameStart : MonoBehaviour
 {
-    RectTransform mRect;
-    public GameObject mRootHUD;
+    public GameObject mTemplate;
     public TMP_Text mTextPowerUp;
     GameObject[] mPlayers;
 
     public void UpdateText()
     {
-        mTextPowerUp.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].HUDGameStart[0];
+        mTextPowerUp.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].HUDGameStart[0];
         for (int i = 0; i < mPlayers.Length; ++i)
         {
             mPlayers[i].GetComponent<HUDBtnPlayer>().UpdateText();
         }
     }
 
-    void Awake()
+    public void Init()
     {
-        mRect = GetComponent<RectTransform>();
-        mPlayers = new GameObject[GameManager.instance.mPlayerJsonData.Length];
-        mPlayers[0] = mRootHUD;
-        mPlayers[0].GetComponent<HUDBtnPlayer>().mId = 0;
-        mPlayers[0].GetComponent<HUDBtnPlayer>().Init();
+        mPlayers = new GameObject[GameManager.instance.mJsonPlayerData.Length];
+        mPlayers[0] = mTemplate;
+        mPlayers[0].GetComponent<HUDBtnPlayer>().Init(0);
         for (int i = 1; i < mPlayers.Length; ++i)
         {
-            mPlayers[i] = Instantiate(mRootHUD);
-            mPlayers[i].transform.SetParent(mRootHUD.transform.parent);
+            mPlayers[i] = Instantiate(mTemplate);
             mPlayers[i].transform.name = "Character " + i;
-            mPlayers[i].transform.localScale = mRootHUD.transform.localScale;
-            mPlayers[i].GetComponent<HUDBtnPlayer>().mId = i;
-            mPlayers[i].GetComponent<HUDBtnPlayer>().Init();
+            mPlayers[i].transform.SetParent(mTemplate.transform.parent);
+            mPlayers[i].transform.localScale = mTemplate.transform.localScale;
+            mPlayers[i].GetComponent<HUDBtnPlayer>().Init(i);
             mPlayers[i].GetComponent<Button>().interactable = true;
-            if (!GameManager.instance.mPlayerJsonData[i].Enable)
+            if (!GameManager.instance.mJsonPlayerData[i].Enable)
                 mPlayers[i].GetComponent<Button>().interactable = false;
-        }    
+        }
     }
 }

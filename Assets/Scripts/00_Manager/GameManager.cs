@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public Sprite[] mHUDBtnPlayerSprite;
     public Sprite[] mHUDBtnItemSprite;
     public Sprite[] mHUDAchiveSprite;
+    public Sprite[] mHUDPowerUpSprite;
     public GameObject[] mPoolPrefabs;   // 프리펩들을 보관할 변수
     public Sprite[] mWeaponSprite;
     public Sprite[] mFieldObjectSprite;
@@ -33,14 +34,15 @@ public class GameManager : MonoBehaviour
     public RuntimeAnimatorController[] mPlayerAnimCtrl;
     public RuntimeAnimatorController[] mEnemyAnimCtrl;
     [Header("# Json Info")]
-    public float mObjectGenTime;
-    public TextJsonData[] mTextJsonData;
-    public AchiveJsonData[] mAchiveJsonData;
-    public LevelJsonData mLevelJsonData;
-    public PlayerJsonData[] mPlayerJsonData;
-    public WeaponJsonData[] mWeaponJsonData;
-    public PerkJsonData[] mPerkJsonData;
-    public EnemyJsonData[] mEnemyJsonData;
+    public JsonFieldObjectData mJsonFieldObjectData;
+    public JsonTextData[] mJsonTextData;
+    public JsonAchiveData[] mJsonAchiveData;
+    public JsonLevelData mJsonLevelData;
+    public JsonPlayerData[] mJsonPlayerData;
+    public JsonWeaponData[] mJsonWeaponData;
+    public JsonPerkData[] mJsonPerkData;
+    public JsonPowerUpData[] mJsonPowerUpData;
+    public JsonEnemyData[] mJsonEnemyData;
     [Header("# Level & Item Info")]
     public PlayerData mPlayerData;
     public ItemCtrlData[] mPerkCtrlData;
@@ -59,6 +61,7 @@ public class GameManager : MonoBehaviour
     public HUDLevelUp mHUDLevelUp;
     public HUDResult mHUDResult;
     public HUDSetting mHUDSetting;
+    public HUDPowerUp mHUDPowerUp;
     public WaitForSeconds mWait0_5s;
     public WaitForSecondsRealtime mWait5s;
 
@@ -67,17 +70,17 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("MyData", 1);
 
-        for (int i = 0; i < mAchiveJsonData.Length; ++i)
+        for (int i = 0; i < mJsonAchiveData.Length; ++i)
         {
-            PlayerPrefs.SetInt(mAchiveJsonData[i].Name.ToString(), 0);
+            PlayerPrefs.SetInt(mJsonAchiveData[i].Name.ToString(), 0);
         }
     }
     void CheckAchive()
     {
-        for (int i = 0; i < mAchiveJsonData.Length; ++i)
+        for (int i = 0; i < mJsonAchiveData.Length; ++i)
         {
             bool isAchive = false;
-            switch (mAchiveJsonData[i].Name)
+            switch (mJsonAchiveData[i].Name)
             {
                 case Enum.Achive.UnlockChar2:
                     if (mPlayerData.Kill >= 1) isAchive = true;
@@ -89,9 +92,9 @@ public class GameManager : MonoBehaviour
                     Debug.Assert(false, "Error");
                     break;
             }
-            if (isAchive && PlayerPrefs.GetInt(mAchiveJsonData[i].Name.ToString()) == 0)
+            if (isAchive && PlayerPrefs.GetInt(mJsonAchiveData[i].Name.ToString()) == 0)
             {
-                PlayerPrefs.SetInt(mAchiveJsonData[i].Name.ToString(), 1);
+                PlayerPrefs.SetInt(mJsonAchiveData[i].Name.ToString(), 1);
                 StartCoroutine(NoticeRoutine(i));
             }
         }
@@ -104,20 +107,25 @@ public class GameManager : MonoBehaviour
     }
     public void SaveToJson()
     {
-        string json = JsonConvert.SerializeObject(mEnemyJsonData);
-        File.WriteAllText(Application.dataPath + "/Datas/EnemyJsonData.json", json);
-        json = JsonConvert.SerializeObject(mWeaponJsonData);
-        File.WriteAllText(Application.dataPath + "/Datas/WeaponJsonData.json", json);
-        json = JsonConvert.SerializeObject(mPerkJsonData);
-        File.WriteAllText(Application.dataPath + "/Datas/PerkJsonData.json", json);
-        json = JsonConvert.SerializeObject(mPlayerJsonData);
-        File.WriteAllText(Application.dataPath + "/Datas/PlayerJsonData.json", json);
-        json = JsonConvert.SerializeObject(mAchiveJsonData);
-        File.WriteAllText(Application.dataPath + "/Datas/AchiveJsonData.json", json);
-        json = JsonConvert.SerializeObject(mTextJsonData);
-        File.WriteAllText(Application.dataPath + "/Datas/TextJsonData.json", json);
-        json = JsonConvert.SerializeObject(mLevelJsonData);
-        File.WriteAllText(Application.dataPath + "/Datas/LevelJsonData.json", json);
+        string json = JsonConvert.SerializeObject(mJsonEnemyData);
+        File.WriteAllText(Application.dataPath + "/Datas/JsonEnemyData.json", json);
+        json = JsonConvert.SerializeObject(mJsonWeaponData);
+        File.WriteAllText(Application.dataPath + "/Datas/JsonWeaponData.json", json);
+        json = JsonConvert.SerializeObject(mJsonPerkData);
+        File.WriteAllText(Application.dataPath + "/Datas/JsonPerkData.json", json);
+        json = JsonConvert.SerializeObject(mJsonPlayerData);
+        File.WriteAllText(Application.dataPath + "/Datas/JsonPlayerData.json", json);
+        json = JsonConvert.SerializeObject(mJsonAchiveData);
+        File.WriteAllText(Application.dataPath + "/Datas/JsonAchiveData.json", json);
+        json = JsonConvert.SerializeObject(mJsonTextData);
+        File.WriteAllText(Application.dataPath + "/Datas/JsonTextData.json", json);
+        json = JsonConvert.SerializeObject(mJsonLevelData);
+        File.WriteAllText(Application.dataPath + "/Datas/JsonLevelData.json", json);
+        json = JsonConvert.SerializeObject(mJsonFieldObjectData);
+        File.WriteAllText(Application.dataPath + "/Datas/JsonFieldObjectData.json", json);
+        json = JsonConvert.SerializeObject(mJsonPowerUpData);
+        File.WriteAllText(Application.dataPath + "/Datas/JsonPowerUpData.json", json);
+
         SaveSettingJson();
     }
     public void LoadSettingJson()
@@ -127,26 +135,34 @@ public class GameManager : MonoBehaviour
     }
     private void LoadFromJson()
     {
-        string json = File.ReadAllText(Application.dataPath + "/Datas/EnemyJsonData.json");
-        mEnemyJsonData = JsonConvert.DeserializeObject<EnemyJsonData[]>(json);
+        string json = File.ReadAllText(Application.dataPath + "/Datas/JsonEnemyData.json");
+        mJsonEnemyData = JsonConvert.DeserializeObject<JsonEnemyData[]>(json);
 
-        json = File.ReadAllText(Application.dataPath + "/Datas/PlayerJsonData.json");
-        mPlayerJsonData = JsonConvert.DeserializeObject<PlayerJsonData[]>(json);
+        json = File.ReadAllText(Application.dataPath + "/Datas/JsonPlayerData.json");
+        mJsonPlayerData = JsonConvert.DeserializeObject<JsonPlayerData[]>(json);
 
-        json = File.ReadAllText(Application.dataPath + "/Datas/WeaponJsonData.json");
-        mWeaponJsonData = JsonConvert.DeserializeObject<WeaponJsonData[]>(json);
+        json = File.ReadAllText(Application.dataPath + "/Datas/JsonWeaponData.json");
+        mJsonWeaponData = JsonConvert.DeserializeObject<JsonWeaponData[]>(json);
 
-        json = File.ReadAllText(Application.dataPath + "/Datas/PerkJsonData.json");
-        mPerkJsonData = JsonConvert.DeserializeObject<PerkJsonData[]>(json);
+        json = File.ReadAllText(Application.dataPath + "/Datas/JsonPerkData.json");
+        mJsonPerkData = JsonConvert.DeserializeObject<JsonPerkData[]>(json);
 
-        json = File.ReadAllText(Application.dataPath + "/Datas/AchiveJsonData.json");
-        mAchiveJsonData = JsonConvert.DeserializeObject<AchiveJsonData[]>(json);
+        json = File.ReadAllText(Application.dataPath + "/Datas/JsonAchiveData.json");
+        mJsonAchiveData = JsonConvert.DeserializeObject<JsonAchiveData[]>(json);
 
-        json = File.ReadAllText(Application.dataPath + "/Datas/TextJsonData.json");
-        mTextJsonData = JsonConvert.DeserializeObject<TextJsonData[]>(json);
+        json = File.ReadAllText(Application.dataPath + "/Datas/JsonLevelData.json");
+        mJsonLevelData = JsonConvert.DeserializeObject<JsonLevelData>(json);
 
-        json = File.ReadAllText(Application.dataPath + "/Datas/LevelJsonData.json");
-        mLevelJsonData = JsonConvert.DeserializeObject<LevelJsonData>(json);
+        json = File.ReadAllText(Application.dataPath + "/Datas/JsonPowerUpData.json");
+        mJsonPowerUpData = JsonConvert.DeserializeObject<JsonPowerUpData[]>(json);
+
+        json = File.ReadAllText(Application.dataPath + "/Datas/JsonFieldObjectData.json");
+        mJsonFieldObjectData = JsonConvert.DeserializeObject<JsonFieldObjectData>(json);
+
+        json = File.ReadAllText(Application.dataPath + "/Datas/JsonTextData.json");
+        mJsonTextData = JsonConvert.DeserializeObject<JsonTextData[]>(json);
+
+        Debug.Assert(mJsonTextData[0].HUDPowerUpName.Length == mJsonPowerUpData.Length, "Power Up Count Error");
 
         LoadSettingJson();
     }
@@ -160,7 +176,7 @@ public class GameManager : MonoBehaviour
     {
         mEnemyPool = new GameObject("EnemyPool").AddComponent<PoolManager>();
         mEnemyPool.transform.parent = GameManager.instance.transform;
-        mEnemyPool.Init((int)mEnemyJsonData[0].PrefabEnemy);
+        mEnemyPool.Init((int)mJsonEnemyData[0].PrefabEnemy);
     }
     void InitDropPool()
     {
@@ -220,6 +236,29 @@ public class GameManager : MonoBehaviour
     {
 
     }
+    void InitHUDGameStart()
+    {
+        mHUDGameStart.gameObject.SetActive(true);
+        mHUDGameStart.Init();
+    }
+    void InitHUDLevelUp()
+    {
+        // mHUDLevelUp.gameObject.SetActive(true);
+        mHUDLevelUp.Init();
+        mHUDLevelUp.gameObject.SetActive(false);
+    }
+    void InitHUDSetting()
+    {
+        mHUDSetting.gameObject.SetActive(true);
+        mHUDSetting.Init();
+        mHUDSetting.gameObject.SetActive(false);
+    }
+    void InitHUDPowerUp()
+    {
+        mHUDPowerUp.gameObject.SetActive(true);
+        mHUDPowerUp.Init();
+        mHUDPowerUp.gameObject.SetActive(false);
+    }
     void Init()
     {
         instance = this;
@@ -236,6 +275,10 @@ public class GameManager : MonoBehaviour
         InitPlayerData();
         InitBGM();
         InitSFX();
+        InitHUDGameStart();
+        InitHUDLevelUp();
+        InitHUDPowerUp();
+        InitHUDSetting();
     }
     // Part 3. Awake
     void Awake()
@@ -243,15 +286,51 @@ public class GameManager : MonoBehaviour
         Init();
         Debug.Assert(mFieldObjectSprite.Length == System.Enum.GetValues(typeof(Enum.FieldObjectSprite)).Length, "Error");
         // Debug.Assert(mWeaponSprite.Length == System.Enum.GetValues(typeof(Enum.WeaponType)).Length, "Error");
-        Debug.Assert(mPlayerAnimCtrl.Length == mPlayerJsonData.Length, "Error");
+        Debug.Assert(mPlayerAnimCtrl.Length == mJsonPlayerData.Length, "Error");
 
     }
+
+    public void HUDSettingToggle()
+    {
+        if (mHUDSetting.gameObject.activeSelf)
+        {
+            mHUDSetting.gameObject.SetActive(false);
+            GameManager.instance.PlayEffect(false);
+            Time.timeScale = 1;
+        }
+        else
+        {
+            mHUDSetting.gameObject.SetActive(true);
+            GameManager.instance.PlayEffect(true);
+            Time.timeScale = 0;
+        }
+    }
+
+    public void HUDPowerUpToggle()
+    {
+        if (mHUDPowerUp.gameObject.activeSelf)
+        {
+            mHUDPowerUp.gameObject.SetActive(false);
+            GameManager.instance.PlayEffect(false);
+            Time.timeScale = 1;
+        }
+        else
+        {
+            mHUDPowerUp.gameObject.SetActive(true);
+            GameManager.instance.PlayEffect(true);
+            Time.timeScale = 0;
+        }
+    }
+
     // Part 4. Update
     void InputCheck()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            mHUDSetting.Toggle();
+            if (mHUDPowerUp.gameObject.activeSelf)
+                HUDPowerUpToggle();
+            else
+                HUDSettingToggle();
             SaveSettingJson();
         }
     }
@@ -271,9 +350,9 @@ public class GameManager : MonoBehaviour
         mPlayerData.GameTime += Time.deltaTime;
         CheckAchive();
 
-        if (mPlayerData.GameTime > mPlayerJsonData[mPlayerData.Id].MaxGameTime)
+        if (mPlayerData.GameTime > mJsonPlayerData[mPlayerData.Id].MaxGameTime)
         {
-            mPlayerData.GameTime = mPlayerJsonData[mPlayerData.Id].MaxGameTime;
+            mPlayerData.GameTime = mJsonPlayerData[mPlayerData.Id].MaxGameTime;
             GameVictory();
         }
     }
@@ -298,10 +377,11 @@ public class GameManager : MonoBehaviour
 
         mPlayerData.Exp += value;
 
-        if (mPlayerData.Exp >= mLevelJsonData.PlayerExp[Mathf.Min(mPlayerData.Level, mLevelJsonData.PlayerExp.Length - 1)])
+        if (mPlayerData.Exp >= mJsonLevelData.PlayerExp[Mathf.Min(mPlayerData.Level, mJsonLevelData.PlayerExp.Length - 1)])
         {
-            mPlayerData.Exp -= mLevelJsonData.PlayerExp[Mathf.Min(mPlayerData.Level, mLevelJsonData.PlayerExp.Length - 1)];
+            mPlayerData.Exp -= mJsonLevelData.PlayerExp[Mathf.Min(mPlayerData.Level, mJsonLevelData.PlayerExp.Length - 1)];
             mPlayerData.Level++;
+            mHUDLevelUp.gameObject.SetActive(true);
             mHUDLevelUp.Show();
         }
     }
@@ -349,8 +429,8 @@ public class GameManager : MonoBehaviour
     IEnumerator NoticeRoutine(int i)
     {
         mHUDAchive.gameObject.SetActive(true);
-        mHUDAchive.mIcon.sprite = mHUDAchiveSprite[mAchiveJsonData[i].SpriteId];
-        mHUDAchive.mText.text = mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].AchiveDesc[i];
+        mHUDAchive.mIcon.sprite = mHUDAchiveSprite[mJsonAchiveData[i].SpriteId];
+        mHUDAchive.mText.text = mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].AchiveDesc[i];
         yield return mWait5s;
         mHUDAchive.gameObject.SetActive(false);
 
@@ -367,24 +447,27 @@ public class GameManager : MonoBehaviour
     public void GameStart(int i)
     {
         mPlayerData.Id = i;
-        mPlayerData.AnimCtrlId = mPlayerJsonData[i].AnimCtrlId;
+        mPlayerData.AnimCtrlId = mJsonPlayerData[i].AnimCtrlId;
         mPlayerData.GameTime = 0;
-        mPlayerData.MovementSpeed = mPlayerJsonData[i].MovementSpeed;
-        mPlayerData.MaxHealth = mPlayerJsonData[i].MaxHealth;
-        mPlayerData.Health = mPlayerJsonData[i].MaxHealth;
+        mPlayerData.MovementSpeed = mJsonPlayerData[i].MovementSpeed;
+        mPlayerData.MaxHealth = mJsonPlayerData[i].MaxHealth;
+        mPlayerData.Health = mJsonPlayerData[i].MaxHealth;
         mPlayerData.Level = 0;
         mPlayerData.Kill = 0;
         mPlayerData.Exp = 0;
         mPlayerData.WeaponSize = 0;
         mPlayerData.PerkSize = 0;
 
-        mPerkCtrlData = new ItemCtrlData[mPlayerJsonData[i].MaxPerkSize];
-        mWeaponCtrlData = new ItemCtrlData[mPlayerJsonData[i].MaxWeaponSize];
-        mWeaponData = new WeaponData[mPlayerJsonData[i].MaxWeaponSize];
-        mWeaponLastData = new WeaponData[mPlayerJsonData[i].MaxWeaponSize];
+        mPerkCtrlData = new ItemCtrlData[mJsonPlayerData[i].MaxPerkSize];
+        mWeaponCtrlData = new ItemCtrlData[mJsonPlayerData[i].MaxWeaponSize];
+        mWeaponData = new WeaponData[mJsonPlayerData[i].MaxWeaponSize];
+        mWeaponLastData = new WeaponData[mJsonPlayerData[i].MaxWeaponSize];
 
         mPlayer.gameObject.SetActive(true);
-        mHUDLevelUp.Select(mPlayerJsonData[i].StartWeaponId);
+
+        mHUDLevelUp.gameObject.SetActive(true);
+        mHUDLevelUp.Select(mJsonPlayerData[i].StartWeaponId);
+        mHUDLevelUp.gameObject.SetActive(false);
 
         mHUDGameStart.gameObject.SetActive(false);
         mHUDInGame.gameObject.SetActive(true);

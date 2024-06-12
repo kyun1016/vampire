@@ -13,17 +13,16 @@ public class HUDLevelUp : MonoBehaviour
 
     public void UpdateText()
     {
-        mTextTitle.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].HUDLevelUpTitle[0];
+        mTextTitle.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].HUDLevelUpTitle[0];
         for (int i = 0; i < mItems.Length; ++i)
         {
             mItems[i].GetComponent<HUDBtnItem>().UpdateText();
         }
     }
 
-    void Awake()
+    public void Init()
     {
-        mRect = GetComponent<RectTransform>();
-        mItems = new GameObject[GameManager.instance.mWeaponJsonData.Length + GameManager.instance.mPerkJsonData.Length];
+        mItems = new GameObject[GameManager.instance.mJsonWeaponData.Length + GameManager.instance.mJsonPerkData.Length];
         mItems[0] = mRootHUD;
         for (int i = 1; i < mItems.Length; ++i)
         {
@@ -32,15 +31,23 @@ public class HUDLevelUp : MonoBehaviour
             mItems[i].transform.SetParent(mRootHUD.transform.parent);
             mItems[i].transform.name = "Item " + i;
             mItems[i].transform.localScale = mRootHUD.transform.localScale;
-        }    
+        }
     }
+
+    //private void OnEnable()
+    //{
+    //    for (int i = 0; i < mItems.Length; ++i)
+    //    {
+    //        mItems[i].SetActive(true);
+    //    }
+    //}
 
     public void Show()
     {
-        mTextTitle.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].HUDLevelUpTitle[0];
+        mTextTitle.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].HUDLevelUpTitle[0];
         Next();
         GameManager.instance.Stop();
-        mRect.localScale = Vector3.one;
+        // mRect.localScale = Vector3.one;
 
         GameManager.instance.PlayEffect(true);
         GameManager.instance.PlaySFX(Enum.SFX.LevelUp);
@@ -49,10 +56,11 @@ public class HUDLevelUp : MonoBehaviour
     public void Hide()
     {
         GameManager.instance.Resume();
-        mRect.localScale = Vector3.zero;
+        // mRect.localScale = Vector3.zero;
 
         GameManager.instance.PlayEffect(false);
         GameManager.instance.PlaySFX(Enum.SFX.Select);
+        gameObject.SetActive(false);
     }
 
     public void Select(int index)
@@ -84,7 +92,7 @@ public class HUDLevelUp : MonoBehaviour
             GameObject ranItem = mItems[ran[index]];
             int level = -1;
             int idx = ran[index];
-            if (idx < GameManager.instance.mWeaponJsonData.Length)
+            if (idx < GameManager.instance.mJsonWeaponData.Length)
             {
                 for (int i = 0; i < GameManager.instance.mPlayerData.WeaponSize; ++i)
                 {
@@ -92,33 +100,33 @@ public class HUDLevelUp : MonoBehaviour
                         level = GameManager.instance.mWeaponCtrlData[i].Level;
                 }
 
-                if (level == GameManager.instance.mWeaponJsonData[idx].Damage.Length)
+                if (level == GameManager.instance.mJsonWeaponData[idx].Damage.Length)
                 {
                     mItems[mItems.Length - 1].SetActive(true);
                     return;
                 }
-                if ((GameManager.instance.mPlayerData.WeaponSize == GameManager.instance.mPlayerJsonData[GameManager.instance.mPlayerData.Id].MaxWeaponSize) &&
+                if ((GameManager.instance.mPlayerData.WeaponSize == GameManager.instance.mJsonPlayerData[GameManager.instance.mPlayerData.Id].MaxWeaponSize) &&
                     (level == -1))
                 {
                     mItems[mItems.Length - 1].SetActive(true);
                     return;
                 }
             }
-            else if(idx < GameManager.instance.mWeaponJsonData.Length + GameManager.instance.mPerkJsonData.Length)
+            else if(idx < GameManager.instance.mJsonWeaponData.Length + GameManager.instance.mJsonPerkData.Length)
             {
-                idx -= GameManager.instance.mWeaponJsonData.Length;
+                idx -= GameManager.instance.mJsonWeaponData.Length;
                 for (int i = 0; i < GameManager.instance.mPlayerData.PerkSize; ++i)
                 {
                     if (idx == GameManager.instance.mPerkCtrlData[i].Id)
                         level = GameManager.instance.mPerkCtrlData[i].Level;
                 }
 
-                if (level == GameManager.instance.mPerkJsonData[idx].Damage.Length)
+                if (level == GameManager.instance.mJsonPerkData[idx].Damage.Length)
                 {
                     mItems[mItems.Length - 1].SetActive(true);
                     return;
                 }
-                if ((GameManager.instance.mPlayerData.PerkSize == GameManager.instance.mPlayerJsonData[GameManager.instance.mPlayerData.Id].MaxPerkSize) && 
+                if ((GameManager.instance.mPlayerData.PerkSize == GameManager.instance.mJsonPlayerData[GameManager.instance.mPlayerData.Id].MaxPerkSize) && 
                     (level == -1))
                 {
                     mItems[mItems.Length - 1].SetActive(true);

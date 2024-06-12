@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
     }
     public void Init(int id)
     {
-        EnemyJsonData data = GameManager.instance.mEnemyJsonData[id];
+        JsonEnemyData data = GameManager.instance.mJsonEnemyData[id];
         mAnim.runtimeAnimatorController = GameManager.instance.mEnemyAnimCtrl[data.AnimCtrlId];
         mMovementSpeed = data.MovementSpeed;
         mMaxHealth = data.MaxHealth;

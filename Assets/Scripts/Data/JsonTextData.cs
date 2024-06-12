@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct TextJsonData
+public struct JsonTextData
 {
     public Enum.Language Type;
     public string Language;
@@ -24,4 +24,7 @@ public struct TextJsonData
     public string[] HUDGameStart;
     public string[] HUDLevelUpTitle;
     public string[] HUDSetting;
+    public string[] HUDPowerUpTitle;
+    public string[] HUDPowerUpName;
+    public string[] HUDPowerUpDesc;
 }

@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public Vector2 mLastDir;
     public EnemyScanner mScanner;
     public WeaponCtrl[] mWeaponCtrl;
+    // public PoolManager[] mWeaponPool;
     float mTimerEnemyLevel;
     float mTimerEnemySpawn;
     float mTimerFieldObjectSpawn;
@@ -61,16 +62,16 @@ public class Player : MonoBehaviour
 
         // 적 생성
         mTimerEnemySpawn += Time.fixedDeltaTime;
-        if (mTimerEnemySpawn > GameManager.instance.mEnemyJsonData[mEnemyLevel].SpawnTime)
+        if (mTimerEnemySpawn > GameManager.instance.mJsonEnemyData[mEnemyLevel].SpawnTime)
         {
             mTimerEnemySpawn = 0;
-            for (int i = 0; i < GameManager.instance.mEnemyJsonData[mEnemyLevel].SpawnCount; ++i)
+            for (int i = 0; i < GameManager.instance.mJsonEnemyData[mEnemyLevel].SpawnCount; ++i)
                 FuncPool.SpawnEnemy(mEnemyLevel);
         }
 
         // 적 레벨업
         mTimerEnemyLevel += Time.fixedDeltaTime;
-        if (mTimerEnemyLevel > GameManager.instance.mEnemyJsonData[mEnemyLevel].LevelUpTime && mEnemyLevel < GameManager.instance.mEnemyJsonData.Length - 1)
+        if (mTimerEnemyLevel > GameManager.instance.mJsonEnemyData[mEnemyLevel].LevelUpTime && mEnemyLevel < GameManager.instance.mJsonEnemyData.Length - 1)
         {
             mTimerEnemyLevel = 0;
             mTimerEnemySpawn = 0;
@@ -79,7 +80,7 @@ public class Player : MonoBehaviour
 
         // 필드 오브젝트 생성
         mTimerFieldObjectSpawn += Time.fixedDeltaTime;
-        if (mTimerFieldObjectSpawn > GameManager.instance.mObjectGenTime)
+        if (mTimerFieldObjectSpawn > GameManager.instance.mJsonFieldObjectData.mObjectGenTime)
         {
             mTimerFieldObjectSpawn = 0;
             FuncPool.SpawnFieldObject();

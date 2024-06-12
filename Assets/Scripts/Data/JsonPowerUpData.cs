@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct PerkJsonData
+public struct JsonPowerUpData
 {
     public bool Enable;
-    public int HUDBtnItemSpriteId;
+    public int SpriteId;
     public Enum.DescType DescType;
 
     public float[] MovementSpeed;

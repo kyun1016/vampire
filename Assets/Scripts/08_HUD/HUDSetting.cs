@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class HUDSetting : MonoBehaviour
 {
-    bool isActive;
-    RectTransform mRect;
-
     public TMP_Dropdown mDropdownLanguage;
     public TMP_Dropdown mDropdownWindow;
     public Toggle mToggleWindow;
@@ -26,16 +23,16 @@ public class HUDSetting : MonoBehaviour
     {
         for(int i=0; i<mText.Length; ++i)
         {
-            mText[i].text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].HUDSetting[i];
+            mText[i].text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].HUDSetting[i];
         }
     }
     void InitLanguage()
     {
-        for (int i = 0; i < GameManager.instance.mTextJsonData.Length; ++i)
+        for (int i = 0; i < GameManager.instance.mJsonTextData.Length; ++i)
         {
             TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData();
 
-            option.text = GameManager.instance.mTextJsonData[i].Language;
+            option.text = GameManager.instance.mJsonTextData[i].Language;
             mDropdownLanguage.options.Add(option);
         }
         mDropdownLanguage.RefreshShownValue();
@@ -65,38 +62,6 @@ public class HUDSetting : MonoBehaviour
         InitLanguage();
         InitWindow();
         InitVolume();
-    }
-    private void Awake()
-    {
-        mRect = GetComponent<RectTransform>();
-        isActive = false;
-        Init();
-    }
-
-    public void Show()
-    {
-        Time.timeScale = 0;
-        isActive = true;
-        mRect.localScale = Vector3.one;
-
-        GameManager.instance.PlayEffect(true);
-    }
-
-    public void Hide()
-    {
-        Time.timeScale = 1;
-        isActive = false;
-        mRect.localScale = Vector3.zero;
-
-        GameManager.instance.PlayEffect(false);
-    }
-
-    public void Toggle()
-    {
-        if (isActive)
-            Hide();
-        else
-            Show();
     }
 
     public void ToTitle()

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct PlayerJsonData
+public struct JsonPlayerData
 {
     public bool Enable;
     public int AnimCtrlId;

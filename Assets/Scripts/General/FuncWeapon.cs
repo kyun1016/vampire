@@ -37,42 +37,42 @@ static public class FuncWeapon
         int id = GameManager.instance.mPerkCtrlData[idx].Id;
         int level = GameManager.instance.mPerkCtrlData[idx].Level;
 
-        GameManager.instance.mPerkData.MovementSpeed += GameManager.instance.mPerkJsonData[id].MovementSpeed[level];
-        GameManager.instance.mPerkData.Projectile += GameManager.instance.mPerkJsonData[id].Projectile[level];
-        GameManager.instance.mPerkData.ProjectileSize+= GameManager.instance.mPerkJsonData[id].ProjectileSize[level];
-        GameManager.instance.mPerkData.Damage += GameManager.instance.mPerkJsonData[id].Damage[level];
-        GameManager.instance.mPerkData.Speed += GameManager.instance.mPerkJsonData[id].Speed[level];
-        GameManager.instance.mPerkData.Range += GameManager.instance.mPerkJsonData[id].Range[level];
-        GameManager.instance.mPerkData.CoolTime += GameManager.instance.mPerkJsonData[id].CoolTime[level];
-        GameManager.instance.mPerkData.Pierce += GameManager.instance.mPerkJsonData[id].Pierce[level];
-        GameManager.instance.mPerkData.MovementSpeedCoef += GameManager.instance.mPerkJsonData[id].MovementSpeedCoef[level];
-        GameManager.instance.mPerkData.ProjectileCoef += GameManager.instance.mPerkJsonData[id].ProjectileCoef[level];
-        GameManager.instance.mPerkData.ProjectileSizeCoef += GameManager.instance.mPerkJsonData[id].ProjectileSizeCoef[level];
-        GameManager.instance.mPerkData.DamageCoef += GameManager.instance.mPerkJsonData[id].DamageCoef[level];
-        GameManager.instance.mPerkData.SpeedCoef += GameManager.instance.mPerkJsonData[id].SpeedCoef[level];
-        GameManager.instance.mPerkData.RangeCoef += GameManager.instance.mPerkJsonData[id].RangeCoef[level];
-        GameManager.instance.mPerkData.CoolTimeCoef += GameManager.instance.mPerkJsonData[id].CoolTimeCoef[level];
-        GameManager.instance.mPerkData.PierceCoef += GameManager.instance.mPerkJsonData[id].PierceCoef[level];
+        GameManager.instance.mPerkData.MovementSpeed += GameManager.instance.mJsonPerkData[id].MovementSpeed[level];
+        GameManager.instance.mPerkData.Projectile += GameManager.instance.mJsonPerkData[id].Projectile[level];
+        GameManager.instance.mPerkData.ProjectileSize+= GameManager.instance.mJsonPerkData[id].ProjectileSize[level];
+        GameManager.instance.mPerkData.Damage += GameManager.instance.mJsonPerkData[id].Damage[level];
+        GameManager.instance.mPerkData.Speed += GameManager.instance.mJsonPerkData[id].Speed[level];
+        GameManager.instance.mPerkData.Range += GameManager.instance.mJsonPerkData[id].Range[level];
+        GameManager.instance.mPerkData.CoolTime += GameManager.instance.mJsonPerkData[id].CoolTime[level];
+        GameManager.instance.mPerkData.Pierce += GameManager.instance.mJsonPerkData[id].Pierce[level];
+        GameManager.instance.mPerkData.MovementSpeedCoef += GameManager.instance.mJsonPerkData[id].MovementSpeedCoef[level];
+        GameManager.instance.mPerkData.ProjectileCoef += GameManager.instance.mJsonPerkData[id].ProjectileCoef[level];
+        GameManager.instance.mPerkData.ProjectileSizeCoef += GameManager.instance.mJsonPerkData[id].ProjectileSizeCoef[level];
+        GameManager.instance.mPerkData.DamageCoef += GameManager.instance.mJsonPerkData[id].DamageCoef[level];
+        GameManager.instance.mPerkData.SpeedCoef += GameManager.instance.mJsonPerkData[id].SpeedCoef[level];
+        GameManager.instance.mPerkData.RangeCoef += GameManager.instance.mJsonPerkData[id].RangeCoef[level];
+        GameManager.instance.mPerkData.CoolTimeCoef += GameManager.instance.mJsonPerkData[id].CoolTimeCoef[level];
+        GameManager.instance.mPerkData.PierceCoef += GameManager.instance.mJsonPerkData[id].PierceCoef[level];
 
         if (level != 0)
         {
             --level;
-            GameManager.instance.mPerkData.MovementSpeed -= GameManager.instance.mPerkJsonData[id].MovementSpeed[level];
-            GameManager.instance.mPerkData.Projectile -= GameManager.instance.mPerkJsonData[id].Projectile[level];
-            GameManager.instance.mPerkData.ProjectileSize -= GameManager.instance.mPerkJsonData[id].ProjectileSize[level];
-            GameManager.instance.mPerkData.Damage -= GameManager.instance.mPerkJsonData[id].Damage[level];
-            GameManager.instance.mPerkData.Speed -= GameManager.instance.mPerkJsonData[id].Speed[level];
-            GameManager.instance.mPerkData.Range -= GameManager.instance.mPerkJsonData[id].Range[level];
-            GameManager.instance.mPerkData.CoolTime -= GameManager.instance.mPerkJsonData[id].CoolTime[level];
-            GameManager.instance.mPerkData.Pierce -= GameManager.instance.mPerkJsonData[id].Pierce[level];
-            GameManager.instance.mPerkData.MovementSpeedCoef -= GameManager.instance.mPerkJsonData[id].MovementSpeedCoef[level];
-            GameManager.instance.mPerkData.ProjectileCoef -= GameManager.instance.mPerkJsonData[id].ProjectileCoef[level];
-            GameManager.instance.mPerkData.ProjectileSizeCoef -= GameManager.instance.mPerkJsonData[id].ProjectileSizeCoef[level];
-            GameManager.instance.mPerkData.DamageCoef -= GameManager.instance.mPerkJsonData[id].DamageCoef[level];
-            GameManager.instance.mPerkData.SpeedCoef -= GameManager.instance.mPerkJsonData[id].SpeedCoef[level];
-            GameManager.instance.mPerkData.RangeCoef -= GameManager.instance.mPerkJsonData[id].RangeCoef[level];
-            GameManager.instance.mPerkData.CoolTimeCoef -= GameManager.instance.mPerkJsonData[id].CoolTimeCoef[level];
-            GameManager.instance.mPerkData.PierceCoef -= GameManager.instance.mPerkJsonData[id].PierceCoef[level];
+            GameManager.instance.mPerkData.MovementSpeed -= GameManager.instance.mJsonPerkData[id].MovementSpeed[level];
+            GameManager.instance.mPerkData.Projectile -= GameManager.instance.mJsonPerkData[id].Projectile[level];
+            GameManager.instance.mPerkData.ProjectileSize -= GameManager.instance.mJsonPerkData[id].ProjectileSize[level];
+            GameManager.instance.mPerkData.Damage -= GameManager.instance.mJsonPerkData[id].Damage[level];
+            GameManager.instance.mPerkData.Speed -= GameManager.instance.mJsonPerkData[id].Speed[level];
+            GameManager.instance.mPerkData.Range -= GameManager.instance.mJsonPerkData[id].Range[level];
+            GameManager.instance.mPerkData.CoolTime -= GameManager.instance.mJsonPerkData[id].CoolTime[level];
+            GameManager.instance.mPerkData.Pierce -= GameManager.instance.mJsonPerkData[id].Pierce[level];
+            GameManager.instance.mPerkData.MovementSpeedCoef -= GameManager.instance.mJsonPerkData[id].MovementSpeedCoef[level];
+            GameManager.instance.mPerkData.ProjectileCoef -= GameManager.instance.mJsonPerkData[id].ProjectileCoef[level];
+            GameManager.instance.mPerkData.ProjectileSizeCoef -= GameManager.instance.mJsonPerkData[id].ProjectileSizeCoef[level];
+            GameManager.instance.mPerkData.DamageCoef -= GameManager.instance.mJsonPerkData[id].DamageCoef[level];
+            GameManager.instance.mPerkData.SpeedCoef -= GameManager.instance.mJsonPerkData[id].SpeedCoef[level];
+            GameManager.instance.mPerkData.RangeCoef -= GameManager.instance.mJsonPerkData[id].RangeCoef[level];
+            GameManager.instance.mPerkData.CoolTimeCoef -= GameManager.instance.mJsonPerkData[id].CoolTimeCoef[level];
+            GameManager.instance.mPerkData.PierceCoef -= GameManager.instance.mJsonPerkData[id].PierceCoef[level];
         }
     }
 
@@ -84,22 +84,22 @@ static public class FuncWeapon
         int id = GameManager.instance.mPerkCtrlData[idx].Id;
         int level = GameManager.instance.mPerkCtrlData[idx].Level;
 
-        GameManager.instance.mPerkData.MovementSpeed += GameManager.instance.mPerkJsonData[id].MovementSpeed[level];
-        GameManager.instance.mPerkData.Projectile += GameManager.instance.mPerkJsonData[id].Projectile[level];
-        GameManager.instance.mPerkData.ProjectileSize += GameManager.instance.mPerkJsonData[id].ProjectileSize[level];
-        GameManager.instance.mPerkData.Damage += GameManager.instance.mPerkJsonData[id].Damage[level];
-        GameManager.instance.mPerkData.Speed += GameManager.instance.mPerkJsonData[id].Speed[level];
-        GameManager.instance.mPerkData.Range += GameManager.instance.mPerkJsonData[id].Range[level];
-        GameManager.instance.mPerkData.CoolTime += GameManager.instance.mPerkJsonData[id].CoolTime[level];
-        GameManager.instance.mPerkData.Pierce += GameManager.instance.mPerkJsonData[id].Pierce[level];
-        GameManager.instance.mPerkData.MovementSpeedCoef += GameManager.instance.mPerkJsonData[id].MovementSpeedCoef[level];
-        GameManager.instance.mPerkData.ProjectileCoef += GameManager.instance.mPerkJsonData[id].ProjectileCoef[level];
-        GameManager.instance.mPerkData.ProjectileSizeCoef += GameManager.instance.mPerkJsonData[id].ProjectileSizeCoef[level];
-        GameManager.instance.mPerkData.DamageCoef += GameManager.instance.mPerkJsonData[id].DamageCoef[level];
-        GameManager.instance.mPerkData.SpeedCoef += GameManager.instance.mPerkJsonData[id].SpeedCoef[level];
-        GameManager.instance.mPerkData.RangeCoef += GameManager.instance.mPerkJsonData[id].RangeCoef[level];
-        GameManager.instance.mPerkData.CoolTimeCoef += GameManager.instance.mPerkJsonData[id].CoolTimeCoef[level];
-        GameManager.instance.mPerkData.PierceCoef += GameManager.instance.mPerkJsonData[id].PierceCoef[level];
+        GameManager.instance.mPerkData.MovementSpeed += GameManager.instance.mJsonPerkData[id].MovementSpeed[level];
+        GameManager.instance.mPerkData.Projectile += GameManager.instance.mJsonPerkData[id].Projectile[level];
+        GameManager.instance.mPerkData.ProjectileSize += GameManager.instance.mJsonPerkData[id].ProjectileSize[level];
+        GameManager.instance.mPerkData.Damage += GameManager.instance.mJsonPerkData[id].Damage[level];
+        GameManager.instance.mPerkData.Speed += GameManager.instance.mJsonPerkData[id].Speed[level];
+        GameManager.instance.mPerkData.Range += GameManager.instance.mJsonPerkData[id].Range[level];
+        GameManager.instance.mPerkData.CoolTime += GameManager.instance.mJsonPerkData[id].CoolTime[level];
+        GameManager.instance.mPerkData.Pierce += GameManager.instance.mJsonPerkData[id].Pierce[level];
+        GameManager.instance.mPerkData.MovementSpeedCoef += GameManager.instance.mJsonPerkData[id].MovementSpeedCoef[level];
+        GameManager.instance.mPerkData.ProjectileCoef += GameManager.instance.mJsonPerkData[id].ProjectileCoef[level];
+        GameManager.instance.mPerkData.ProjectileSizeCoef += GameManager.instance.mJsonPerkData[id].ProjectileSizeCoef[level];
+        GameManager.instance.mPerkData.DamageCoef += GameManager.instance.mJsonPerkData[id].DamageCoef[level];
+        GameManager.instance.mPerkData.SpeedCoef += GameManager.instance.mJsonPerkData[id].SpeedCoef[level];
+        GameManager.instance.mPerkData.RangeCoef += GameManager.instance.mJsonPerkData[id].RangeCoef[level];
+        GameManager.instance.mPerkData.CoolTimeCoef += GameManager.instance.mJsonPerkData[id].CoolTimeCoef[level];
+        GameManager.instance.mPerkData.PierceCoef += GameManager.instance.mJsonPerkData[id].PierceCoef[level];
     }
 
     public static void InitPerkLoad()
@@ -119,14 +119,14 @@ static public class FuncWeapon
         int id = GameManager.instance.mWeaponCtrlData[idx].Id;
         int level = GameManager.instance.mWeaponCtrlData[idx].Level;
 
-        GameManager.instance.mWeaponData[idx].WeaponType = GameManager.instance.mWeaponJsonData[id].WeaponType;
-        GameManager.instance.mWeaponData[idx].Projectile = GameManager.instance.mWeaponJsonData[id].Projectile[level];
-        GameManager.instance.mWeaponData[idx].ProjectileSize = GameManager.instance.mWeaponJsonData[id].ProjectileSize[level];
-        GameManager.instance.mWeaponData[idx].Damage = GameManager.instance.mWeaponJsonData[id].Damage[level];
-        GameManager.instance.mWeaponData[idx].Speed = GameManager.instance.mWeaponJsonData[id].Speed[level];
-        GameManager.instance.mWeaponData[idx].Range = GameManager.instance.mWeaponJsonData[id].Range[level];
-        GameManager.instance.mWeaponData[idx].CoolTime = GameManager.instance.mWeaponJsonData[id].CoolTime[level];
-        GameManager.instance.mWeaponData[idx].Pierce = GameManager.instance.mWeaponJsonData[id].Pierce[level];
+        GameManager.instance.mWeaponData[idx].WeaponType = GameManager.instance.mJsonWeaponData[id].WeaponType;
+        GameManager.instance.mWeaponData[idx].Projectile = GameManager.instance.mJsonWeaponData[id].Projectile[level];
+        GameManager.instance.mWeaponData[idx].ProjectileSize = GameManager.instance.mJsonWeaponData[id].ProjectileSize[level];
+        GameManager.instance.mWeaponData[idx].Damage = GameManager.instance.mJsonWeaponData[id].Damage[level];
+        GameManager.instance.mWeaponData[idx].Speed = GameManager.instance.mJsonWeaponData[id].Speed[level];
+        GameManager.instance.mWeaponData[idx].Range = GameManager.instance.mJsonWeaponData[id].Range[level];
+        GameManager.instance.mWeaponData[idx].CoolTime = GameManager.instance.mJsonWeaponData[id].CoolTime[level];
+        GameManager.instance.mWeaponData[idx].Pierce = GameManager.instance.mJsonWeaponData[id].Pierce[level];
     }
     public static void InitWeaponLoad()
     {
@@ -171,7 +171,7 @@ static public class FuncWeapon
     public static void UpdatePlayerMovement()
     {
         GameManager.instance.mPlayerData.MovementSpeed =
-            (GameManager.instance.mPlayerJsonData[GameManager.instance.mPlayerData.Id].MovementSpeed +
+            (GameManager.instance.mJsonPlayerData[GameManager.instance.mPlayerData.Id].MovementSpeed +
             GameManager.instance.mPerkData.MovementSpeed) * GameManager.instance.mPerkData.MovementSpeedCoef;
     }
 }

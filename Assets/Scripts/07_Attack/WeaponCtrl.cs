@@ -9,7 +9,8 @@ public class WeaponCtrl : MonoBehaviour
     float mTime;
     int mShotCnt;
     bool mShotEn;
-    PoolManager mWeaponPool;
+    public PoolManager mWeaponPool;
+
 
 
     public void Init(int id)
@@ -23,10 +24,10 @@ public class WeaponCtrl : MonoBehaviour
         mWeaponPool.transform.parent = transform;
         mWeaponPool.transform.localPosition = Vector3.zero;
         mWeaponPool.transform.localRotation = Quaternion.identity;
-        mWeaponPool.Init((int) GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].PrefabType);
-        mWeaponPool.mPool[0].GetComponent<SpriteRenderer>().sprite = GameManager.instance.mWeaponSprite[GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].SpriteId];
+        mWeaponPool.Init((int) GameManager.instance.mJsonWeaponData[GameManager.instance.mWeaponCtrlData[mId].Id].PrefabType);
+        mWeaponPool.mPool[0].GetComponent<SpriteRenderer>().sprite = GameManager.instance.mWeaponSprite[GameManager.instance.mJsonWeaponData[GameManager.instance.mWeaponCtrlData[mId].Id].SpriteId];
 
-        mWeaponType = GameManager.instance.mWeaponJsonData[GameManager.instance.mWeaponCtrlData[mId].Id].WeaponType;
+        mWeaponType = GameManager.instance.mJsonWeaponData[GameManager.instance.mWeaponCtrlData[mId].Id].WeaponType;
 
         // initialize Root Prefab (particular setting)
         switch (mWeaponType)
@@ -88,6 +89,11 @@ public class WeaponCtrl : MonoBehaviour
                 Debug.Assert(false, "Error");
                 break;
         }
+    }
+
+    public void LevelUp(int level)
+    {
+
     }
 
     void Update()

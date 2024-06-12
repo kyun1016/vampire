@@ -8,28 +8,40 @@ public class HUDBtnItem : MonoBehaviour
 {
     public int mId;
 
-    Image mIcon;
-    TMP_Text mTextLevel;
-    TMP_Text mTextName;
-    TMP_Text mTextDesc;
+    public Image mIcon;
+    public TMP_Text mTextLevel;
+    public TMP_Text mTextName;
+    public TMP_Text mTextDesc;
+    private void Awake()
+    {
+        mIcon = GetComponentsInChildren<Image>()[1];
+
+        TMP_Text[] texts = GetComponentsInChildren<TMP_Text>();
+        mTextLevel = texts[0];
+        mTextName = texts[1];
+        mTextDesc = texts[2];
+
+        UpdateText();
+        UpdateSprite();
+    }
 
     public void UpdateTextName()
     {
-        if (mId < GameManager.instance.mWeaponJsonData.Length)
+        if (mId < GameManager.instance.mJsonWeaponData.Length)
         {
-            mTextName.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].WeaponName[mId];
+            mTextName.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].WeaponName[mId];
         }
         else
         {
-            int idx = mId - GameManager.instance.mWeaponJsonData.Length;
-            mTextName.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].PerkName[idx];
+            int idx = mId - GameManager.instance.mJsonWeaponData.Length;
+            mTextName.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].PerkName[idx];
         }
     }
     public void UpdateTextDesc()
     {
         int level = 0;
 
-        if (mId < GameManager.instance.mWeaponJsonData.Length)
+        if (mId < GameManager.instance.mJsonWeaponData.Length)
         {
             for (int i = 0; i < GameManager.instance.mPlayerData.WeaponSize; ++i)
             {
@@ -38,19 +50,19 @@ public class HUDBtnItem : MonoBehaviour
             }
             if(level == 0)
             {
-                mTextDesc.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].WeaponInitDesc[mId];
+                mTextDesc.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].WeaponInitDesc[mId];
             }
             else
             {
-                switch (GameManager.instance.mWeaponJsonData[mId].DescType)
+                switch (GameManager.instance.mJsonWeaponData[mId].DescType)
                 {
                     case Enum.DescType.Melee:
-                        mTextDesc.text = string.Format(GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].WeaponLvUpDesc[0],
-                            GameManager.instance.mWeaponJsonData[mId].Damage[level] * 100, GameManager.instance.mWeaponJsonData[mId].Projectile[level], GameManager.instance.mWeaponJsonData[mId].Speed[level]);
+                        mTextDesc.text = string.Format(GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].WeaponLvUpDesc[0],
+                            GameManager.instance.mJsonWeaponData[mId].Damage[level] * 100, GameManager.instance.mJsonWeaponData[mId].Projectile[level], GameManager.instance.mJsonWeaponData[mId].Speed[level]);
                         break;
                     case Enum.DescType.Range:
-                        mTextDesc.text = string.Format(GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].WeaponLvUpDesc[1],
-                            GameManager.instance.mWeaponJsonData[mId].Damage[level] * 100, GameManager.instance.mWeaponJsonData[mId].Projectile[level], GameManager.instance.mWeaponJsonData[mId].CoolTime[level], GameManager.instance.mWeaponJsonData[mId].Pierce[level]);
+                        mTextDesc.text = string.Format(GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].WeaponLvUpDesc[1],
+                            GameManager.instance.mJsonWeaponData[mId].Damage[level] * 100, GameManager.instance.mJsonWeaponData[mId].Projectile[level], GameManager.instance.mJsonWeaponData[mId].CoolTime[level], GameManager.instance.mJsonWeaponData[mId].Pierce[level]);
                         break;
                     default:
                         Debug.Assert(false, "Error");
@@ -61,20 +73,20 @@ public class HUDBtnItem : MonoBehaviour
         }
         else
         {
-            int idx = mId - GameManager.instance.mWeaponJsonData.Length;
+            int idx = mId - GameManager.instance.mJsonWeaponData.Length;
             for (int i = 0; i < GameManager.instance.mPlayerData.PerkSize; ++i)
             {
                 if (idx == GameManager.instance.mPerkCtrlData[i].Id)
                     level = GameManager.instance.mPerkCtrlData[i].Level;
             }
 
-            switch (GameManager.instance.mPerkJsonData[idx].DescType)
+            switch (GameManager.instance.mJsonPerkData[idx].DescType)
             {
                 case Enum.DescType.Perk:
-                    mTextDesc.text = string.Format(GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].PerkDesc[idx], GameManager.instance.mPerkJsonData[idx].Damage[level] * 100);
+                    mTextDesc.text = string.Format(GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].PerkDesc[idx], GameManager.instance.mJsonPerkData[idx].Damage[level] * 100);
                     break;
                 case Enum.DescType.Heal:
-                    mTextDesc.text = GameManager.instance.mTextJsonData[(int)GameManager.instance.mSettingData.LanguageType].PerkDesc[idx];
+                    mTextDesc.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].PerkDesc[idx];
                     break;
                 default:
                     Debug.Assert(false, "Error");
@@ -92,28 +104,17 @@ public class HUDBtnItem : MonoBehaviour
 
     void UpdateSprite()
     {
-        if (mId < GameManager.instance.mWeaponJsonData.Length)
+        if (mId < GameManager.instance.mJsonWeaponData.Length)
         {
-            mIcon.sprite = GameManager.instance.mHUDBtnItemSprite[GameManager.instance.mWeaponJsonData[mId].HUDBtnItemSpriteId];
+            mIcon.sprite = GameManager.instance.mHUDBtnItemSprite[GameManager.instance.mJsonWeaponData[mId].HUDBtnItemSpriteId];
         }
         else
         {
-            int idx = mId - GameManager.instance.mWeaponJsonData.Length;
-            mIcon.sprite = GameManager.instance.mHUDBtnItemSprite[GameManager.instance.mPerkJsonData[idx].HUDBtnItemSpriteId];
+            int idx = mId - GameManager.instance.mJsonWeaponData.Length;
+            mIcon.sprite = GameManager.instance.mHUDBtnItemSprite[GameManager.instance.mJsonPerkData[idx].HUDBtnItemSpriteId];
         }
     }
-    private void Awake()
-    {
-        mIcon = GetComponentsInChildren<Image>()[1];
 
-        TMP_Text[] texts = GetComponentsInChildren<TMP_Text>();
-        mTextLevel = texts[0];
-        mTextName = texts[1];
-        mTextDesc = texts[2];
-
-        UpdateText();
-        UpdateSprite();
-    }
 
     private void OnEnable()
     {
@@ -131,7 +132,7 @@ public class HUDBtnItem : MonoBehaviour
         int idx = mId;
         int idxCtrl = -1;
         int level = 0;
-        if (mId < GameManager.instance.mWeaponJsonData.Length)
+        if (mId < GameManager.instance.mJsonWeaponData.Length)
         {
             for (int i = 0; i < GameManager.instance.mPlayerData.WeaponSize; ++i)
             {
@@ -141,7 +142,7 @@ public class HUDBtnItem : MonoBehaviour
                     level = GameManager.instance.mWeaponCtrlData[i].Level;
                 }
             }
-            switch (GameManager.instance.mWeaponJsonData[mId].DescType)
+            switch (GameManager.instance.mJsonWeaponData[mId].DescType)
             {
                 case Enum.DescType.Melee:
                 case Enum.DescType.Range:
@@ -161,14 +162,14 @@ public class HUDBtnItem : MonoBehaviour
                     Debug.Assert(false, "Error");
                     break;
             }
-            if (GameManager.instance.mWeaponCtrlData[idxCtrl].Level == GameManager.instance.mWeaponJsonData[idx].Damage.Length)
+            if (GameManager.instance.mWeaponCtrlData[idxCtrl].Level == GameManager.instance.mJsonWeaponData[idx].Damage.Length)
             {
                 GetComponent<Button>().interactable = false;
             }
         }
         else
         {
-            idx -= GameManager.instance.mWeaponJsonData.Length;
+            idx -= GameManager.instance.mJsonWeaponData.Length;
             for (int i = 0; i < GameManager.instance.mPlayerData.PerkSize; ++i)
             {
                 if (idx == GameManager.instance.mPerkCtrlData[i].Id)
@@ -178,7 +179,7 @@ public class HUDBtnItem : MonoBehaviour
                 }
 
             }
-            switch (GameManager.instance.mPerkJsonData[idx].DescType)
+            switch (GameManager.instance.mJsonPerkData[idx].DescType)
             {
                 case Enum.DescType.Perk:
                     if (level == 0)
@@ -200,7 +201,7 @@ public class HUDBtnItem : MonoBehaviour
                     break;
 
             }
-            if ((idxCtrl != -1) && (GameManager.instance.mPerkCtrlData[idxCtrl].Level == GameManager.instance.mPerkJsonData[idx].Damage.Length))
+            if ((idxCtrl != -1) && (GameManager.instance.mPerkCtrlData[idxCtrl].Level == GameManager.instance.mJsonPerkData[idx].Damage.Length))
             {
                 GetComponent<Button>().interactable = false;
             }
