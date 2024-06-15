@@ -351,6 +351,7 @@ public class GameManager : MonoBehaviour
         mHUDGameStart.UpdateText();
         mHUDLevelUp.UpdateText();
         mHUDSetting.UpdateText();
+        mHUDPowerUp.UpdateText();
     }
 
     void Update()

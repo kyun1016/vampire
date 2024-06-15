@@ -12,7 +12,7 @@ public class HUDPowerUp : MonoBehaviour
 
     public void UpdateText()
     {
-        mTextTitle.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].HUDLevelUpTitle[0];
+        mTextTitle.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].HUDPowerUpTitle[0];
         for (int i = 0; i < mItems.Length; ++i)
         {
             mItems[i].GetComponent<HUDBtnPowerUp>().UpdateText();

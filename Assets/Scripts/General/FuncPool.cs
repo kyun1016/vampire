@@ -51,7 +51,6 @@ static public class FuncPool
                 item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Gold0];
                 break;
         }
-        item.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
     }
 
     public static void DropExp(int value, Vector3 pos)
@@ -75,7 +74,6 @@ static public class FuncPool
                 item.GetComponent<SpriteRenderer>().sprite = GameManager.instance.mDropItemSprite[(int)Enum.DropItemSprite.Exp0];
                 break;
         }
-        item.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
     }
 
     public static void DropItem(Vector3 pos)
