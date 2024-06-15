@@ -48,20 +48,6 @@ public class HUDLevelUp : MonoBehaviour
 
     public void SelectBtn(bool up)
     {
-        // Debug.Log(up.ToString() +" / " + mSelNum.ToString());
-
-        if (mSelNum == -1)
-        {
-            for (mSelNum = 0; mSelNum < mItems.Length; ++mSelNum)
-            {
-                if (mItems[mSelNum].gameObject.activeSelf)
-                {
-                    mItems[mSelNum].gameObject.GetComponent<Button>().Select();
-                    return;
-                }
-            }
-        }
-
         if (!up)
         {
             if (mSelNum >= mItems.Length-1)
