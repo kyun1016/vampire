@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\07_Attack\Weapon.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Context Menu\ContextMenuContentMobile.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManager.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonFieldObjectData.cs" />
     <Compile Include="Assets\Scripts\07_Attack\Melee.cs" />
     <Compile Include="Assets\Scripts\Data\PerkData.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Demo\DemoElementSway.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Assets\Modern UI Pack\Scripts\ListView\ListViewItem.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Scripts\General\FuncPool.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDPowerUp.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Context Menu\ContextMenuContent.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Assets\Modern UI Pack\Scripts\Core\MUIPInternalTools.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerInputField.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Slider\SliderManager.cs" />
+    <Compile Include="Assets\Scripts\Data\JsonPowerUpData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\Scripts\Data\ItemCtrlData.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Layout Group\RadialLayoutGroupEditor.cs" />
@@ -193,6 +196,7 @@
     <Compile Include="Assets\Modern UI Pack\Scripts\Icon\IconLibrary.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Icon\IconManagerEditor.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Input Field\CustomInputField.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDBtnPowerUp.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Tools\ElementTabbing.cs" />
     <Compile Include="Assets\Scripts\Data\JsonEnemyData.cs" />
     <Compile Include="Assets\Modern UI Pack\Scripts\Tooltip\TooltipContent.cs" />
@@ -221,10 +225,6 @@
     <Compile Include="Assets\Scripts\Data\WeaponData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\General\FuncWeapon.cs" />
-    <Compile Include="Assets\Scripts\08_HUD\HUDPowerUp.cs" />
-    <Compile Include="Assets\Scripts\08_HUD\HUDBtnPowerUp.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonPowerUpData.cs" />
-    <Compile Include="Assets\Scripts\Data\JsonFieldObjectData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

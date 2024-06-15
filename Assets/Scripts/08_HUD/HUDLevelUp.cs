@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HUDLevelUp : MonoBehaviour
 {
     RectTransform mRect;
     public GameObject mRootHUD;
-    GameObject[] mItems;
+    public GameObject[] mItems;
     public TMP_Text mTextTitle;
+    public int mSelNum;
 
 
     public void UpdateText()
@@ -32,22 +34,15 @@ public class HUDLevelUp : MonoBehaviour
             mItems[i].transform.name = "Item " + i;
             mItems[i].transform.localScale = mRootHUD.transform.localScale;
         }
+        mSelNum = -1;
     }
-
-    //private void OnEnable()
-    //{
-    //    for (int i = 0; i < mItems.Length; ++i)
-    //    {
-    //        mItems[i].SetActive(true);
-    //    }
-    //}
 
     public void Show()
     {
         mTextTitle.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].HUDLevelUpTitle[0];
         Next();
+        GameManager.instance.mPlayer.mInputVec = Vector2.zero;
         GameManager.instance.Stop();
-        // mRect.localScale = Vector3.one;
 
         GameManager.instance.PlayEffect(true);
         GameManager.instance.PlaySFX(Enum.SFX.LevelUp);
@@ -56,15 +51,59 @@ public class HUDLevelUp : MonoBehaviour
     public void Hide()
     {
         GameManager.instance.Resume();
-        // mRect.localScale = Vector3.zero;
 
         GameManager.instance.PlayEffect(false);
         GameManager.instance.PlaySFX(Enum.SFX.Select);
         gameObject.SetActive(false);
     }
 
+    public void SelectBtn(bool up)
+    {
+        Debug.Log(up.ToString() +" / " + mSelNum.ToString());
+
+        if(mSelNum == -1)
+        {
+            for (mSelNum = 0; mSelNum < mItems.Length; ++mSelNum)
+            {
+                if (mItems[mSelNum].gameObject.activeSelf)
+                {
+                    mItems[mSelNum].gameObject.GetComponent<Button>().Select();
+                    return;
+                }
+            }
+        }
+
+        if(up)
+        {
+            if (mSelNum == mItems.Length)
+                return;
+            for(mSelNum=mSelNum+1; mSelNum< mItems.Length; ++mSelNum)
+            {
+                if (mItems[mSelNum].gameObject.activeSelf)
+                {
+                    mItems[mSelNum].gameObject.GetComponent<Button>().Select();
+                    return;
+                }
+            }
+        }
+        else
+        {
+            if (mSelNum == 0)
+                return;
+            for (mSelNum = mSelNum - 1; mSelNum > 0; --mSelNum)
+            {
+                if (mItems[mSelNum].gameObject.activeSelf)
+                {
+                    mItems[mSelNum].gameObject.GetComponent<Button>().Select();
+                    return;
+                }
+            }
+        }
+    }
+
     public void Select(int index)
     {
+        mSelNum = -1;
         mItems[index].GetComponent<HUDBtnItem>().OnClick();
     }
 

@@ -333,6 +333,18 @@ public class GameManager : MonoBehaviour
                 HUDSettingToggle();
             SaveSettingJson();
         }
+
+        if(mHUDLevelUp.gameObject.activeSelf)
+        {
+            if(Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                mHUDLevelUp.SelectBtn(false);
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                mHUDLevelUp.SelectBtn(true);
+            }
+        }
     }
     public void UpdateText()
     {
