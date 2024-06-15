@@ -20,7 +20,7 @@ public class DropItem : MonoBehaviour
     {
         mEnable = false;
     }
-    private void FixedUpdate()
+    private void Update()
     {
         if (!GameManager.instance.mIsLive)
             return;
@@ -28,7 +28,7 @@ public class DropItem : MonoBehaviour
             return;
 
         Vector2 dirVec = mTarget.position - mRigid.position;
-        Vector2 nextVec = dirVec.normalized * 10 * Time.fixedDeltaTime;
+        Vector2 nextVec = dirVec.normalized * 15 * Time.deltaTime;
         mRigid.MovePosition(mRigid.position + nextVec);
         mRigid.velocity = Vector2.zero;
     }

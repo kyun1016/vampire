@@ -27,4 +27,5 @@ public struct JsonTextData
     public string[] HUDPowerUpTitle;
     public string[] HUDPowerUpName;
     public string[] HUDPowerUpDesc;
+    public string[] HUDPowerUpBuy;
 }

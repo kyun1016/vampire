@@ -4,20 +4,22 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUDBtnPowerUp : MonoBehaviour
+public class HUDPanelPowerUpDisplay : MonoBehaviour
 {
     public int mId;
 
     public Image mIcon;
-    public GameObject mCheckBoxTemplet;
-    GameObject[] mCheckBox;
     public TMP_Text mTextName;
-    TMP_Text mTextDesc;
+    public TMP_Text mTextDesc;
+    public TMP_Text mTextBuy;
+    public TMP_Text mTextGold;
 
     public void UpdateText()
     {
         mTextName.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].HUDPowerUpName[mId];
-        // mTextDesc.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].HUDPowerUpDesc[mId];
+        mTextDesc.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].HUDPowerUpDesc[mId];
+        mTextBuy.text = GameManager.instance.mJsonTextData[(int)GameManager.instance.mSettingData.LanguageType].HUDPowerUpBuy[0];
+        mTextGold.text = GameManager.instance.mJsonPowerUpData[mId].GoldCost[0].ToString();
     }
 
     void UpdateSprite()
@@ -33,6 +35,6 @@ public class HUDBtnPowerUp : MonoBehaviour
 
     public void OnClick()
     {
-        GameManager.instance.mHUDPowerUp.mDisplayPanel.GetComponent<HUDPanelPowerUpDisplay>().Init(mId);
+
     }
 }

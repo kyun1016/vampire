@@ -9,6 +9,8 @@ public struct JsonPowerUpData
     public int SpriteId;
     public Enum.DescType DescType;
 
+    public int[] GoldCost;
+
     public float[] MovementSpeed;
     public int[] Projectile;
     public float[] ProjectileSize;
