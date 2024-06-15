@@ -12,15 +12,9 @@ public class HUDBtnItem : MonoBehaviour
     public TMP_Text mTextLevel;
     public TMP_Text mTextName;
     public TMP_Text mTextDesc;
-    private void Awake()
+    public void Init(int id)
     {
-        mIcon = GetComponentsInChildren<Image>()[1];
-
-        TMP_Text[] texts = GetComponentsInChildren<TMP_Text>();
-        mTextLevel = texts[0];
-        mTextName = texts[1];
-        mTextDesc = texts[2];
-
+        mId = id;
         UpdateText();
         UpdateSprite();
     }
@@ -162,10 +156,6 @@ public class HUDBtnItem : MonoBehaviour
                     Debug.Assert(false, "Error");
                     break;
             }
-            if (GameManager.instance.mWeaponCtrlData[idxCtrl].Level == GameManager.instance.mJsonWeaponData[idx].Damage.Length)
-            {
-                GetComponent<Button>().interactable = false;
-            }
         }
         else
         {
@@ -200,10 +190,6 @@ public class HUDBtnItem : MonoBehaviour
                     Debug.Assert(false, "Error");
                     break;
 
-            }
-            if ((idxCtrl != -1) && (GameManager.instance.mPerkCtrlData[idxCtrl].Level == GameManager.instance.mJsonPerkData[idx].Damage.Length))
-            {
-                GetComponent<Button>().interactable = false;
             }
         }
         for (int i = 0; i < GameManager.instance.mPlayerData.WeaponSize; ++i)

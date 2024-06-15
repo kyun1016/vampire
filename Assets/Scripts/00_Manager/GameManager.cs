@@ -243,7 +243,7 @@ public class GameManager : MonoBehaviour
     }
     void InitHUDLevelUp()
     {
-        // mHUDLevelUp.gameObject.SetActive(true);
+        mHUDLevelUp.gameObject.SetActive(true);
         mHUDLevelUp.Init();
         mHUDLevelUp.gameObject.SetActive(false);
     }
