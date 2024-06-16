@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUDItem : MonoBehaviour
+public class HUDBtnItem : MonoBehaviour
 {
     public int mId;
 
@@ -24,13 +24,13 @@ public class HUDItem : MonoBehaviour
 
         if (mId < GameManager.instance.mWeaponJsonData.Length)
         {
-            mIcon.sprite = GameManager.instance.mSprite[GameManager.instance.mWeaponJsonData[mId].SpriteId];
+            mIcon.sprite = GameManager.instance.mItemSprite[GameManager.instance.mWeaponJsonData[mId].SpriteId];
             mTextName.text = GameManager.instance.mWeaponJsonData[mId].Name;
         }
         else
         {
             int idx = mId - GameManager.instance.mWeaponJsonData.Length;
-            mIcon.sprite = GameManager.instance.mSprite[GameManager.instance.mPerkJsonData[idx].SpriteId];
+            mIcon.sprite = GameManager.instance.mItemSprite[GameManager.instance.mPerkJsonData[idx].SpriteId];
             mTextName.text = GameManager.instance.mPerkJsonData[idx].Name;
         }
     }
@@ -41,13 +41,13 @@ public class HUDItem : MonoBehaviour
         int level = 0;
         if (mId < GameManager.instance.mWeaponJsonData.Length)
         {
-            mIcon.sprite = GameManager.instance.mSprite[GameManager.instance.mWeaponJsonData[mId].SpriteId];
+            mIcon.sprite = GameManager.instance.mItemSprite[GameManager.instance.mWeaponJsonData[mId].SpriteId];
             mTextName.text = GameManager.instance.mWeaponJsonData[mId].Name;
         }
         else
         {
             idx = mId - GameManager.instance.mWeaponJsonData.Length;
-            mIcon.sprite = GameManager.instance.mSprite[GameManager.instance.mPerkJsonData[idx].SpriteId];
+            mIcon.sprite = GameManager.instance.mItemSprite[GameManager.instance.mPerkJsonData[idx].SpriteId];
             mTextName.text = GameManager.instance.mPerkJsonData[idx].Name;
         }
         idx = mId;

@@ -61,14 +61,13 @@
     <Compile Include="Assets\Scripts\07_Attack\Melee.cs" />
     <Compile Include="Assets\Scripts\Data\PerkData.cs" />
     <Compile Include="Assets\Scripts\00_Manager\PoolManager.cs" />
-    <Compile Include="Assets\Scripts\08_HUD\HUDItem.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Scripts\05_PositionCtrl\Reposition.cs" />
     <Compile Include="Assets\Scripts\06_EnemyCtrl\EnemyScanner.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
-    <Compile Include="Assets\Scripts\08_HUD\FollowCamera.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDFollowCamera.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\Scripts\07_Attack\WeaponCtrl.cs" />
@@ -99,7 +98,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\02_TextCtrl\TextFlash.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
-    <Compile Include="Assets\Scripts\08_HUD\HUDDefault.cs" />
     <Compile Include="Assets\Scripts\Data\WeaponJsonData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
@@ -120,6 +118,10 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\Enum\WeaponFunc.cs" />
     <Compile Include="Assets\Scripts\08_HUD\HUDResult.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDInGame.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDBtnItem.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDBtnPlayer.cs" />
+    <Compile Include="Assets\Scripts\08_HUD\HUDGameStart.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

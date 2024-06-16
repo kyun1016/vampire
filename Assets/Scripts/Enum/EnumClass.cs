@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Enum
 {
+    public enum InfoType { 
+        Exp, 
+        Level, 
+        Kill, 
+        Time, 
+        Health 
+    }
     public enum WeaponType
     {
         Melee,

@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour
     public int[] mNextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
     [Header("# Unity Data Info")]
     public SpriteAtlas mSpriteAtlas;
-    public Sprite[] mSprite;
+    public Sprite[] mPlayerSprite;
+    public Sprite[] mItemSprite;
     public GameObject[] mPoolPrefabs;   // 프리펩들을 보관할 변수
     public GameObject[] mHUDPrefabs;    // 프리펩들을 보관할 변수
     public RuntimeAnimatorController[] mPlayerAnimCtrl;
@@ -35,6 +36,8 @@ public class GameManager : MonoBehaviour
     [Header("# Game Object")]
     public Player mPlayer;
     public PoolManager mEnemyPool;
+    public HUDGameStart mHUDGameStart;
+    public HUDInGame mHUDInGame;
     public HUDLevelUp mHUDLevelUp;
     public HUDResult mHUDResult;
 
@@ -81,8 +84,9 @@ public class GameManager : MonoBehaviour
 
     public void GameStart(int i)
     {
+        
         mPlayerData.Id = i;
-        mPlayerData.SpriteId = mPlayerJsonData[i].SpriteId;
+        mPlayerData.AnimCtrlId = mPlayerJsonData[i].AnimCtrlId;
         mPlayerData.GameTime = 0;
         mPlayerData.MovementSpeed = mPlayerJsonData[i].MovementSpeed;
         mPlayerData.Health = mPlayerJsonData[i].MaxHealth;
@@ -97,9 +101,11 @@ public class GameManager : MonoBehaviour
         mWeaponData = new WeaponData[mPlayerJsonData[i].MaxWeaponSize];
         mWeaponLastData = new WeaponData[mPlayerJsonData[i].MaxWeaponSize];
 
-        mPlayer.init();
+        mPlayer.gameObject.SetActive(true);
         mHUDLevelUp.Select(mPlayerJsonData[i].StartWeaponId);
 
+        mHUDGameStart.gameObject.SetActive(false);
+        mHUDInGame.gameObject.SetActive(true);
         Resume();
     }
 
@@ -112,7 +118,7 @@ public class GameManager : MonoBehaviour
     {
         mIsLive = false;
         yield return new WaitForSeconds(0.5f);
-        mHUDResult.Win();
+        mHUDResult.Lose();
         mHUDResult.gameObject.SetActive(true);
         Stop();
     }

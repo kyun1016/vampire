@@ -15,7 +15,7 @@ public class HUDLevelUp : MonoBehaviour
         for (int i = 1; i < mItems.Length; ++i)
         {
             mItems[i] = Instantiate(mRootHUD);
-            mItems[i].GetComponent<HUDItem>().mId = i;
+            mItems[i].GetComponent<HUDBtnItem>().mId = i;
             mItems[i].transform.SetParent(mRootHUD.transform.parent);
             mItems[i].transform.name = "Item " + i;
             mItems[i].transform.localScale = mRootHUD.transform.localScale;
@@ -37,7 +37,7 @@ public class HUDLevelUp : MonoBehaviour
 
     public void Select(int index)
     {
-        mItems[index].GetComponent<HUDItem>().OnClick();
+        mItems[index].GetComponent<HUDBtnItem>().OnClick();
     }
 
     void Next()

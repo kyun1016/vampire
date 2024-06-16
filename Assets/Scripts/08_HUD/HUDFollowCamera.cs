@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowCamera : MonoBehaviour
+public class HUDFollowCamera : MonoBehaviour
 {
     RectTransform mRect;
 

@@ -14,9 +14,18 @@ public class Player : MonoBehaviour
     Animator mAnim;
     SpriteRenderer mSpriter;
     Rigidbody2D mRigid;
-    public void init()
+
+    private void Awake()
     {
-        mAnim.runtimeAnimatorController = GameManager.instance.mPlayerAnimCtrl[GameManager.instance.mPlayerData.SpriteId];
+        mAnim = GetComponent<Animator>();
+        mSpriter = GetComponent<SpriteRenderer>();
+        mRigid = GetComponent<Rigidbody2D>();
+        mScanner = GetComponent<EnemyScanner>();
+    }
+
+    private void OnEnable()
+    {
+        mAnim.runtimeAnimatorController = GameManager.instance.mPlayerAnimCtrl[GameManager.instance.mPlayerData.AnimCtrlId];
         mWeaponCtrl = new WeaponCtrl[GameManager.instance.mWeaponCtrlData.Length];
 
         for (int i = 0; i < mWeaponCtrl.Length; ++i)
@@ -28,13 +37,7 @@ public class Player : MonoBehaviour
             mWeaponCtrl[i].transform.localRotation = Quaternion.identity;
         }
     }
-    void Start()
-    {
-        mAnim = GetComponent<Animator>();
-        mSpriter = GetComponent<SpriteRenderer>();
-        mRigid = GetComponent<Rigidbody2D>();
-        mScanner = GetComponent<EnemyScanner>();
-    }
+
     void OnMove(InputValue value)
     {
         if (!GameManager.instance.mIsLive)
