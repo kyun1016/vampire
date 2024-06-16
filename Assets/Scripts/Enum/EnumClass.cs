@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class Enum
 {
-    public enum InfoType { 
-        Exp, 
-        Level, 
-        Kill, 
-        Time, 
-        Health 
+    public enum Achive { 
+        UnlockChar2,
+        UnlockChar3,
     }
     public enum WeaponType
     {

@@ -122,6 +122,7 @@
     <Compile Include="Assets\Scripts\08_HUD\HUDBtnItem.cs" />
     <Compile Include="Assets\Scripts\08_HUD\HUDBtnPlayer.cs" />
     <Compile Include="Assets\Scripts\08_HUD\HUDGameStart.cs" />
+    <Compile Include="Assets\Scripts\00_Manager\AchiveManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
